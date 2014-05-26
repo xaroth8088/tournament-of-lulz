@@ -1,5 +1,5 @@
-Tournament of Funny
-===================
+Tournament of Lulz
+==================
 
 Compare photos from imgur and decide who is the funniest of them all!
 
