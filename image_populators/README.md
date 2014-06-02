@@ -1,0 +1,1 @@
+These are a collection of scripts used to populate the database with new images to include in the tournament.  Probably, one or more of these should be run on a regular basis (e.g. with `cron` or similar) in order to keep content in the system fresh.
