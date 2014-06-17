@@ -100,7 +100,7 @@ These will happen when the server is having a bad day.  The body of the response
 ---
 # API Endpoints
 
-## [GET /top_pics?start=&lt;start&gt;&limit=&lt;limit&gt;](id:get_top_pics)
+## [GET /api/top_pics?start=&lt;start&gt;&limit=&lt;limit&gt;](id:get_top_pics)
 
 ### Purpose
 Fetch a list of the top images, primarily for use in a top-10 type of view.  Results will be sorted by descending rating.
@@ -138,7 +138,7 @@ Fetch a list of the top images, primarily for use in a top-10 type of view.  Res
 * Giving a `start`/`limit` combination which extend beyond the number of images in the system will result in a shortened or empty `images` array.
 
 ---
-## [POST /tournament](id:post_tournament)
+## [POST /api/tournament](id:post_tournament)
 
 ### Purpose
 Fetch top images and their ratings, primarily for use as a top-10 type of view.  Results will be sorted by descending rating.
@@ -183,7 +183,7 @@ Fetch top images and their ratings, primarily for use as a top-10 type of view. 
 * Sending `num_images` that is less than 1, larger than a server-specified "reasonable" value, or a non-numeric entry will result in a `400 Bad Request` response.
 
 ---
-## [POST /tournament/&lt;tournament_id&gt;/results](id:post_tournament_results)
+## [POST /api/tournament/&lt;tournament_id&gt;/results](id:post_tournament_results)
 
 ### Purpose
 To indicate a player-selected match win between two images in a tournament.  This will affect the ratings of both images given, per the ratings algorithm on the server side.
@@ -213,7 +213,7 @@ To indicate a player-selected match win between two images in a tournament.  Thi
 * A `403 Forbidden` will be returned if `winner_id` or `loser_id` refer to an `image_id` that is not a part of the tournament referred to by `tournament_id`.
 
 ---
-## [DELETE /tournament/&lt;tournament_id&gt;](id:delete_tournament)
+## [DELETE /api/tournament/&lt;tournament_id&gt;](id:delete_tournament)
 
 ### Purpose
 Ends a tournament.
