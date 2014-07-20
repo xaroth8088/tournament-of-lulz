@@ -23,7 +23,7 @@ var ModelTournament = new JS.Class(Model,{
 
 		request = {
 			'method': 'POST',
-			'url': '/api/tournament',
+			'url': '/api/tournament.json',
 			'params': params,
 			'context': this,
 			'success': this.onLoadComplete,

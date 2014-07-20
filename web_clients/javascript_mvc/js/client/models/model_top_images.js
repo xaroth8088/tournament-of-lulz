@@ -15,7 +15,7 @@ var ModelTopImages = new JS.Class(Model,{
 		var request;
 
 		request = {
-			'url': '/api/top_images',
+			'url': '/api/top_images.json',
 			'params': {
 				'start': start,
 				'limit': limit
