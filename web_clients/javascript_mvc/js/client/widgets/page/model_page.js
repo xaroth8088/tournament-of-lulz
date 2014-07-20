@@ -2,33 +2,38 @@
 	Main Page Model
 	Responsible for tracking which "screen" is shown to the user.
 ***/
-var ModelPage = new JS.Class(Model,{
-	'initialize': function() {
-		'use strict';
-		this.callSuper();
+define(['require', 'jsclass/min/core', '../../base/model'], function (require) {
+	'use strict';
+	var Model = require('../../base/model'),
+		ModelPage;
 
-		this.current_screen = ModelPage.SCREENS.INTRO;
-	},
+	ModelPage = new JS.Class(Model,{
+		'initialize': function() {
+			this.callSuper();
 
-	'changeScreen': function( screen_name ) {
-		'use strict';
+			this.current_screen = ModelPage.SCREENS.INTRO;
+		},
 
-		if( ModelPage.SCREENS[screen_name] === undefined ) {
-			console.log( 'Tried to switch to non-existent screen: ' + screen_name );
-			return;
+		'changeScreen': function( screen_name ) {
+			if( ModelPage.SCREENS[screen_name] === undefined ) {
+				console.log( 'Tried to switch to non-existent screen: ' + screen_name );
+				return;
+			}
+
+			if( this.current_screen === ModelPage.SCREENS[screen_name] ) {
+				return;	// Intentionally do nothing
+			}
+
+			this.current_screen = ModelPage.SCREENS[screen_name];
+			this.modelWasUpdated();
 		}
+	});
 
-		if( this.current_screen === ModelPage.SCREENS[screen_name] ) {
-			return;	// Intentionally do nothing
-		}
-
-		this.current_screen = ModelPage.SCREENS[screen_name];
-		this.modelWasUpdated();
+	ModelPage.SCREENS = {
+		'INTRO': 0,
+		'IN_GAME': 1,
+		'SHARE': 2
 	}
+	
+	return ModelPage;
 });
-
-ModelPage.SCREENS = {
-	'INTRO': 0,
-	'IN_GAME': 1,
-	'SHARE': 2
-}

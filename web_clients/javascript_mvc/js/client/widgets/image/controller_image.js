@@ -2,18 +2,21 @@
 	Image Controller
 	Responsible for handling the intro screen controls
 ***/
-var ControllerImage = new JS.Class(Controller, {
-	'initialize': function(parent_controller, view, page_model ) {
-		'use strict';
-		this.callSuper();
+define(['require', 'jsclass/min/core', '../../base/controller'], function (require) {
+	'use strict';
+	var Controller = require('../../base/controller');
+	
+	return new JS.Class(Controller, {
+		'initialize': function(parent_controller, view, page_model ) {
+			this.callSuper();
 
-		this.image_model = null;
-	},
+			this.image_model = null;
+		},
 
-	'start': function() {
-		'use strict';
-		this.callSuper();
+		'start': function() {
+			this.callSuper();
 
-		this.image_model = this.models[0];
-	}
+			this.image_model = this.models[0];
+		}
+	});
 });

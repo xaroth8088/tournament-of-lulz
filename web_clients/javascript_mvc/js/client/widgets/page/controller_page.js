@@ -2,9 +2,13 @@
 	Main Page Controller
 	Responsible for controlling which "screen" is shown to the user.
 ***/
-var ControllerPage = new JS.Class(Controller, {
-	'initialize': function(parent_controller, view) {
-		'use strict';
-		this.callSuper();
-	}
+define(['require', 'jsclass/min/core', '../../base/controller'], function (require) {
+	'use strict';
+	var Controller = require('../../base/controller');
+	
+	return new JS.Class(Controller, {
+		'initialize': function(parent_controller, view) {
+			this.callSuper();
+		}
+	});
 });

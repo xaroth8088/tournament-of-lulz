@@ -2,49 +2,50 @@
 	Top Images Model
 	Keeps track of the "top images", as reported by the server
 ***/
-var ModelTopImages = new JS.Class(Model,{
-	'initialize': function() {
-		'use strict';
-		this.callSuper();
+define(['require', 'jsclass/min/core', '../base/model', './model_image'], function (require) {
+	'use strict';
+	var Model = require('../base/model'),
+		ModelImage = require('./model_image');
 
-		this.images = [];
-	},
+	return new JS.Class(Model,{
+		'initialize': function() {
+			this.callSuper();
 
-	'loadFromServer': function( start, limit ) {
-		'use strict';
-		var request;
+			this.images = [];
+		},
 
-		request = {
-			'url': '/api/top_images.json',
-			'params': {
-				'start': start,
-				'limit': limit
-			},
-			'context': this,
-			'success': this.onLoadComplete,
-			'error': this.onLoadFailure
-		};
-		this.ajax(request);
-	},
+		'loadFromServer': function( start, limit ) {
+			var request;
 
-	'onLoadComplete': function(data) {
-		'use strict';
-		var i, len, images, image;
+			request = {
+				'url': '/api/top_images.json',
+				'params': {
+					'start': start,
+					'limit': limit
+				},
+				'context': this,
+				'success': this.onLoadComplete,
+				'error': this.onLoadFailure
+			};
+			this.ajax(request);
+		},
 
-		// TODO: never trust your server.  Check for malformed response data.
-		images = data['images'];
-		for( i = 0, len = images.length; i < len; i++ ) {
-			image = new ModelImage();
-			image.loadFromObject(images[i]);
-			this.images.push(image);
+		'onLoadComplete': function(data) {
+			var i, len, images, image;
+
+			// TODO: never trust your server.  Check for malformed response data.
+			images = data['images'];
+			for( i = 0, len = images.length; i < len; i++ ) {
+				image = new ModelImage();
+				image.loadFromObject(images[i]);
+				this.images.push(image);
+			}
+
+			this.modelWasUpdated();
+		},
+
+		'onLoadFailure': function(jqxhr, text_status, error_thrown) {
+			console.log("Loading top images failed:" + text_status + " (" + error_thrown + ")" );
 		}
-
-		this.modelWasUpdated();
-	},
-
-	'onLoadFailure': function(jqxhr, text_status, error_thrown) {
-		'use strict';
-
-		console.log("Loading top images failed:" + text_status + " (" + error_thrown + ")" );
-	}
+	});
 });

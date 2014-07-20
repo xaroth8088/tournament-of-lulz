@@ -2,33 +2,32 @@
 	InGame Screen View
 	Manages in-game state
 ***/
-var ViewScreenInGame = new JS.Class(View, {
-	'initialize': function( controller ) {
-		'use strict';
-		this.callSuper( controller );
-	},
+define(['require', 'jsclass/min/core', '../../base/view'], function (require) {
+	'use strict';
+	var View = require('../../base/view');
+	
+	return new JS.Class(View, {
+		'initialize': function( controller ) {
+			this.callSuper( controller );
+		},
 
-	'start': function(controller, models) {
-		'use strict';
-		this.callSuper(controller, models);
-	},
+		'start': function(controller, models) {
+			this.callSuper(controller, models);
+		},
 
-	'_initTemplate': function() {
-		'use strict';
-		this.callSuper();
+		'_initTemplate': function() {
+			this.callSuper();
 
-		this.container.append('\
-			<div class="in-game">In Game</div>\
-		');
-	},
+			this.container.append('\
+				<div class="in-game">In Game</div>\
+			');
+		},
 
-	'_draw': function() {
-		'use strict';
-	},
+		'_draw': function() {
+		},
 
-	'destroy': function() {
-		'use strict';
-
-		this.callSuper();
-	}
+		'destroy': function() {
+			this.callSuper();
+		}
+	});
 });
