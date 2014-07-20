@@ -25,7 +25,7 @@ Once this information has been retrieved, the client is free to organize the `im
 
 1. Matches in the tournament must be comprised of directly comparing one `image` against another.
 2. Any given pair of `image`s is not permitted to occur twice in the same tournament.
-	* Example: If "cat with a pancake on its head" is matched up against "dog licking baby's ice cream", those two animal pics mustn't compete again in the current tournament.
+	* Example: If "cat with a pancake on its head" is matched up against "dog licking baby's ice cream", those two animal images mustn't compete again in the current tournament.
 
 *Note: this is naturally the case for most tournament formats.*
 
@@ -100,7 +100,7 @@ These will happen when the server is having a bad day.  The body of the response
 ---
 # API Endpoints
 
-## [GET /api/top_pics?start=&lt;start&gt;&limit=&lt;limit&gt;](id:get_top_pics)
+## [GET /api/top_images?start=&lt;start&gt;&limit=&lt;limit&gt;](id:get_top_images)
 
 ### Purpose
 Fetch a list of the top images, primarily for use in a top-10 type of view.  Results will be sorted by descending rating.
@@ -152,6 +152,7 @@ Fetch top images and their ratings, primarily for use as a top-10 type of view. 
 
 ### Sample Request Body
 	{
+		'num_images': 8,
 		'starting_image_id': 123
 	}
 
