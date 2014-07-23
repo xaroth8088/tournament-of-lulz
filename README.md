@@ -16,3 +16,17 @@ This is a set of different implementations of the same functionality, together d
 ## How do I use it?
 
 This project is too early to use at this point.  Give a star to the project and keep an eye on this space for more details.
+
+## Dependencies
+
+To run JavaScript unit tests:
+
+	npm install karma
+	npm install karma-phantomjs-launcher
+	npm install karma-jasmine
+	npm install karma-html-reporter
+	npm install karma-coverage
+
+	karma start
+	karma run
+

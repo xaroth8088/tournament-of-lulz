@@ -18,7 +18,7 @@ A custom framework is typically not a good fit for prototyping or rapid initial 
 
 ## Setup
 
-Configure your favorite web server to serve up this directory, using nginx or the like.
+Configure your favorite web server to serve up the www directory, using nginx or the like.
 
 As is the case for all of the JavaScript clients, the web server will need to present the API endpoints as though they're on the same domain as the static HTML files to satisfy browsers' same-domain policies.  Normally, this is done by way of a transparent proxy for those endpoints.
 
