@@ -2,9 +2,9 @@
 	Model Image
 	A representation of a server-side Image object
 ***/
-define(['require', 'jsclass/min/core', '../base/model'], function (require) {
+define(['require', 'jsclass/min/core', 'client/base/model'], function (require) {
 	'use strict';
-	var Model = require('../base/model');
+	var Model = require('client/base/model');
 	
 	return new JS.Class(Model,{
 		'initialize': function() {

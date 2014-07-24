@@ -2,11 +2,11 @@
 	Intro Screen Controller
 	Responsible for handling the intro screen controls
 ***/
-define(['require', 'jsclass/min/core', '../../base/controller', '../../models/model_top_images', '../../configuration'], function (require) {
+define(['require', 'jsclass/min/core', 'client/base/controller', 'client/models/model_top_images', 'client/configuration'], function (require) {
 	'use strict';
-	var Controller = require('../../base/controller'),
-		ModelTopImages = require('../../models/model_top_images'),
-		CONFIGURATION = require('../../configuration');
+	var Controller = require('client/base/controller'),
+		ModelTopImages = require('client/models/model_top_images'),
+		CONFIGURATION = require('client/configuration');
 	
 	return new JS.Class(Controller, {
 		'initialize': function(parent_controller, view, page_model ) {

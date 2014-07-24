@@ -2,9 +2,9 @@
 	Game Model
 	Responsible for tracking game state
 ***/
-define(['require', 'jsclass/min/core', '../base/model', './model_tournament'], function (require) {
+define(['require', 'jsclass/min/core', 'client/base/model', './model_tournament'], function (require) {
 	'use strict';
-	var Model = require('../base/model'),
+	var Model = require('client/base/model'),
 		ModelTournament = require('./model_tournament');
 	
 	return new JS.Class(Model,{

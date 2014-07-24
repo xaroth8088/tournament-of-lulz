@@ -2,14 +2,11 @@
 	Main Page View
 	Responsible for organizing which "screen" is presented to the user.
 ***/
-define(['require', 'jsclass/min/core', '../../base/view', './model_page', '../screen_intro/controller_screen_intro', '../screen_intro/view_screen_intro', '../screen_in_game/controller_screen_in_game', '../screen_in_game/view_screen_in_game'], function (require) {
+define(['require', 'jsclass/min/core', 'client/base/view', 'client/widgets/screen_intro/widget_screen_intro', 'client/widgets/screen_in_game/widget_screen_in_game'], function (require) {
 	'use strict';
-	var View = require('../../base/view'),
-		ModelPage = require('./model_page'),
-		ControllerScreenIntro = require('../screen_intro/controller_screen_intro'),
-		ViewScreenIntro = require('../screen_intro/view_screen_intro'),
-		ControllerScreenInGame = require('../screen_in_game/controller_screen_in_game'),
-		ViewScreenInGame = require('../screen_in_game/view_screen_in_game');
+	var View = require('client/base/view'),
+		WidgetScreenIntro = require('client/widgets/screen_intro/widget_screen_intro'),
+		WidgetScreenInGame = require('client/widgets/screen_in_game/widget_screen_in_game');
 
 	return new JS.Class(View, {
 		'initialize': function( controller ) {
@@ -46,17 +43,17 @@ define(['require', 'jsclass/min/core', '../../base/view', './model_page', '../sc
 			this.container.children().hide();
 
 			switch( this.page_model.current_screen ) {
-				case ModelPage.SCREENS.INTRO:
+				case this.page_model.CONSTANTS.SCREENS.INTRO:
 					element = this.container.find(".intro");
-					new_screen = new ControllerScreenIntro( this.controller, new ViewScreenIntro(), this.page_model );
+					new_screen = new WidgetScreenIntro.controller( this.controller, new WidgetScreenIntro.view(), this.page_model );
 					break;
-				case ModelPage.SCREENS.IN_GAME:
+				case this.page_model.CONSTANTS.SCREENS.IN_GAME:
 					element = this.container.find(".in_game");
-					new_screen = new ControllerScreenInGame( this.controller, new ViewScreenInGame() );
+					new_screen = new WidgetScreenInGame.controller( this.controller, new WidgetScreenInGame.view() );
 					break;
-				// case ModelPage.SCREENS.SHARE:
+				// case this.page_model.CONSTANTS.SCREENS.SHARE:
 				// 	element = this.container.find(".share");
-				// 	new_screen = new ControllerScreenIntro( this.controller, new ViewScreenIntro(), this.page_model );
+				// 	new_screen = new WidgetScreenIntro.controller( this.controller, new WidgetScreenIntro.view(), this.page_model );
 				// 	break;
 				default:
 					return;

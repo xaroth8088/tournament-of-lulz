@@ -2,9 +2,9 @@
 	Top Images Model
 	Keeps track of the "top images", as reported by the server
 ***/
-define(['require', 'jsclass/min/core', '../base/model', './model_image'], function (require) {
+define(['require', 'jsclass/min/core', 'client/base/model', './model_image'], function (require) {
 	'use strict';
-	var Model = require('../base/model'),
+	var Model = require('client/base/model'),
 		ModelImage = require('./model_image');
 
 	return new JS.Class(Model,{

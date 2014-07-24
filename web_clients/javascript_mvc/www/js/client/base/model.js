@@ -2,9 +2,9 @@
 	Model base class.
 	Exposes a number of convenience methods for models, especially around wiring to views.
 ***/
-define(['require', 'jquery', 'jsclass/min/core', '../configuration'], function (require) {
+define(['require', 'jquery', 'jsclass/min/core', 'client/configuration'], function (require) {
 	'use strict';
-	var CONFIGURATION = require('../configuration');
+	var CONFIGURATION = require('client/configuration');
 
 	return new JS.Class({
 		'initialize': function(controller, model) {

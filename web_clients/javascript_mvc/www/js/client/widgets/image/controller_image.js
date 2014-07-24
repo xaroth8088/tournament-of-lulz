@@ -2,9 +2,9 @@
 	Image Controller
 	Responsible for handling the intro screen controls
 ***/
-define(['require', 'jsclass/min/core', '../../base/controller'], function (require) {
+define(['require', 'jsclass/min/core', 'client/base/controller'], function (require) {
 	'use strict';
-	var Controller = require('../../base/controller');
+	var Controller = require('client/base/controller');
 	
 	return new JS.Class(Controller, {
 		'initialize': function(parent_controller, view, page_model ) {

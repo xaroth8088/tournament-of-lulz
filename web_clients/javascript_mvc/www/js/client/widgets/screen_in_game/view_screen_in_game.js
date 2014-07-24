@@ -2,9 +2,9 @@
 	InGame Screen View
 	Manages in-game state
 ***/
-define(['require', 'jsclass/min/core', '../../base/view'], function (require) {
+define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
 	'use strict';
-	var View = require('../../base/view');
+	var View = require('client/base/view');
 	
 	return new JS.Class(View, {
 		'initialize': function( controller ) {

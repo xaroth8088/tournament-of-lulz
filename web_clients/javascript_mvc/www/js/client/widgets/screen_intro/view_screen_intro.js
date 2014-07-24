@@ -2,11 +2,10 @@
 	Intro Screen View
 	Shows the top 10 images, and presents "start tournament" functionality
 ***/
-define(['require', 'jsclass/min/core', '../../base/view', '../image/controller_image', '../image/view_image'], function (require) {
+define(['require', 'jsclass/min/core', 'client/base/view', 'client/widgets/image/widget_image'], function (require) {
 	'use strict';
-	var View = require('../../base/view'),
-		ControllerImage = require('../image/controller_image'),
-		ViewImage = require('../image/view_image');
+	var View = require('client/base/view'),
+		WidgetImage = require('client/widgets/image/widget_image');
 
 	return new JS.Class(View, {
 		'initialize': function( controller ) {
@@ -52,7 +51,7 @@ define(['require', 'jsclass/min/core', '../../base/view', '../image/controller_i
 
 			// Add image widgets for each one in the top_images_model
 			for( i = 0, len = this.top_images_model.images.length; i < len; i++ ) {
-				image_widget = new ControllerImage( this.controller, new ViewImage(), this.top_images_model.images[i] );
+				image_widget = new WidgetImage.controller( this.controller, new WidgetImage.view(), this.top_images_model.images[i] );
 				this.addSubwidget( image_widget, this.container );
 				image_widget.start();
 				image_widget.view.container.delay( 500 * i ).animate( {
