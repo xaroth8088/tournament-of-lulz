@@ -3,7 +3,7 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
     describe('Model', function() {
         var Model;
 
-        // Mock dependencies
+        // Mock dependencies and module loading
         beforeEach(function(done) {
             var injector, builder;
 
