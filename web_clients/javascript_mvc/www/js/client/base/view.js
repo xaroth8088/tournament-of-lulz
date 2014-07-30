@@ -7,13 +7,13 @@ define(['require', 'jsclass/min/core'], function (require) {
 	
 	return new JS.Class({
 		'initialize': function() {
-			this.controller = null;
-			this.subwidgets = [];
+			this._controller = null;
+			this._subwidgets = [];
 			this.container = $("<div/>");
 		},
 
 		'start': function( controller, models ) {
-			this.controller = controller;
+			this._controller = controller;
 			this._initTemplate();
 		},
 
@@ -29,8 +29,21 @@ define(['require', 'jsclass/min/core'], function (require) {
 
 
 		'addSubwidget': function(widget, parent_element) {
+			var i, len, subwidget;
+			// TODO: validate that 'parent_container' either is - or is a child of - this.container, to help prevent
+			// separation of concerns violations
+
+			// validate that the widget being added isn't already a subwidget
+			for( i = 0, len = this._subwidgets.length; i < len; i++ ) {
+				subwidget = this._subwidgets[i];
+				if( widget === subwidget ) {
+					throw("Attempted to re-add a subwidget.");
+				}
+			}
+
+			// Actually add the subwidget
 			parent_element.append( widget.view.container );
-			this.subwidgets.push(widget);
+			this._subwidgets.push(widget);
 		},
 
 		'removeSubwidget': function(widget) {
@@ -40,11 +53,11 @@ define(['require', 'jsclass/min/core'], function (require) {
 				return;
 			}
 
-			for( i = 0, len = this.subwidgets.length; i < len; i++ ) {
-				subwidget = this.subwidgets[i];
+			for( i = 0, len = this._subwidgets.length; i < len; i++ ) {
+				subwidget = this._subwidgets[i];
 				if( widget === subwidget ) {
 					subwidget.destroy();
-					this.subwidgets.splice( i, 1 );
+					this._subwidgets.splice( i, 1 );
 					return;
 				}
 			}
@@ -60,12 +73,12 @@ define(['require', 'jsclass/min/core'], function (require) {
 		'removeAllSubwidgets': function() {
 			var i, len, subwidget;
 
-			for( i = 0, len = this.subwidgets.length; i < len; i++ ) {
-				subwidget = this.subwidgets[i];
+			for( i = 0, len = this._subwidgets.length; i < len; i++ ) {
+				subwidget = this._subwidgets[i];
 				subwidget.destroy();
 			}
 
-			this.subwidgets = [];
+			this._subwidgets = [];
 		},
 
 		'onModelUpdated': function() {
