@@ -8,28 +8,30 @@ define(['require', 'jquery', 'jsclass/min/core', 'client/configuration'], functi
 
 	return new JS.Class({
 		'initialize': function(controller, model) {
-			this.watchers = [];
+			this._watchers = [];
 		},
 
 		'modelWasUpdated': function() {
 			var i, len;
 
-			for( i = 0, len = this.watchers.length; i < len; i++ ) {
-				this.watchers[i].onModelUpdated();
+			for( i = 0, len = this._watchers.length; i < len; i++ ) {
+				this._watchers[i].onModelUpdated();
 			}
 		},
 
+		// TODO: This should be named "addWatcher"
 		'watch': function(view) {
-			this.watchers.push(view);
+			this._watchers.push(view);
 		},
 
+		// TODO: This should be named "removeWatcher"
 		'unwatch': function(view) {
 			var i, len, watcher;
 
-			for( i = 0, len = this.watchers.length; i < len; i++ ) {
-				watcher = this.watchers[i];
+			for( i = 0, len = this._watchers.length; i < len; i++ ) {
+				watcher = this._watchers[i];
 				if( watcher === view ) {
-					this.watchers.splice( i, 1 );
+					this._watchers.splice( i, 1 );
 					return;
 				}
 			}

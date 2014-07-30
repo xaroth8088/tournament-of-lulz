@@ -21,12 +21,11 @@ This project is too early to use at this point.  Give a star to the project and 
 
 To run JavaScript unit tests:
 
+	// TODO: convert this into proper dependencies file.  :P
 	npm install karma
 	npm install karma-phantomjs-launcher
-	npm install karma-jasmine
+	npm install karma-jasmine@2_0
 	npm install karma-html-reporter
 	npm install karma-coverage
 
 	karma start
-	karma run
-

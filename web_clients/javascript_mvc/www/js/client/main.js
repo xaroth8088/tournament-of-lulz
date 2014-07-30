@@ -13,5 +13,5 @@ define(['require', 'jquery', './widgets/page/widget_page'], function (require) {
 		$(document.body).append(page_widget.view.container);
 	}
 
-	$(document).ready( main );	
+	$(document).ready( main );
 });

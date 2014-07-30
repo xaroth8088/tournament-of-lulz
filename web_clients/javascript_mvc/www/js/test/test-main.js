@@ -1,5 +1,5 @@
 var allTestFiles = [];
-var TEST_REGEXP = /(spec|test)\.js$/i;
+var TEST_REGEXP = /_test\.js$/i;
 
 var pathToModule = function(path) {
   return path.replace(/^\/base\/js\//, '..\/').replace(/\.js$/, '');
@@ -12,20 +12,16 @@ Object.keys(window.__karma__.files).forEach(function(file) {
   }
 });
 
-console.log("allTestFiles:" + allTestFiles);
-
 require.config({
-  // Karma serves files under /base, which is the basePath from your config file
   baseUrl: '/base/js/vendor',
-
-  // dynamically load all test files
-  deps: allTestFiles,
 
   paths: {
     jquery: 'jquery/jquery-2.1.1.min',
+    squire: 'squire/Squire',
     client: '../client'
-  },
-
-  // we have to kickoff jasmine, as it is asynchronous
-  callback: window.__karma__.start
+  }
 });
+
+// Kick off Jasmine
+// NOTE: this MUST NOT be run via deps+config, otherwise Squire will run the tests multiple times.
+require( allTestFiles, window.__karma__.start );
