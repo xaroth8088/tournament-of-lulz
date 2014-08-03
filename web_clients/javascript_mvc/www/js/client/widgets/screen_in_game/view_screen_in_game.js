@@ -21,13 +21,6 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
 			this.container.append('\
 				<div class="in-game">In Game</div>\
 			');
-		},
-
-		'_draw': function() {
-		},
-
-		'destroy': function() {
-			this.callSuper();
 		}
 	});
 });
