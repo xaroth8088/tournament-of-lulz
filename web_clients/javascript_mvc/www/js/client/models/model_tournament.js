@@ -2,9 +2,10 @@
 	Tournament Model
 	A representation of the server-side "tournament" object
 ***/
-define(['require', 'jsclass/min/core', 'client/base/model'], function (require) {
+define(['require', 'jsclass/min/core', 'client/base/model', 'client/models/model_image'], function (require) {
 	'use strict';
-	var Model = require('client/base/model');
+	var Model = require('client/base/model'),
+		ModelImage = require('client/models/model_image');
 	
 	return new JS.Class(Model,{
 		'initialize': function() {
