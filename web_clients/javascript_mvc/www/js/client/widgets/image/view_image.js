@@ -7,8 +7,8 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
 	var View = require('client/base/view');
 	
 	return new JS.Class(View, {
-		'initialize': function( controller ) {
-			this.callSuper( controller );
+		'initialize': function() {
+			this.callSuper();
 
 			this.image_model = null;
 		},
@@ -29,6 +29,7 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
 		'_draw': function() {
 			if( this.image_model === null ) {
 				this.container.hide();
+				return;
 			}
 
 			this.container.show();
@@ -36,10 +37,6 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
 			this.container.css({
 				'background-image': "url('" + this.image_model.thumbnail_url + "')"
 			});
-		},
-
-		'destroy': function() {
-			this.callSuper();
 		}
 	});
 });

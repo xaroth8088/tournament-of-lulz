@@ -8,8 +8,8 @@ define(['require', 'jsclass/min/core', 'client/base/view', 'client/widgets/image
 		WidgetImage = require('client/widgets/image/widget_image');
 
 	return new JS.Class(View, {
-		'initialize': function( controller ) {
-			this.callSuper( controller );
+		'initialize': function() {
+			this.callSuper();
 			this.top_images_model = null;
 		},
 
@@ -37,7 +37,7 @@ define(['require', 'jsclass/min/core', 'client/base/view', 'client/widgets/image
 				<button>Start Tournament</button>\
 			');
 
-			this.container.find('button').click( $.proxy( this.controller.onStartPressed, this.controller ) );
+			this.container.find('button').click( $.proxy( this._controller.onStartPressed, this._controller ) );
 		},
 
 		'_draw': function() {
@@ -51,7 +51,7 @@ define(['require', 'jsclass/min/core', 'client/base/view', 'client/widgets/image
 
 			// Add image widgets for each one in the top_images_model
 			for( i = 0, len = this.top_images_model.images.length; i < len; i++ ) {
-				image_widget = new WidgetImage.controller( this.controller, new WidgetImage.view(), this.top_images_model.images[i] );
+				image_widget = new WidgetImage.controller( this._controller, new WidgetImage.view(), this.top_images_model.images[i] );
 				this.addSubwidget( image_widget, this.container );
 				image_widget.start();
 				image_widget.view.container.delay( 500 * i ).animate( {

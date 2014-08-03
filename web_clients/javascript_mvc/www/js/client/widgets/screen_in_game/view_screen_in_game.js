@@ -7,8 +7,8 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
 	var View = require('client/base/view');
 	
 	return new JS.Class(View, {
-		'initialize': function( controller ) {
-			this.callSuper( controller );
+		'initialize': function() {
+			this.callSuper();
 		},
 
 		'start': function(controller, models) {

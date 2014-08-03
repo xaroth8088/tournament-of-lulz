@@ -9,8 +9,8 @@ define(['require', 'jsclass/min/core', 'client/base/view', 'client/widgets/scree
 		WidgetScreenInGame = require('client/widgets/screen_in_game/widget_screen_in_game');
 
 	return new JS.Class(View, {
-		'initialize': function( controller ) {
-			this.callSuper( controller );
+		'initialize': function() {
+			this.callSuper();
 
 			this.page_model = null;
 			this.current_screen = null;
