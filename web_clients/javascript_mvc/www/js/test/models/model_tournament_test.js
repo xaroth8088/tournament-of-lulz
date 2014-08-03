@@ -10,8 +10,6 @@ define(['require', 'squire', 'jquery', 'jsclass/min/core'], function(require, Sq
             injector = new Squire();
 
             this.mock_image_class = jasmine.createSpyObj('mock_image_class', ['loadFromObject']);
-
-            injector = new Squire();
             injector.mock('client/models/model_image', Squire.Helpers.returns(this.mock_image_class));
 
             injector.require(['client/models/model_tournament'], function(model_tournament_with_mocks) {
