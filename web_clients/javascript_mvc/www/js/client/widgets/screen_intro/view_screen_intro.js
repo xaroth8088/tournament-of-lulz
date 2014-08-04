@@ -62,11 +62,11 @@ define(['require', 'jsclass/min/core', 'client/base/view', 'client/widgets/image
 		},
 
 		'destroy': function() {
-			this.callSuper();
-
 			if( this.top_images_model !== null ) {
 				this.top_images_model.unwatch( this );
 			}
+
+			this.callSuper();
 		}
 	});
 });
