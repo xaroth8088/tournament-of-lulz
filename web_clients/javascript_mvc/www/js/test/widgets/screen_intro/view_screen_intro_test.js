@@ -11,14 +11,20 @@ define(['require', 'squire', 'jquery', 'jsclass/min/core'], function(require, Sq
                 'initialize': function() {
                     this.container = $('<div/>')
                 },
-                'start': function() {}
+                'start': function() {},
+                'destroy': function() {
+                    this.container.remove();
+                }
             });
 
             mock_controller_image = new JS.Class({
                 'initialize': function() {
                     this.view = new mock_view_image();
                 },
-                'start': function() {}
+                'start': function() {},
+                'destroy': function() {
+                    this.view.destroy();
+                }
             });
 
             injector = new Squire();
@@ -102,6 +108,88 @@ define(['require', 'squire', 'jquery', 'jsclass/min/core'], function(require, Sq
                 expect(this.view.container.children('').length).toBe(1);
                 expect(this.view.container.children('button').length).toBe(1);
                 expect(mock_top_images.watch).toHaveBeenCalled();
+
+                // Cleanup
+            });
+
+            it("should properly replace the existing sub-widgets and watchers if given a second model_top_images", function() {
+                var mock_top_images, mock_top_images_2, i;
+
+                // Setup
+                mock_top_images = jasmine.createSpyObj('ModelTopImages', ['watch', 'unwatch']);
+                mock_top_images.images = [];
+                // Because we're mocking the Image widget, the actual contents of the images is moot, but the quantity is important.
+                for( i = 0; i < 4; i++ ) {
+                    mock_top_images.images.push({});
+                }
+
+                this.view.start(this.mock_controller, []);
+                this.view.setTopImagesModel(mock_top_images);
+
+                expect(this.view.top_images_model).not.toBeNull();
+
+                mock_top_images_2 = jasmine.createSpyObj('ModelTopImages', ['watch', 'unwatch']);
+                mock_top_images_2.images = [];
+                // Because we're mocking the Image widget, the actual contents of the images is moot, but the quantity is important.
+                for( i = 0; i < 10; i++ ) {
+                    mock_top_images_2.images.push({});
+                }
+
+                // Preconditions
+                expect(this.view.top_images_model).not.toBeNull();
+
+                // Run Test
+                this.view.setTopImagesModel(mock_top_images_2);
+
+                // Postconditions
+                expect(this.view.container.children().length).toBe(11);
+                expect(this.view.container.children('button').length).toBe(1);
+                expect(mock_top_images.unwatch.calls.count()).toBe(1);
+                expect(mock_top_images.watch.calls.count()).toBe(1);
+                expect(mock_top_images_2.unwatch).not.toHaveBeenCalled();
+                expect(mock_top_images_2.watch.calls.count()).toBe(1);
+
+                // Cleanup
+            });
+        });
+
+        describe('#destroy', function() {
+            it("should clean up its watchers, if it has a top images model", function() {
+                var mock_top_images;
+
+                // Setup
+                mock_top_images = jasmine.createSpyObj('ModelTopImages', ['watch', 'unwatch']);
+                mock_top_images.images = [];
+                this.view.start(this.mock_controller, []);
+                this.view.setTopImagesModel(mock_top_images);
+
+                // Preconditions
+                expect(mock_top_images.unwatch).not.toHaveBeenCalled();
+
+                // Run Test
+                this.view.destroy();
+
+                // Postconditions
+                expect(mock_top_images.unwatch).toHaveBeenCalled();
+
+                // Cleanup
+            });
+
+            it("should clean up without affecting watchers, if it does not have a top images model", function() {
+                var mock_top_images;
+
+                // Setup
+                spyOn(this.view, 'removeAllSubwidgets');
+                this.view.start(this.mock_controller, []);
+
+                // Preconditions
+                expect(this.view.removeAllSubwidgets.calls.count()).toBe(1);
+
+                // Run Test
+                this.view.destroy();
+
+                // Postconditions
+                expect(this.view.removeAllSubwidgets.calls.count()).toBe(2);
 
                 // Cleanup
             });
