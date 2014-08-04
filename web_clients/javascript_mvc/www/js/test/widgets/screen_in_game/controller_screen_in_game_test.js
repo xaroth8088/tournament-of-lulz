@@ -25,7 +25,7 @@ define(['require', 'squire', 'jquery', 'jsclass/min/core'], function(require, Sq
 
         // Tests
         describe('#start', function() {
-            it("should fail until more tests are written", function() {
+            it("should create a game model and start it", function() {
                 // Setup
 
                 // Preconditions
