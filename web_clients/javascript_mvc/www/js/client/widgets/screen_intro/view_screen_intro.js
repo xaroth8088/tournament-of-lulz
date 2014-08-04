@@ -55,8 +55,8 @@ define(['require', 'jsclass/min/core', 'client/base/view', 'client/widgets/image
 				this.addSubwidget( image_widget, this.container );
 				image_widget.start();
 				image_widget.view.container.delay( 500 * i ).animate( {
-					'top': '100%'
-				}, 3000
+						'top': '100%'
+					}, 3000
 				);
 			}
 		},
