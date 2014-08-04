@@ -9,14 +9,14 @@ define(['require', 'jsclass/min/core', 'client/base/controller', 'client/models/
 		CONFIGURATION = require('client/configuration');
 	
 	return new JS.Class(Controller, {
-		'initialize': function(parent_controller, view, page_model ) {
+		'initialize': function(parent_controller, view) {
 			this.callSuper();
-
-			this.page_model = page_model;
 		},
 
 		'start': function() {
 			this.callSuper();
+
+			this.page_model = this.models[0];
 
 			this.top_images_model = new ModelTopImages();
 			this.top_images_model.loadFromServer( 0, CONFIGURATION.INTRO_TOP_X_IMAGES_COUNT );
