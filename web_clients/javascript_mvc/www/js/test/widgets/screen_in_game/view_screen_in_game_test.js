@@ -16,7 +16,7 @@ define(['require', 'squire', 'jquery', 'jsclass/min/core'], function(require, Sq
         });
 
         beforeEach(function(){
-            this.view = new WidgetScreenInGame.view(null);
+            this.view = new WidgetScreenInGame.view();
         });
 
         // Tests
