@@ -39,7 +39,7 @@ define(['require', 'squire', 'jquery', 'jsclass/min/core'], function(require, Sq
         });
 
         beforeEach(function(){
-            this.mock_controller = jasmine.createSpyObj('ControllerScreenIntro', ['onStartPressed'])
+            this.mock_controller = jasmine.createSpyObj('ControllerScreenIntro', ['onStartPressed']);
             this.view = new WidgetScreenIntro.view();
         });
 

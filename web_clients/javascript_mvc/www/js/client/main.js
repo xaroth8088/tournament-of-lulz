@@ -3,7 +3,7 @@
 ***/
 define(['require', 'jquery', './widgets/page/widget_page'], function (require) {
 	'use strict';
-	var WidgetPage = require( './widgets/page/widget_page');
+	var WidgetPage = require('./widgets/page/widget_page');
 	
 	function main() {
 		var page_widget;
