@@ -37,11 +37,7 @@ define(['require', 'jsclass/min/core', 'client/base/view', 'client/widgets/scree
 		'_draw': function() {
 			var element, new_screen;
 
-			// Destroy the previous screen, and create a new one in its place
-			this.removeSubwidget( this.current_screen );
-
-			this.container.children().hide();
-
+			// Decide which screen to show
 			switch( this.page_model.current_screen ) {
 				case this.page_model.CONSTANTS.SCREENS.INTRO:
 					element = this.container.find(".intro");
@@ -56,8 +52,14 @@ define(['require', 'jsclass/min/core', 'client/base/view', 'client/widgets/scree
 				// 	new_screen = new WidgetScreenIntro.controller( this.controller, new WidgetScreenIntro.view(), this.page_model );
 				// 	break;
 				default:
+					console.log("Invalid screen selected in model, ViewPage doesn't know what to display.");
 					return;
 			}
+
+			// Destroy the previous screen, and create a new one in its place
+			this.container.children().hide();
+
+			this.removeSubwidget( this.current_screen );
 
 			this.current_screen = new_screen;
 			this.current_screen.start();
