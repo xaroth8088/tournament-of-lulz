@@ -14,7 +14,8 @@
 		paths: {
 			jquery: 'jquery/jquery-2.1.1.min',
 			squire: 'squire/Squire',
-			client: '../client'
+			client: '../client',
+			test: '../test'
 		}
 	});
 
