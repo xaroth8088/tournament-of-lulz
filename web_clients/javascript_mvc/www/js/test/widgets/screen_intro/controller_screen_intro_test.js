@@ -1,19 +1,28 @@
-define(['require', 'squire', 'jquery', 'jsclass/min/core'], function(require, Squire) {
+define(['require', 'squire', 'jquery'], function(require, Squire) {
     'use strict';
     describe('WidgetScreenIntro.controller', function() {
-        var WidgetScreenIntro;
+        var WidgetScreenIntro, MockWidget;
 
         // Mock dependencies and module loading
         beforeEach(function(done) {
             var injector;
 
-            this.mock_top_images = jasmine.createSpyObj('ModelTopImages', ['loadFromServer']);
+            injector = new Squire();
+
+            injector.require(['test/mocks/widget/mock_widget'], function(mock_widget) {
+                MockWidget = mock_widget;
+                done();
+            });
+        });
+
+        beforeEach(function(done) {
+            var injector;
+
             this.mock_configuration = {
                 'INTRO_TOP_X_IMAGES_COUNT': '1000'
             };
             injector = new Squire();
 
-            injector.mock('client/models/model_top_images', Squire.Helpers.returns(this.mock_top_images));
             injector.mock('client/configuration', this.mock_configuration);
 
             injector.require(['client/widgets/screen_intro/widget_screen_intro'], function(widget_with_mocks) {
@@ -23,30 +32,32 @@ define(['require', 'squire', 'jquery', 'jsclass/min/core'], function(require, Sq
         });
 
         beforeEach(function(){
-            this.mock_model_page = jasmine.createSpyObj('ModelPage', ['changeScreen']);
-            this.mock_view = jasmine.createSpyObj('View', ['start', 'setTopImagesModel']);
-            this.controller = new WidgetScreenIntro.controller(null, this.mock_view, this.mock_model_page);
+            this.mock_top_images = new MockWidget.model();
+            this.mock_top_images.loadFromServer = jasmine.createSpy('loadFromServer');
+
+            this.mock_model_page = new MockWidget.model();
+            this.mock_model_page.changeScreen = jasmine.createSpy('changeScreen');
+
+            this.mock_view = new MockWidget.view();
+            this.controller = new WidgetScreenIntro.controller(null, this.mock_view, {
+                'page_model': this.mock_model_page,
+                'top_images_model': this.mock_top_images
+            });
         });
 
         // Tests
         describe('#start', function() {
-            it("should create and kick off a new top images model, and get its view associated with it", function() {
+            it("should kick off the top images model", function() {
                 // Setup
 
                 // Preconditions
-                expect(this.controller.page_model).toBeUndefined();
-                expect(this.controller.top_images_model).toBeUndefined();
                 expect(this.mock_top_images.loadFromServer).not.toHaveBeenCalled();
-                expect(this.mock_view.setTopImagesModel).not.toHaveBeenCalled();
 
                 // Run Test
                 this.controller.start();
 
                 // Postconditions
-                expect(this.controller.page_model).toBe(this.mock_model_page);
-                expect(this.controller.top_images_model).toBe(this.mock_top_images);
                 expect(this.mock_top_images.loadFromServer).toHaveBeenCalledWith(0, this.mock_configuration.INTRO_TOP_X_IMAGES_COUNT);
-                expect(this.mock_view.setTopImagesModel).toHaveBeenCalledWith(this.mock_top_images);
 
                 // Cleanup
             });
@@ -58,8 +69,6 @@ define(['require', 'squire', 'jquery', 'jsclass/min/core'], function(require, Sq
                 this.controller.start();
 
                 // Preconditions
-                expect(this.controller.page_model).not.toBeUndefined();
-                expect(this.controller.top_images_model).not.toBeUndefined();
 
                 // Run Test
                 this.controller.onStartPressed();
@@ -74,10 +83,7 @@ define(['require', 'squire', 'jquery', 'jsclass/min/core'], function(require, Sq
                 // Setup
 
                 // Preconditions
-                expect(this.controller.page_model).toBeUndefined();
-                expect(this.controller.top_images_model).toBeUndefined();
                 expect(this.mock_top_images.loadFromServer).not.toHaveBeenCalled();
-                expect(this.mock_view.setTopImagesModel).not.toHaveBeenCalled();
 
                 // Run Test
                 expect(function() {

@@ -6,14 +6,14 @@ define(['require', 'jsclass/min/core'], function (require) {
 	'use strict';
 	
 	return new JS.Class({
-		'initialize': function(parent_controller, view /*, model1, model2, ... */) {
+		'initialize': function(parent_controller, view, models) {
 			var args;
 
 			args = Array.prototype.slice.apply(arguments);
 
 			this.parent_controller = parent_controller;
 			this.view = view;
-			this.models = args.slice( 2 );
+			this.models = models;
 		},
 
 		'start': function() {

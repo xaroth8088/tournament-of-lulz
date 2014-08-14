@@ -12,10 +12,20 @@ define(['require', 'jquery', 'jsclass/min/core', 'client/configuration'], functi
 		},
 
 		'modelWasUpdated': function() {
-			var i, len;
+			var i, len, watcher, to_do_list;
 
+			// The watchers list may change during iteration, so deal with that.
+			to_do_list = [];
 			for( i = 0, len = this._watchers.length; i < len; i++ ) {
-				this._watchers[i].onModelUpdated();
+				watcher = this._watchers[i]
+				to_do_list.push( watcher );
+			}
+
+			for( i = 0, len = to_do_list.length; i < len; i++ ) {
+				watcher = to_do_list[i];
+				if( watcher && watcher.onModelUpdated ) {
+					watcher.onModelUpdated();
+				}
 			}
 		},
 

@@ -2,25 +2,23 @@
 	Main Page View
 	Responsible for organizing which "screen" is presented to the user.
 ***/
-define(['require', 'jsclass/min/core', 'client/base/view', 'client/widgets/screen_intro/widget_screen_intro', 'client/widgets/screen_in_game/widget_screen_in_game'], function (require) {
+define(['require', 'jsclass/min/core', 'client/base/view', 'client/widgets/screen_intro/widget_screen_intro', 'client/widgets/screen_in_game/widget_screen_in_game', 'client/models/model_top_images'], function (require) {
 	'use strict';
 	var View = require('client/base/view'),
 		WidgetScreenIntro = require('client/widgets/screen_intro/widget_screen_intro'),
-		WidgetScreenInGame = require('client/widgets/screen_in_game/widget_screen_in_game');
+		WidgetScreenInGame = require('client/widgets/screen_in_game/widget_screen_in_game'),
+		ModelTopImages = require('client/models/model_top_images');
 
 	return new JS.Class(View, {
 		'initialize': function() {
-			this.callSuper();
+			this.callSuper(['page_model']);
 
-			this.page_model = null;
 			this.current_screen = null;
 		},
 
 		'start': function( controller, models ) {
 			this.callSuper( controller, models );
 
-			this.page_model = models[0];
-			this.page_model.watch(this);
 			this._draw();
 		},
 
@@ -38,18 +36,21 @@ define(['require', 'jsclass/min/core', 'client/base/view', 'client/widgets/scree
 			var element, new_screen;
 
 			// Decide which screen to show
-			switch( this.page_model.current_screen ) {
-				case this.page_model.CONSTANTS.SCREENS.INTRO:
+			switch( this.models.page_model.current_screen ) {
+				case this.models.page_model.CONSTANTS.SCREENS.INTRO:
 					element = this.container.find(".intro");
-					new_screen = new WidgetScreenIntro.controller( this.controller, new WidgetScreenIntro.view(), this.page_model );
+					new_screen = new WidgetScreenIntro.controller( this.controller, new WidgetScreenIntro.view(), {
+						'page_model': this.models.page_model,
+						'top_images_model': new ModelTopImages()
+					});
 					break;
-				case this.page_model.CONSTANTS.SCREENS.IN_GAME:
+				case this.models.page_model.CONSTANTS.SCREENS.IN_GAME:
 					element = this.container.find(".in_game");
 					new_screen = new WidgetScreenInGame.controller( this.controller, new WidgetScreenInGame.view() );
 					break;
-				// case this.page_model.CONSTANTS.SCREENS.SHARE:
+				// case this.models.page_model.CONSTANTS.SCREENS.SHARE:
 				// 	element = this.container.find(".share");
-				// 	new_screen = new WidgetScreenIntro.controller( this.controller, new WidgetScreenIntro.view(), this.page_model );
+				// 	new_screen = new WidgetScreenIntro.controller( this.controller, new WidgetScreenIntro.view(), this.models.page_model );
 				// 	break;
 				default:
 					console.log("Invalid screen selected in model, ViewPage doesn't know what to display.");
@@ -67,12 +68,6 @@ define(['require', 'jsclass/min/core', 'client/base/view', 'client/widgets/scree
 			this.addSubwidget( this.current_screen, element );
 
 			element.show();
-		},
-
-		'destroy': function() {
-			this.page_model.unwatch();
-
-			this.callSuper();
 		}
 	});
 });

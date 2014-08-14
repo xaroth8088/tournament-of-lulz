@@ -8,15 +8,13 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
 	
 	return new JS.Class(View, {
 		'initialize': function() {
-			this.callSuper();
+			this.callSuper(['image_model']);
 
-			this.image_model = null;
+			this.models.image_model = null;
 		},
 
 		'start': function(controller, models) {
 			this.callSuper(controller, models);
-
-			this.image_model = models[0];
 			this._draw();
 		},
 
@@ -27,15 +25,8 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
 		},
 
 		'_draw': function() {
-			if( this.image_model === null ) {
-				this.container.hide();
-				return;
-			}
-
-			this.container.show();
-
 			this.container.css({
-				'background-image': "url('" + this.image_model.thumbnail_url + "')"
+				'background-image': "url('" + this.models.image_model.thumbnail_url + "')"
 			});
 		}
 	});

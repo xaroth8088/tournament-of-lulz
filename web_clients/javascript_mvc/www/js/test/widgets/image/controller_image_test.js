@@ -1,9 +1,20 @@
-define(['require', 'squire', 'jquery', 'jsclass/min/core'], function(require, Squire) {
+define(['require', 'squire', 'jquery'], function(require, Squire) {
     'use strict';
     describe('WidgetImage.controller', function() {
-        var WidgetImage;
+        var WidgetImage, MockWidget;
 
         // Mock dependencies and module loading
+        beforeEach(function(done) {
+            var injector;
+
+            injector = new Squire();
+
+            injector.require(['test/mocks/widget/mock_widget'], function(mock_widget) {
+                MockWidget = mock_widget;
+                done();
+            });
+        });
+
         beforeEach(function(done) {
             var injector, mock_;
 
@@ -19,7 +30,10 @@ define(['require', 'squire', 'jquery', 'jsclass/min/core'], function(require, Sq
             this.mock_model = {
                 'thumbnail_url': 'mock_url'
             };
-            this.mock_view = jasmine.createSpyObj('View', ['start']);
+
+            this.mock_view = new MockWidget.view();
+            spyOn( this.mock_view, 'start');
+
             this.controller = new WidgetImage.controller(null, this.mock_view, this.mock_model);
         });
 
@@ -29,7 +43,6 @@ define(['require', 'squire', 'jquery', 'jsclass/min/core'], function(require, Sq
                 // Setup
 
                 // Preconditions
-                expect(this.controller.image_model).toBeNull();
                 expect(this.mock_view.start).not.toHaveBeenCalled();
 
                 // Run Test
@@ -37,7 +50,6 @@ define(['require', 'squire', 'jquery', 'jsclass/min/core'], function(require, Sq
 
                 // Postconditions
                 expect(this.mock_view.start).toHaveBeenCalled();
-                expect(this.controller.image_model).toBe(this.mock_model);
 
                 // Cleanup
             });

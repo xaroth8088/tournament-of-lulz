@@ -7,16 +7,8 @@ define(['require', 'jsclass/min/core', 'client/base/controller'], function (requ
 	var Controller = require('client/base/controller');
 	
 	return new JS.Class(Controller, {
-		'initialize': function(parent_controller, view, image_model) {
-			this.callSuper(parent_controller, view, image_model);
-
-			this.image_model = null;
-		},
-
-		'start': function() {
-			this.callSuper();
-
-			this.image_model = this.models[0];
+		'initialize': function(parent_controller, view, models) {
+			this.callSuper(parent_controller, view, models);
 		}
 	});
 });

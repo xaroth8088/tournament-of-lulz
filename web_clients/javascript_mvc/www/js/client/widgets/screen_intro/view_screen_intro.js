@@ -9,25 +9,13 @@ define(['require', 'jsclass/min/core', 'client/base/view', 'client/widgets/image
 
 	return new JS.Class(View, {
 		'initialize': function() {
-			this.callSuper();
-			this.top_images_model = null;
+			this.callSuper(['top_images_model']);
 		},
 
 		'start': function(controller, models) {
 			this.callSuper(controller, models);
 
 			this._draw();
-		},
-
-		'setTopImagesModel': function( top_images_model ) {
-			if( this.top_images_model !== null ) {
-				this.top_images_model.unwatch( this );
-			}
-
-			this.top_images_model = top_images_model;
-			this.top_images_model.watch( this );
-
-			this.onModelUpdated();
 		},
 
 		'_initTemplate': function() {
@@ -45,13 +33,11 @@ define(['require', 'jsclass/min/core', 'client/base/view', 'client/widgets/image
 
 			this.removeAllSubwidgets();
 
-			if( this.top_images_model === null ) {
-				return;
-			}
-
 			// Add image widgets for each one in the top_images_model
-			for( i = 0, len = this.top_images_model.images.length; i < len; i++ ) {
-				image_widget = new WidgetImage.controller( this._controller, new WidgetImage.view(), this.top_images_model.images[i] );
+			for( i = 0, len = this.models.top_images_model.images.length; i < len; i++ ) {
+				image_widget = new WidgetImage.controller( this._controller, new WidgetImage.view(), {
+					'image_model': this.models.top_images_model.images[i] 
+				});
 				this.addSubwidget( image_widget, this.container );
 				image_widget.start();
 				image_widget.view.container.delay( 500 * i ).animate( {
@@ -59,14 +45,6 @@ define(['require', 'jsclass/min/core', 'client/base/view', 'client/widgets/image
 					}, 3000
 				);
 			}
-		},
-
-		'destroy': function() {
-			if( this.top_images_model !== null ) {
-				this.top_images_model.unwatch( this );
-			}
-
-			this.callSuper();
 		}
 	});
 });

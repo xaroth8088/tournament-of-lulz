@@ -1,4 +1,4 @@
-define(['require', 'squire', 'jquery', 'jsclass/min/core'], function(require, Squire) {
+define(['require', 'squire', 'jquery'], function(require, Squire) {
     'use strict';
     describe('WidgetScreenInGame.view', function() {
         var WidgetScreenInGame;

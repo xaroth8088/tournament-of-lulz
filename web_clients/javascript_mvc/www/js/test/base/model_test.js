@@ -142,6 +142,34 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
 
                 // Cleanup
             });
+
+            it("should skip watchers who don't have an onModelUpdated function to call", function() {
+                // Setup
+                var mock_view, mock_view2;
+
+                mock_view = {
+                    'onModelUpdated': function() {}
+                };
+
+                mock_view2 = {
+                };
+
+                spyOn( mock_view, 'onModelUpdated' );
+
+                this.model.watch( mock_view );
+                this.model.watch( mock_view2 );
+
+                // Preconditions
+                expect( this.model._watchers.length ).toBe( 2 );
+
+                // Run Test
+                this.model.modelWasUpdated();
+
+                // Postconditions
+                expect(mock_view.onModelUpdated).toHaveBeenCalled();
+
+                // Cleanup
+            });
         });
 
         describe('#ajax wrapper', function() {

@@ -52,15 +52,15 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
                 // Setup
 
                 // Preconditions
-                expect(this.view.page_model).toBeNull();
                 expect(this.view.current_screen).toBeNull();
                 expect(this.view.container.children().length).toBe(0);
 
                 // Run Test
-                this.view.start(this.mock_controller, [this.mock_model]);
+                this.view.start(this.mock_controller, {
+                    'page_model': this.mock_model
+                });
 
                 // Postconditions
-                expect(this.view.page_model).toBe(this.mock_model);
                 expect(this.view.current_screen).not.toBeNull();
                 expect(this.view.container.children().length).toBe(3);
                 expect(this.view.container.children('div').filter(function() {
@@ -75,10 +75,11 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
         describe('#onModelUpdated', function() {
             it("should update which screen is shown, and clean up the old screen", function() {
                 // Setup
-                this.view.start(this.mock_controller, [this.mock_model]);
+                this.view.start(this.mock_controller, {
+                    'page_model': this.mock_model
+                });
 
                 // Preconditions
-                expect(this.view.page_model).toBe(this.mock_model);
                 expect(this.view.current_screen).not.toBeNull();
                 expect(this.view.container.children().length).toBe(3);
                 expect(this.view.container.children('div').filter(function() {
@@ -92,7 +93,6 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
                 this.view.onModelUpdated();
 
                 // Postconditions
-                expect(this.view.page_model).toBe(this.mock_model);
                 expect(this.view.current_screen).not.toBeNull();
                 expect(this.view.container.children().length).toBe(3);
                 expect(this.view.container.children('div').filter(function() {
@@ -105,11 +105,12 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
 
             it("should log a message and do nothing else when an invalid screen is selected in the model", function() {
                 // Setup
-                this.view.start(this.mock_controller, [this.mock_model]);
+                this.view.start(this.mock_controller, {
+                    'page_model': this.mock_model
+                });
                 spyOn(console, 'log');
 
                 // Preconditions
-                expect(this.view.page_model).toBe(this.mock_model);
                 expect(this.view.current_screen).not.toBeNull();
                 expect(this.view.container.children().length).toBe(3);
                 expect(this.view.container.children('div').filter(function() {
@@ -125,7 +126,6 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
                 this.view.onModelUpdated();
 
                 // Postconditions
-                expect(this.view.page_model).toBe(this.mock_model);
                 expect(this.view.current_screen).not.toBeNull();
                 expect(this.view.container.children().length).toBe(3);
                 expect(this.view.container.children('div').filter(function() {
@@ -135,25 +135,6 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
                 expect(console.log).toHaveBeenCalled();
                 expect(this.view.removeSubwidget).not.toHaveBeenCalled();
                 expect(this.view.addSubwidget).not.toHaveBeenCalled();
-
-                // Cleanup
-            });
-        });
-
-        describe('#destroy', function() {
-            it("should stop watching its models", function() {
-                // Setup
-                this.view.start(this.mock_controller, [this.mock_model]);
-                spyOn(this.view.page_model, 'unwatch');
-
-                // Preconditions
-                expect(this.view.page_model.unwatch).not.toHaveBeenCalled();
-
-                // Run Test
-                this.view.destroy();
-
-                // Postconditions
-                expect(this.view.page_model.unwatch).toHaveBeenCalled();
 
                 // Cleanup
             });

@@ -8,10 +8,8 @@ define(['require', 'jsclass/min/core', 'client/base/controller', 'client/models/
 		ModelGame = require('client/models/model_game');
 
 	return new JS.Class(Controller, {
-		'initialize': function(parent_controller, view, page_model ) {
-			this.callSuper();
-
-			this.page_model = page_model;
+		'initialize': function(parent_controller, view, models ) {
+			this.callSuper(parent_controller, view, models);
 		},
 
 		'start': function() {
