@@ -42,6 +42,7 @@ module.exports = function(config) {
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
     reporters: ['progress', 'html', 'coverage'],
+    // reporters: ['progress', 'html'],
 
     htmlReporter: {
       outputDir: '../karma_html',
