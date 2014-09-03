@@ -31,6 +31,7 @@ define(['require', 'jsclass/min/core'], function (require) {
 			this._controller = controller;
 			this._watchModels(models);
 			this._initTemplate();
+			this._draw();
 		},
 
 		'_initTemplate': function() {

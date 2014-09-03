@@ -13,11 +13,6 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
 			this.models.image_model = null;
 		},
 
-		'start': function(controller, models) {
-			this.callSuper(controller, models);
-			this._draw();
-		},
-
 		'_initTemplate': function() {
 			this.callSuper();
 

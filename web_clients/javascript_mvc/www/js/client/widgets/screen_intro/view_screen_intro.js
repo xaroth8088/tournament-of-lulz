@@ -12,12 +12,6 @@ define(['require', 'jsclass/min/core', 'client/base/view', 'client/widgets/image
 			this.callSuper(['top_images_model']);
 		},
 
-		'start': function(controller, models) {
-			this.callSuper(controller, models);
-
-			this._draw();
-		},
-
 		'_initTemplate': function() {
 			this.callSuper();
 

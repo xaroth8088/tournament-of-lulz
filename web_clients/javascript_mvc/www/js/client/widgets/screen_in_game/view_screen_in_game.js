@@ -8,11 +8,7 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
 	
 	return new JS.Class(View, {
 		'initialize': function() {
-			this.callSuper();
-		},
-
-		'start': function(controller, models) {
-			this.callSuper(controller, models);
+			this.callSuper(['tournament_model']);
 		},
 
 		'_initTemplate': function() {
