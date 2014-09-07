@@ -9,11 +9,14 @@ define(['require', 'squire', 'jquery', 'jsclass/min/core'], function(require, Sq
 
             mock_tournament = new JS.Class({
                 'initialize': function() {},
-                'this_is_a_mock': true
+                'startNewTournament': function() {}
             });
+            mock_tournament = new mock_tournament();
+
+            spyOn( mock_tournament, 'startNewTournament' );
 
             injector = new Squire();
-            builder = injector.mock('client/models/model_tournament', mock_tournament);
+            builder = injector.mock('client/models/model_tournament', Squire.Helpers.returns(mock_tournament));
 
             injector.require(['client/models/model_game'], function(model_game_with_mocks) {
                 ModelGame = model_game_with_mocks;
@@ -34,10 +37,10 @@ define(['require', 'squire', 'jquery', 'jsclass/min/core'], function(require, Sq
                 expect(this.model_game.tournament).toBeNull();
 
                 // Run Test
-                this.model_game.start();
+                this.model_game.startGame();
 
                 // Postconditions
-                expect(this.model_game.tournament.this_is_a_mock).toBeTruthy(); // Did a ModelTournament instance get created as our tournament?
+                expect(this.model_game.tournament.startNewTournament).toHaveBeenCalled();
 
                 // Cleanup
             });

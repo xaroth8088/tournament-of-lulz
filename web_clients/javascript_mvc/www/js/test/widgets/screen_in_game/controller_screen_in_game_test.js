@@ -7,7 +7,7 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
         beforeEach(function(done) {
             var injector;
 
-            this.mock_game = jasmine.createSpyObj('ModelGame', ['start']);
+            this.mock_game = jasmine.createSpyObj('ModelGame', ['startGame']);
             injector = new Squire();
 
             injector.mock('client/models/model_game', Squire.Helpers.returns(this.mock_game));
@@ -30,13 +30,13 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
 
                 // Preconditions
                 expect(this.controller.game_model).toBeUndefined();
-                expect(this.mock_game.start).not.toHaveBeenCalled();
+                expect(this.mock_game.startGame).not.toHaveBeenCalled();
 
                 // Run Test
                 this.controller.start();
 
                 // Postconditions
-                expect(this.mock_game.start).toHaveBeenCalled();
+                expect(this.mock_game.startGame).toHaveBeenCalled();
                 expect(this.controller.game_model).toBe(this.mock_game);
 
                 // Cleanup

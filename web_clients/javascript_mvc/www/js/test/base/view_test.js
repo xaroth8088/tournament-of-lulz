@@ -28,15 +28,8 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
 
         beforeEach(function() {
             this.view = new View();
-            this.mock_widget = {
-                'view': new View(),
-                'destroy': function() {
-                    this.view.destroy();
-                }
-            };
+            this.mock_widget = new MockWidget.controller( this.view._controller, new View() );
             spyOn(this.mock_widget, 'destroy').and.callThrough();
-
-            this.mock_widget.view.start();
         });
 
         afterEach(function() {
@@ -132,15 +125,8 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
                     'mock_model': mock_model
                 });
 
-                mock_widget2 = {
-                    'view': new View(),
-                    'destroy': function() {
-                        this.view.destroy();
-                    }
-                };
+                mock_widget2 = new MockWidget.controller( this.view._controller, new View() );
                 spyOn(mock_widget2, 'destroy').and.callThrough();
-
-                mock_widget2.view.start();
 
                 this.view.addSubwidget(this.mock_widget, this.view.container);
                 this.view.addSubwidget(mock_widget2, this.view.container);
@@ -237,14 +223,8 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
                 // Setup
                 var mock_widget2;
 
-                mock_widget2 = {
-                    'view': new View(),
-                    'destroy': function() {
-                        this.view.destroy();
-                    }
-                };
+                mock_widget2 = new MockWidget.controller( this.view._controller, new View() );
                 spyOn(mock_widget2, 'destroy').and.callThrough();
-                mock_widget2.view.start();
 
                 this.view.addSubwidget(this.mock_widget, this.view.container);
                 this.view.addSubwidget(mock_widget2, this.view.container);
@@ -289,15 +269,8 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
                 // Setup
                 var mock_widget2;
 
-                mock_widget2 = {
-                    'view': new View(),
-                    'destroy': function() {
-                        this.view.destroy();
-                    }
-                };
+                mock_widget2 = new MockWidget.controller( this.view._controller, new View() );
                 spyOn(mock_widget2, 'destroy').and.callThrough();
-
-                mock_widget2.view.start();
 
                 this.view.addSubwidget(this.mock_widget, this.view.container);
                 this.view.addSubwidget(mock_widget2, this.view.container);
