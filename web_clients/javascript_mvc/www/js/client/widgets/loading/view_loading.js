@@ -14,8 +14,8 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
 		'_initTemplate': function() {
 			this.callSuper();
 
-			this.container.addClass( 'loading' );
-			this.container.html("loading");
+			this.container.addClass( 'widget_loading' );
+			this.container.html("<span></span><span></span><span></span><span></span>");
 		}
 	});
 });

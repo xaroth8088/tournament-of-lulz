@@ -14,7 +14,7 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
 		'_initTemplate': function() {
 			this.callSuper();
 
-			this.container.addClass( 'error' );
+			this.container.addClass( 'widget_error' );
 			this.container.html("Sorry!");
 		}
 	});

@@ -16,7 +16,7 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
 		'_initTemplate': function() {
 			this.callSuper();
 
-			this.container.addClass( 'image' );
+			this.container.addClass( 'widget_image' );
 		},
 
 		'_draw': function() {

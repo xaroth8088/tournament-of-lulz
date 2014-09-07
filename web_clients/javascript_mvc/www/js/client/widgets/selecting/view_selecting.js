@@ -14,7 +14,7 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
 		'_initTemplate': function() {
 			this.callSuper();
 
-			this.container.addClass( 'selecting' );
+			this.container.addClass( 'widget_selecting' );
 			this.container.html("Selecting");
 		}
 	});
