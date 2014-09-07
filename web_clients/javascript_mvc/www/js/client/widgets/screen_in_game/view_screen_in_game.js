@@ -27,6 +27,7 @@ define(['require', 'jsclass/min/core', 'client/base/view',
 
 		'_initTemplate': function() {
 			this.callSuper();
+			this.container.addClass('widget_screen_in_game');
 
 			this.container.append('\
 				<div class="loading"></div>\
@@ -112,27 +113,33 @@ define(['require', 'jsclass/min/core', 'client/base/view',
 		},
 
 		'_drawSelecting': function() {
-			var selecting_container;
+			var selecting_container, selected_callback;
 
 			selecting_container = this.container.find('.selecting');
 
-			this.active_widget = new WidgetSelecting.controller( this._controller, new WidgetSelecting.view() );
+			selected_callback = $.proxy(this._controller.onSelectionMade, this);
+
+			this.active_widget = new WidgetSelecting.controller( this._controller, new WidgetSelecting.view( selected_callback ), {
+				'tournament_model': this.models.tournament_model
+			} );
 			this.addSubwidget( this.active_widget, selecting_container );
 
 			selecting_container.show();
 		},
 		
 		'_drawBracket': function() {
-			var bracket_container;
+			var bracket_container, callback;
+
+			callback = $.proxy(this._controller.advanceStateToSelection, this._controller);
 
 			bracket_container = this.container.find('.bracket');
 
-			this.active_widget = new WidgetBracket.controller( this._controller, new WidgetBracket.view() );
+			this.active_widget = new WidgetBracket.controller( this._controller, new WidgetBracket.view( callback ), {
+				'tournament_model': this.models.tournament_model
+			} );
 			this.addSubwidget( this.active_widget, bracket_container );
 
 			bracket_container.show();
-
-			setTimeout($.proxy(this._controller.advanceStateToSelection, this._controller), 5000);
 		},
 		
 		'_drawVictory': function() {

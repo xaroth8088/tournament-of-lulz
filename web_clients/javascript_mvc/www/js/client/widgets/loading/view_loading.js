@@ -15,7 +15,7 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
 			this.callSuper();
 
 			this.container.addClass( 'widget_loading' );
-			this.container.html("<span></span><span></span><span></span><span></span>");
+			this.container.html("<div class='spinner'><span></span><span></span><span></span><span></span></div>");
 		}
 	});
 });

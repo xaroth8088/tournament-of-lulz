@@ -1,0 +1,4 @@
+.widget_screen_in_game > div, .widget_screen_in_game > div > div {
+	width: 100%;
+	height: 100%;
+}

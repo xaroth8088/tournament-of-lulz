@@ -14,6 +14,7 @@ define(['require', 'jsclass/min/core', 'client/base/view', 'client/widgets/image
 
 		'_initTemplate': function() {
 			this.callSuper();
+			this.container.addClass('widget_screen_intro');
 
 			this.container.append('\
 				<button>Start Tournament</button>\

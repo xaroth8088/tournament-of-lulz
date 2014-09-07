@@ -1,3 +1,17 @@
-.selecting {
-	background-color: yellow;
+.widget_selecting {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.widget_selecting > .image_1, .widget_selecting > .image_2 {
+	margin: 5%;
+	flex-grow: 2;
+	width: 100%;
+}
+
+.widget_selecting > .versus {
+	flex-grow: 1;
+	width: 5em;
+	text-align: center;
 }

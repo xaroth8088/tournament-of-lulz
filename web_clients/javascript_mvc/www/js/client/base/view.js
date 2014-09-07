@@ -14,8 +14,7 @@ define(['require', 'jsclass/min/core'], function (require) {
 			this.container = $("<div/>");
 			this.models = {};
 			this._started = false;
-			this._destroyed = false;	// TODO: Update this when we die, and use it to short-circuit other operations.  Model can use this
-										// when deciding whether to act or not.
+			this._destroyed = false;
 
 			// Initialize the model names
 			// It's ok for us to not get an array of models
@@ -37,6 +36,19 @@ define(['require', 'jsclass/min/core'], function (require) {
 			this._controller = controller;
 			this._watchModels(models);
 			this._initTemplate();
+
+			// To avoid scenarios where draw is called before the rendering engine has had time to reflow
+			// (especially important for widgets who care about their available width), defer the initial
+			// _draw() call to after the next reflow.
+			setTimeout($.proxy(this._startupDraw, this),0);
+		},
+
+		'_startupDraw': function() {
+			// We may have been destroyed before getting here
+			if( this._destroyed === true ) {
+				return;
+			}
+
 			this._draw();
 		},
 
@@ -115,6 +127,7 @@ define(['require', 'jsclass/min/core'], function (require) {
 		},
 
 		'destroy': function() {
+			this._destroyed = true;
 			this.removeAllSubwidgets();
 			this._unwatchModels();
 			this.models = {};
@@ -133,6 +146,10 @@ define(['require', 'jsclass/min/core'], function (require) {
 		},
 
 		'onModelUpdated': function() {
+			if( this._destroyed === true ) {
+				return;
+			}
+
 			this._draw();
 		}
 	});

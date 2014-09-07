@@ -25,6 +25,11 @@ define(['require', 'jsclass/min/core', 'client/base/controller', 'client/models/
 
 		'advanceStateToSelection': function() {
 			this.models.screen_in_game_model.setState( this.models.screen_in_game_model.CONSTANTS.STATES.SELECTING );
+		},
+
+		'onSelectionMade': function( image_id ) {
+			this.models.screen_in_game_model.setState( this.models.screen_in_game_model.CONSTANTS.STATES.BRACKET);
+			this.models.tournament_model.registerWinner(image_id);
 		}
 	});
 });

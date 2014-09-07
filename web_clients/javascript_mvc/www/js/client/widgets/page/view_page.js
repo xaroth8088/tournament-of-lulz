@@ -18,6 +18,7 @@ define(['require', 'jsclass/min/core', 'client/base/view', 'client/widgets/scree
 
 		'_initTemplate': function() {
 			this.callSuper();
+			this.container.addClass('widget_page');
 
 			this.container.append('\
 				<div class="intro"></div>\

@@ -1,47 +1,48 @@
-/* Adapted from code found at http://codepen.io/Adevade/pen/FGtre */
-
 .widget_loading {
+  display: flex;
+}
+
+/* Spinner CSS adapted from code found at http://codepen.io/Adevade/pen/FGtre */
+
+.widget_loading > .spinner {
   background-color: #e7e6dd;
   display: block;
   margin: auto;
   overflow: hidden;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100px;
-  height: 100px;
+  width: 5em;
+  height: 5em;
   border-radius: 50%;
+  position: relative;
 }
 
-.widget_loading span {
+.widget_loading > .spinner span {
   display: block;
   position: absolute;
   width: 50%;
   height: 50%;
 }
-.widget_loading span:nth-child(1) {
+.widget_loading > .spinner span:nth-child(1) {
   top: 0;
   left: 0;
   background-color: rgba(170, 116, 57, 0.75);
   -webkit-animation: move1 2s linear 0 infinite;
   animation: move1 2s linear 0 infinite;
 }
-.widget_loading span:nth-child(2) {
+.widget_loading > .spinner span:nth-child(2) {
   top: 0;
   right: 0;
   background-color: rgba(158, 167, 56, 0.75);
   -webkit-animation: move2 2s linear 0 infinite;
   animation: move2 2s linear 0 infinite;
 }
-.widget_loading span:nth-child(3) {
+.widget_loading > .spinner span:nth-child(3) {
   bottom: 0;
   left: 0;
   background-color: rgba(96, 40, 112, 0.75);
   -webkit-animation: move3 2s linear 0 infinite;
   animation: move3 2s linear 0 infinite;
 }
-.widget_loading span:nth-child(4) {
+.widget_loading > .spinner span:nth-child(4) {
   bottom: 0;
   right: 0;
   background-color: rgba(39, 88, 107, 0.75);
