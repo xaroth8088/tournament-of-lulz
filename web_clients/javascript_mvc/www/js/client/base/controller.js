@@ -18,9 +18,16 @@ define(['require', 'jsclass/min/core'], function (require) {
 			if( models !== undefined ) {
 				this.models = models;
 			}
+
+			this._started = false;
 		},
 
 		'start': function() {
+			if( this._started !== false ) {
+				throw("Attempted to start this controller (" + this.klass + ") a second time.");
+			}
+			this._started = true;
+
 			this.view.start( this, this.models );
 		},
 

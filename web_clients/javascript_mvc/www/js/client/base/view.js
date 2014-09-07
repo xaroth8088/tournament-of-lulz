@@ -13,6 +13,7 @@ define(['require', 'jsclass/min/core'], function (require) {
 			this._subwidgets = [];
 			this.container = $("<div/>");
 			this.models = {};
+			this._started = false;
 			this._destroyed = false;	// TODO: Update this when we die, and use it to short-circuit other operations.  Model can use this
 										// when deciding whether to act or not.
 
@@ -28,6 +29,11 @@ define(['require', 'jsclass/min/core'], function (require) {
 
 		/* BEGIN: Methods that child classes probably want to override */
 		'start': function( controller, models ) {
+			if( this._started !== false ) {
+				throw("Attempted to start this view (" + this.klass + ") a second time.");
+			}
+			this._started = true;
+			
 			this._controller = controller;
 			this._watchModels(models);
 			this._initTemplate();
