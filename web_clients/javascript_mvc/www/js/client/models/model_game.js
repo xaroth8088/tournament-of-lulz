@@ -14,8 +14,9 @@ define(['require', 'jsclass/min/core', 'client/base/model', './model_tournament'
 			this.tournament = null;
 		},
 
-		'start': function() {
+		'startGame': function() {
 			this.tournament = new ModelTournament();
+			this.tournament.startNewTournament();
 		}
 	});
 });

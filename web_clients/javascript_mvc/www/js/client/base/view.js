@@ -86,6 +86,7 @@ define(['require', 'jsclass/min/core'], function (require) {
 			// Actually add the subwidget
 			parent_element.append( widget.view.container );
 			this._subwidgets.push(widget);
+			widget.start();
 		},
 
 		'removeSubwidget': function(widget) {

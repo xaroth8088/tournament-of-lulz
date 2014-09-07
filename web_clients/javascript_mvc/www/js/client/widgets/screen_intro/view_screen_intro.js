@@ -33,7 +33,6 @@ define(['require', 'jsclass/min/core', 'client/base/view', 'client/widgets/image
 					'image_model': this.models.top_images_model.images[i] 
 				});
 				this.addSubwidget( image_widget, this.container );
-				image_widget.start();
 				image_widget.view.container.delay( 500 * i ).animate( {
 						'top': '100%'
 					}, 3000

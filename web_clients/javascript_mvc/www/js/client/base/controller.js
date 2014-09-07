@@ -13,7 +13,11 @@ define(['require', 'jsclass/min/core'], function (require) {
 
 			this.parent_controller = parent_controller;
 			this.view = view;
-			this.models = models;
+
+			this.models = {};
+			if( models !== undefined ) {
+				this.models = models;
+			}
 		},
 
 		'start': function() {
