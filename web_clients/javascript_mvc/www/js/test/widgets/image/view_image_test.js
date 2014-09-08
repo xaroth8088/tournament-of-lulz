@@ -32,8 +32,8 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
 
         // Tests
         describe('#start', function() {
-            it("should draw itself as visible with the background set to the image model's url", function() {
-                var mock_model;
+            it("should draw itself as visible with the background set to the image model's url", function(done) {
+                var mock_model, self;
 
                 // Setup
                 mock_model = new MockWidget.model();
@@ -48,12 +48,16 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
                     'image_model': mock_model
                 });
 
-                // Postconditions
-                expect(this.view.container.children().length).toBe(0);
-                expect(this.view.container.css('background-image')).toBe('url(http://localhost:9876/mock_url)');
-                expect(this.view.container.css('display')).not.toBe('none');
+                self = this;
+                setTimeout(function() {
+                    // Postconditions
+                    expect(self.view.container.children().length).toBe(0);
+                    expect(self.view.container.css('background-image')).toBe('url(http://localhost:9876/mock_url)');
+                    expect(self.view.container.css('display')).not.toBe('none');
 
-                // Cleanup
+                    // Cleanup
+                    done();
+                }, 0);
             });
         });
     });

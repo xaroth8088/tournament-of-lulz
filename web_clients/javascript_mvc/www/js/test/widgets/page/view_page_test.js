@@ -48,7 +48,8 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
 
         // Tests
         describe('#start', function() {
-            it("should create a basic layout, and show a single screen", function() {
+            it("should create a basic layout, and show a single screen", function(done) {
+                var self;
                 // Setup
 
                 // Preconditions
@@ -60,83 +61,100 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
                     'page_model': this.mock_model
                 });
 
-                // Postconditions
-                expect(this.view.current_screen).not.toBeNull();
-                expect(this.view.container.children().length).toBe(3);
-                expect(this.view.container.children('div').filter(function() {
-                    return $(this).css('display') !== 'none';
-                }).length).toBe(1); // Check that exactly one child is not hidden
-                expect(this.view.container.children('.intro').css('display')).not.toBe('none');
+                self = this;
+                setTimeout(function() {
+                    // Postconditions
+                    expect(self.view.current_screen).not.toBeNull();
+                    expect(self.view.container.children().length).toBe(3);
+                    expect(self.view.container.children('div').filter(function() {
+                        return $(this).css('display') !== 'none';
+                    }).length).toBe(1); // Check that exactly one child is not hidden
+                    expect(self.view.container.children('.intro').css('display')).not.toBe('none');
 
-                // Cleanup
+                    // Cleanup
+                    done();
+                }, 0);
             });
         });
 
         describe('#onModelUpdated', function() {
-            it("should update which screen is shown, and clean up the old screen", function() {
+            it("should update which screen is shown, and clean up the old screen", function(done) {
+                var self;
+
                 // Setup
                 this.view.start(this.mock_controller, {
                     'page_model': this.mock_model
                 });
 
-                // Preconditions
-                expect(this.view.current_screen).not.toBeNull();
-                expect(this.view.container.children().length).toBe(3);
-                expect(this.view.container.children('div').filter(function() {
-                    return $(this).css('display') !== 'none';
-                }).length).toBe(1); // Check that exactly one child is not hidden
-                expect(this.view.container.children('.intro').css('display')).not.toBe('none');
+                self = this;
+                setTimeout( function() {
+                    // Preconditions
+                    expect(self.view.current_screen).not.toBeNull();
+                    expect(self.view.container.children().length).toBe(3);
+                    expect(self.view.container.children('div').filter(function() {
+                        return $(this).css('display') !== 'none';
+                    }).length).toBe(1); // Check that exactly one child is not hidden
+                    expect(self.view.container.children('.intro').css('display')).not.toBe('none');
 
-                this.mock_model.current_screen = this.mock_model.CONSTANTS.SCREENS.IN_GAME;
+                    self.mock_model.current_screen = self.mock_model.CONSTANTS.SCREENS.IN_GAME;
 
-                // Run Test
-                this.view.onModelUpdated();
+                    // Run Test
+                    self.view.onModelUpdated();
 
-                // Postconditions
-                expect(this.view.current_screen).not.toBeNull();
-                expect(this.view.container.children().length).toBe(3);
-                expect(this.view.container.children('div').filter(function() {
-                    return $(this).css('display') !== 'none';
-                }).length).toBe(1); // Check that exactly one child is not hidden
-                expect(this.view.container.children('.in_game').css('display')).not.toBe('none');
+                    // Postconditions
+                    expect(self.view.current_screen).not.toBeNull();
+                    expect(self.view.container.children().length).toBe(3);
+                    expect(self.view.container.children('div').filter(function() {
+                        return $(this).css('display') !== 'none';
+                    }).length).toBe(1); // Check that exactly one child is not hidden
+                    expect(self.view.container.children('.in_game').css('display')).not.toBe('none');
 
-                // Cleanup
+                    // Cleanup
+                    done();
+                }, 0 );
             });
 
-            it("should log a message and do nothing else when an invalid screen is selected in the model", function() {
+            it("should log a message and do nothing else when an invalid screen is selected in the model", function(done) {
+                var self;
+
                 // Setup
                 this.view.start(this.mock_controller, {
                     'page_model': this.mock_model
                 });
-                spyOn(console, 'log');
 
-                // Preconditions
-                expect(this.view.current_screen).not.toBeNull();
-                expect(this.view.container.children().length).toBe(3);
-                expect(this.view.container.children('div').filter(function() {
-                    return $(this).css('display') !== 'none';
-                }).length).toBe(1); // Check that exactly one child is not hidden
-                expect(this.view.container.children('.intro').css('display')).not.toBe('none');
+                self = this;
+                setTimeout( function() {
+                    spyOn(console, 'log');
 
-                spyOn(this.view, 'removeSubwidget');
-                spyOn(this.view, 'addSubwidget');
-                this.mock_model.current_screen = "mock invalid screen";
+                    // Preconditions
+                    expect(self.view.current_screen).not.toBeNull();
+                    expect(self.view.container.children().length).toBe(3);
+                    expect(self.view.container.children('div').filter(function() {
+                        return $(this).css('display') !== 'none';
+                    }).length).toBe(1); // Check that exactly one child is not hidden
+                    expect(self.view.container.children('.intro').css('display')).not.toBe('none');
 
-                // Run Test
-                this.view.onModelUpdated();
+                    spyOn(self.view, 'removeSubwidget');
+                    spyOn(self.view, 'addSubwidget');
+                    self.mock_model.current_screen = "mock invalid screen";
 
-                // Postconditions
-                expect(this.view.current_screen).not.toBeNull();
-                expect(this.view.container.children().length).toBe(3);
-                expect(this.view.container.children('div').filter(function() {
-                    return $(this).css('display') !== 'none';
-                }).length).toBe(1); // Check that exactly one child is not hidden
-                expect(this.view.container.children('.intro').css('display')).not.toBe('none');
-                expect(console.log).toHaveBeenCalled();
-                expect(this.view.removeSubwidget).not.toHaveBeenCalled();
-                expect(this.view.addSubwidget).not.toHaveBeenCalled();
+                    // Run Test
+                    self.view.onModelUpdated();
 
-                // Cleanup
+                    // Postconditions
+                    expect(self.view.current_screen).not.toBeNull();
+                    expect(self.view.container.children().length).toBe(3);
+                    expect(self.view.container.children('div').filter(function() {
+                        return $(this).css('display') !== 'none';
+                    }).length).toBe(1); // Check that exactly one child is not hidden
+                    expect(self.view.container.children('.intro').css('display')).not.toBe('none');
+                    expect(console.log).toHaveBeenCalled();
+                    expect(self.view.removeSubwidget).not.toHaveBeenCalled();
+                    expect(self.view.addSubwidget).not.toHaveBeenCalled();
+
+                    // Cleanup
+                    done();
+                }, 0 );
             });
         });
     });
