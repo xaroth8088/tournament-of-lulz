@@ -43,15 +43,6 @@ define(['require', 'jsclass/min/core'], function (require) {
 			setTimeout($.proxy(this._startupDraw, this),0);
 		},
 
-		'_startupDraw': function() {
-			// We may have been destroyed before getting here
-			if( this._destroyed === true ) {
-				return;
-			}
-
-			this._draw();
-		},
-
 		'_initTemplate': function() {
 			this.container.empty();
 		},
@@ -146,6 +137,15 @@ define(['require', 'jsclass/min/core'], function (require) {
 		},
 
 		'onModelUpdated': function() {
+			if( this._destroyed === true ) {
+				return;
+			}
+
+			this._draw();
+		},
+
+		'_startupDraw': function() {
+			// We may have been destroyed before getting here
 			if( this._destroyed === true ) {
 				return;
 			}
