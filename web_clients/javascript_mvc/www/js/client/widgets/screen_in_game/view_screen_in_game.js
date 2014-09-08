@@ -23,6 +23,7 @@ define(['require', 'jsclass/min/core', 'client/base/view',
 
 			this.mode = null;
 			this.active_widget = null;
+			this._has_preloaded = false;
 		},
 
 		'_initTemplate': function() {
@@ -52,6 +53,8 @@ define(['require', 'jsclass/min/core', 'client/base/view',
 					return;
 			}
 
+			this._preloadImages();
+
 			switch( this.models.screen_in_game_model.state ) {
 				case this.models.screen_in_game_model.CONSTANTS.STATES.SELECTING:
 					this._changeMode(this.CONSTANTS.MODES.SELECTING);
@@ -64,6 +67,25 @@ define(['require', 'jsclass/min/core', 'client/base/view',
 			}
 
 			this._drawError();
+		},
+
+		'_preloadImages': function() {
+			var images;
+
+			// Because so much of the rest of the game relies on seeing the images we're using,
+			// this is as good a place as any to go preload those images, to smooth out the experience
+			// later on.
+			if( this._has_preloaded === true ) {
+				return;
+			}
+			this._has_preloaded = true;
+
+			images = this.models.tournament_model.images;
+
+		    $(images).each(function(){
+		        $('<img/>')[0].src = this.image_url;
+		        $('<img/>')[0].src = this.thumbnail_url;
+		    });
 		},
 
 		'_changeMode': function( mode ) {
