@@ -195,11 +195,22 @@ define(['require', 'jsclass/min/core', 'client/base/model', 'client/models/model
 
 			// Complete the tournament, if appropriate
 			if( this.round >= this.total_rounds ) {
-				this.state = this.CONSTANTS.COMPLETE;
+				this._finishTournament();
 			}
 
-
 			this.modelWasUpdated();
+		},
+
+		'_finishTournament': function() {
+			this.state = this.CONSTANTS.COMPLETE;
+
+			// Intentionally ignore both success and failure of this call.
+			// If the data makes it to the server, great.  Otherwise, this is actually non-critical data,
+			// and the server will expire the tournament on its own.
+			this.ajax({
+				'url': '/api/tournament/' + this.tournament_id + '.json',
+				'method': 'DELETE'
+			});
 		},
 
 		'_registerWinnerWithServer': function( match ) {
