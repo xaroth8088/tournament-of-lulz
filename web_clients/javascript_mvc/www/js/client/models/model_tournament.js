@@ -184,7 +184,7 @@ define(['require', 'jsclass/min/core', 'client/base/model', 'client/models/model
 				match.winner = match.player_2;
 			}
 
-			// TODO: Send the match information to the server
+			this._registerWinnerWithServer( match );
 
 			// Populate the next tier, if there is one
 			this._populateNextTier(match.winner);
@@ -200,6 +200,33 @@ define(['require', 'jsclass/min/core', 'client/base/model', 'client/models/model
 
 
 			this.modelWasUpdated();
+		},
+
+		'_registerWinnerWithServer': function( match ) {
+			var winner_id, loser_id;
+
+			if( match.player_1 === undefined || match.player_2 === undefined ) {
+				return;
+			}
+
+			winner_id = match.winner.image_id;
+			if( match.player_1 === match.winner ) {
+				loser_id = match.player_2.image_id;
+			} else {
+				loser_id = match.player_1.image_id;
+			}
+
+			// Intentionally ignore both success and failure of this call.
+			// If the data makes it to the server, great.  Otherwise, this is actually non-critical data,
+			// only used for global rankings of the images.
+			this.ajax({
+				'url': '/api/tournament/' + this.tournament_id + '/results.json',
+				'method': 'POST',
+				'data': {
+					'winner_id': winner_id,
+					'loser_id': loser_id
+				}
+			});
 		},
 
 		'_populateNextTier': function(winner) {
