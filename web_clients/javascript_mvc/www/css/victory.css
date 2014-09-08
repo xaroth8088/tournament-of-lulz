@@ -1,3 +1,17 @@
-.victory {
-	background-color: orange;
+.widget_victory {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
+
+.widget_victory > .winner {
+	width: 50%;
+	margin: 1em;
+}
+
+.widget_victory > .victory_text {
+	width: 50%;
+	text-align: center;
+}
+

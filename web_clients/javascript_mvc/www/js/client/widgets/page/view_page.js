@@ -41,7 +41,9 @@ define(['require', 'jsclass/min/core', 'client/base/view', 'client/widgets/scree
 					break;
 				case this.models.page_model.CONSTANTS.SCREENS.IN_GAME:
 					element = this.container.find(".in_game");
-					new_screen = new WidgetScreenInGame.controller( this._controller, new WidgetScreenInGame.view());
+					new_screen = new WidgetScreenInGame.controller( this._controller, new WidgetScreenInGame.view(), {
+						'page_model': this.models.page_model
+					});
 					break;
 				// case this.models.page_model.CONSTANTS.SCREENS.SHARE:
 				// 	element = this.container.find(".share");

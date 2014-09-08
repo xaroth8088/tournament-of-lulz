@@ -19,7 +19,7 @@ define(['require', 'jsclass/min/core', 'client/base/view',
 	
 	return new JS.Class(View, {
 		'initialize': function() {
-			this.callSuper(['tournament_model', 'screen_in_game_model']);
+			this.callSuper(['tournament_model', 'screen_in_game_model', 'page_model']);
 
 			this.mode = null;
 			this.active_widget = null;
@@ -117,7 +117,7 @@ define(['require', 'jsclass/min/core', 'client/base/view',
 
 			selecting_container = this.container.find('.selecting');
 
-			selected_callback = $.proxy(this._controller.onSelectionMade, this);
+			selected_callback = $.proxy(this._controller.onSelectionMade, this._controller);
 
 			this.active_widget = new WidgetSelecting.controller( this._controller, new WidgetSelecting.view( selected_callback ), {
 				'tournament_model': this.models.tournament_model
@@ -147,7 +147,10 @@ define(['require', 'jsclass/min/core', 'client/base/view',
 
 			victory_container = this.container.find('.victory');
 
-			this.active_widget = new WidgetVictory.controller( this._controller, new WidgetVictory.view() );
+			this.active_widget = new WidgetVictory.controller( this._controller, new WidgetVictory.view(), {
+				'tournament_model': this.models.tournament_model,
+				'page_model': this.models.page_model
+			} );
 			this.addSubwidget( this.active_widget, victory_container );
 
 			victory_container.show();

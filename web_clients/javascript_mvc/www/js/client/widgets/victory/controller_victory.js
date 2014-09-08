@@ -8,6 +8,10 @@ define(['require', 'jsclass/min/core', 'client/base/controller'], function (requ
 	return new JS.Class(Controller, {
 		'initialize': function(parent_controller, view, models) {
 			this.callSuper(parent_controller, view, models);
+		},
+
+		'onPlayAgainPressed': function() {
+			this.models.page_model.changeScreen('INTRO');
 		}
 	});
 });

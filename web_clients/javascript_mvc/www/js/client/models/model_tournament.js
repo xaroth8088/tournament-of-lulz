@@ -184,6 +184,8 @@ define(['require', 'jsclass/min/core', 'client/base/model', 'client/models/model
 				match.winner = match.player_2;
 			}
 
+			// TODO: Send the match information to the server
+
 			// Populate the next tier, if there is one
 			this._populateNextTier(match.winner);
 
@@ -248,6 +250,18 @@ define(['require', 'jsclass/min/core', 'client/base/model', 'client/models/model
 			// ...then advance to the next round and try again
 			this.round++;
 			this._skipPastByes();
+		},
+
+		'getWinnerData': function() {
+			var match;
+
+			if( this.state !== this.CONSTANTS.COMPLETE ) {
+				return null;	// No winner yet
+			}
+
+			match = this.getDataForRound(this.total_rounds - 1);
+
+			return match.winner;
 		},
 
 		'CONSTANTS': {

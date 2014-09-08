@@ -33,7 +33,7 @@ define(['require', 'jsclass/min/core', 'jquery_gracket/jquery.gracket.min', 'cli
 			});
 
 			if( this.timeout === null ) {
-		        this.timeout = setTimeout( this.animation_complete_callback, 1000 );
+		        this.timeout = setTimeout( this.animation_complete_callback, 3000 );
 			}
 		},
 
