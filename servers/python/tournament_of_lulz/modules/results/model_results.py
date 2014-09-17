@@ -79,7 +79,7 @@ class ModelResults():
         )
         params = {
             'loser_id': loser_id,
-            'rating': winner_image.rating,
+            'rating': loser_image.rating,
             'rd': loser_image.rd,
             'volatility': loser_image.volatility
         }
