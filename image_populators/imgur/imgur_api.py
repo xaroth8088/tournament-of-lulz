@@ -10,9 +10,9 @@ class ImgurAPI:
     def __init__(self, config):
         self.config = config
         self.file_extensions = {
-        'image/jpeg': 'jpg',
-        'image/jpg': 'jpg',
-        'image/png': 'png'
+            'image/jpeg': 'jpg',
+            'image/jpg': 'jpg',
+            'image/png': 'png'
         }
 
     def _convert_raw_image(self, raw_image):
@@ -22,9 +22,10 @@ class ImgurAPI:
             image['page_url'] = "http://imgur.com/gallery/%s" % raw_image['id']
             image['image_url'] = raw_image['link']
             image['thumbnail_url'] = "http://i.imgur.com/%sm.%s" % (
-            raw_image['id'], self.file_extensions[raw_image['type']])
+                raw_image['id'], self.file_extensions[raw_image['type']])
             image['title'] = raw_image['title']
         except KeyError:
+            print("Malformed raw image, unable to convert")
             return None
 
         return image
@@ -60,15 +61,17 @@ class ImgurAPI:
         """
 
         if 'data' not in result:
+            print("No 'data' section in result")
             return []
 
         for raw_image in result['data']:
-            # Do some filtering of which images we want to take in, and transform the data into something more usable elsewhere
+            # Do some filtering of which images we want to take in, and transform the data
+            # into something more usable elsewhere
             if raw_image['is_album'] is not False:
                 # TODO: We can/should probably just pull out the 'images' section and turn those into entries, too.
                 continue
 
-            if raw_image['nsfw'] is not False:
+            if raw_image['nsfw'] is not False and raw_image['nsfw'] is not None:
                 continue
 
             if raw_image['animated'] is not False:
@@ -86,20 +89,23 @@ class ImgurAPI:
 
     def fetch_viral_images(self):
         headers = {
-        "Authorization": "Client-ID %s" % self.config['imgur']['client_id']
+            "Authorization": "Client-ID %s" % self.config['imgur']['client_id']
         }
 
         try:
             r = requests.get(self.config['imgur']['api_endpoint'], headers=headers)
         except requests.exceptions.ConnectionError:
+            print("Unable to connect to imgur")
             return []
 
         if r.status_code != 200:
+            print("Bad status code from imgur:", r.status_code)
             return []
 
         try:
             result = json.loads(r.text)
         except ValueError:
+            print("Malformed JSON response from imgur:", r.text)
             return []
 
         return self._transform_result(result)
