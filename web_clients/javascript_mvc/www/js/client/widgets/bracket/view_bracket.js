@@ -62,7 +62,7 @@ define(['require', 'jsclass/min/core', 'jquery_gracket/jquery.gracket.min', 'cli
 		},
 
 		'_formatMatch': function( match ) {
-			var player, result;
+			var result;
 
 			result = [];
 			result.push( this._formatPlayer( match.player_1 ) );

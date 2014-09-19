@@ -52,14 +52,14 @@ define(['require', 'jsclass/min/core', 'client/base/model', 'client/models/model
 
 			// TODO: never trust your server.  Check for malformed response data.
 
-			this.tournament_id = data['tournament_id'];
+			this.tournament_id = data.tournament_id;
 			if( this.tournament_id === undefined ) {
 				this.state = this.CONSTANTS.INITIALIZED;
 				throw("Malformed response from server - no tournament_id");
 			}
 
-			images = data['images'];
-			if( images === undefined || images.length === undefined || images.length <= 1 ) {
+			images = data.images;
+			if( images === undefined || images.length <= 1 ) {
 				this.state = this.CONSTANTS.INITIALIZED;
 				throw("Cannot run a tournament with fewer than 2 images.");
 			}
@@ -140,22 +140,22 @@ define(['require', 'jsclass/min/core', 'client/base/model', 'client/models/model
 		},
 
 		'_getBracketPositionForRound': function( round_num ) {
-			var depth, num_tiers, retval;
+			var depth, num_tiers, bracket_position;
 
 			if( round_num < 0 || round_num >= this.total_rounds ) {
 				throw("Invalid round_num given to _getBracketPositionForRound");
 			}
 
-			retval = {};
+			bracket_position = {};
 
 			num_tiers = Math.ceil(this._log2(this.images.length));
 
 			for( depth = 0; depth < num_tiers; depth++ ) {
 				round_num -= Math.pow(2, num_tiers - depth - 1);
 				if( round_num < 0 ) {
-					retval.tier = depth;
-					retval.match = round_num + Math.pow(2, num_tiers - depth - 1);
-					return retval;
+					bracket_position.tier = depth;
+					bracket_position.match = round_num + Math.pow(2, num_tiers - depth - 1);
+					return bracket_position;
 				}
 			}
 

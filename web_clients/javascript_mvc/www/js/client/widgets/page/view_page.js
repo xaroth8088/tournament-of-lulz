@@ -2,7 +2,13 @@
 	Main Page View
 	Responsible for organizing which "screen" is presented to the user.
 ***/
-define(['require', 'jsclass/min/core', 'client/base/view', 'client/widgets/screen_intro/widget_screen_intro', 'client/widgets/screen_in_game/widget_screen_in_game', 'client/models/model_top_images'], function (require) {
+define(['require',
+    'jsclass/min/core',
+    'client/base/view',
+    'client/widgets/screen_intro/widget_screen_intro',
+    'client/widgets/screen_in_game/widget_screen_in_game',
+    'client/models/model_top_images'
+], function (require) {
 	'use strict';
 	var View = require('client/base/view'),
 		WidgetScreenIntro = require('client/widgets/screen_intro/widget_screen_intro'),

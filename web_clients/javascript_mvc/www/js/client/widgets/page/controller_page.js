@@ -8,7 +8,7 @@ define(['require', 'jsclass/min/core', 'client/base/controller'], function (requ
 	
 	return new JS.Class(Controller, {
 		'initialize': function(parent_controller, view, models) {
-			this.callSuper();
+			this.callSuper(parent_controller, view, models);
 		}
 	});
 });

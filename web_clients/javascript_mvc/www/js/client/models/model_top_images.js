@@ -34,7 +34,7 @@ define(['require', 'jsclass/min/core', 'client/base/model', './model_image'], fu
 			var i, len, images, image;
 
 			// TODO: never trust your server.  Check for malformed response data.
-			images = data['images'];
+			images = data.images;
 			for( i = 0, len = images.length; i < len; i++ ) {
 				image = new ModelImage();
 				image.loadFromObject(images[i]);

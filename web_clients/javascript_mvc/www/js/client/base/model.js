@@ -7,7 +7,7 @@ define(['require', 'jquery', 'jsclass/min/core', 'client/configuration'], functi
 	var CONFIGURATION = require('client/configuration');
 
 	return new JS.Class({
-		'initialize': function(controller, model) {
+		'initialize': function() {
 			this._watchers = [];
 		},
 
@@ -17,7 +17,7 @@ define(['require', 'jquery', 'jsclass/min/core', 'client/configuration'], functi
 			// The watchers list may change during iteration, so deal with that.
 			to_do_list = [];
 			for( i = 0, len = this._watchers.length; i < len; i++ ) {
-				watcher = this._watchers[i]
+				watcher = this._watchers[i];
 				to_do_list.push( watcher );
 			}
 

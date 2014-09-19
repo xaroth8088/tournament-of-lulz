@@ -59,11 +59,9 @@ define(['require', 'jsclass/min/core', 'client/base/view',
 				case this.models.screen_in_game_model.CONSTANTS.STATES.SELECTING:
 					this._changeMode(this.CONSTANTS.MODES.SELECTING);
 					return;
-					break;
 				case this.models.screen_in_game_model.CONSTANTS.STATES.BRACKET:
 					this._changeMode(this.CONSTANTS.MODES.BRACKET);
 					return;
-					break;
 			}
 
 			this._drawError();

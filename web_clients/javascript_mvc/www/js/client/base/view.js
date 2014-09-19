@@ -4,7 +4,7 @@
 ***/
 define(['require', 'jsclass/min/core'], function (require) {
 	'use strict';
-	
+
 	return new JS.Class({
 		'initialize': function( model_names ) {
 			var i, len, name;
@@ -70,7 +70,7 @@ define(['require', 'jsclass/min/core'], function (require) {
 		},
 
 		'_unwatchModels': function() {
-			var i, model;
+			var i;
 
 			for( i in this.models ) {
 				if( this.models.hasOwnProperty(i) ) {
