@@ -1,0 +1,19 @@
+{
+    "predef": ["define", "JS"],
+    "maxlen": 150,
+    "curly": true,
+    "eqeqeq": true,
+    "forin": true,
+    "freeze": true,
+    "immed": true,
+    "latedef": true,
+    "newcap": true,
+    "noarg": true,
+    "nonbsp": true,
+    "nonew": true,
+    "undef": true,
+    "unused": true,
+    "strict": true,
+    "multistr": true,
+    "browser": true
+}
