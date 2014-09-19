@@ -87,13 +87,13 @@ class ImgurAPI:
 
         return converted
 
-    def fetch_viral_images(self):
+    def fetch_viral_images(self, api_endpoint):
         headers = {
             "Authorization": "Client-ID %s" % self.config['imgur']['client_id']
         }
 
         try:
-            r = requests.get(self.config['imgur']['api_endpoint'], headers=headers)
+            r = requests.get(api_endpoint, headers=headers)
         except requests.exceptions.ConnectionError:
             print("Unable to connect to imgur")
             return []

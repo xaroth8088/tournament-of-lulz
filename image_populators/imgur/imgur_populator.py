@@ -3,6 +3,7 @@
 
 import hashlib
 import mysql.connector
+import json
 
 from imgur_api import ImgurAPI
 
@@ -11,9 +12,9 @@ class ImgurPopulator:
     def __init__(self, config):
         self.config = config
 
-    def _fetch_viral_gallery(self):
+    def _fetch_viral_gallery(self, api_endpoint):
         imgur = ImgurAPI(self.config)
-        return imgur.fetch_viral_images()
+        return imgur.fetch_viral_images(api_endpoint)
 
     def _store_rows_to_db(self, images):
         print(len(images), "images retrieved from imgur")
@@ -57,8 +58,9 @@ class ImgurPopulator:
         print(new_image_count, "new images added to the DB")
 
     def populate(self):
-        images = self._fetch_viral_gallery()
-        try:
-            self._store_rows_to_db(images)
-        except mysql.connector.errors.InterfaceError:
-            print("Unable to connect to database, or other database problem.")
+        for api_endpoint in json.loads(self.config['imgur']['api_endpoint']):
+            images = self._fetch_viral_gallery(api_endpoint)
+            try:
+                self._store_rows_to_db(images)
+            except mysql.connector.errors.InterfaceError:
+                print("Unable to connect to database, or other database problem.")
