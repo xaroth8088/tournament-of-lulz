@@ -33,7 +33,7 @@ class TestImgurAPIFetchViralImages(TestCase):
         # Pre-conditions
 
         # Execute code
-        images = populator.fetch_viral_images()
+        images = populator.fetch_viral_images(self.config['imgur']['api_endpoint'][0])
 
         # Post-conditions
         self.assertIsInstance(images, type([]))
@@ -49,7 +49,7 @@ class TestImgurAPIFetchViralImages(TestCase):
         # Pre-conditions
 
         # Execute code
-        images = populator.fetch_viral_images()
+        images = populator.fetch_viral_images(self.config['imgur']['api_endpoint'][0])
 
         # Post-conditions
         self.assertIsInstance(images, type([]))
@@ -66,7 +66,7 @@ class TestImgurAPIFetchViralImages(TestCase):
         # Pre-conditions
 
         # Execute code
-        images = populator.fetch_viral_images()
+        images = populator.fetch_viral_images(self.config['imgur']['api_endpoint'][0])
 
         # Post-conditions
         self.assertIsInstance(images, type([]))
@@ -83,7 +83,7 @@ class TestImgurAPIFetchViralImages(TestCase):
         # Pre-conditions
 
         # Execute code
-        images = populator.fetch_viral_images()
+        images = populator.fetch_viral_images(self.config['imgur']['api_endpoint'][0])
 
         # Post-conditions
         self.assertIsInstance(images, type([]))
@@ -100,7 +100,7 @@ class TestImgurAPIFetchViralImages(TestCase):
         # Pre-conditions
 
         # Execute code
-        images = populator.fetch_viral_images()
+        images = populator.fetch_viral_images(self.config['imgur']['api_endpoint'][0])
 
         # Post-conditions
         self.assertIsInstance(images, type([]))
@@ -117,7 +117,7 @@ class TestImgurAPIFetchViralImages(TestCase):
         # Pre-conditions
 
         # Execute code
-        images = populator.fetch_viral_images()
+        images = populator.fetch_viral_images(self.config['imgur']['api_endpoint'][0])
 
         # Post-conditions
         self.assertIsInstance(images, type([]))
@@ -136,7 +136,7 @@ class TestImgurAPIFetchViralImages(TestCase):
         # Pre-conditions
 
         # Execute code
-        images = populator.fetch_viral_images()
+        images = populator.fetch_viral_images(self.config['imgur']['api_endpoint'][0])
 
         # Post-conditions
         self.assertIsInstance(images, type([]))

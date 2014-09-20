@@ -14,6 +14,7 @@ class TestImgurPopulator(TestCase):
         # Load the configuration file
         self.config = configparser.ConfigParser()
         self.config.read("./imgur.conf")
+        self.config['imgur']['api_endpoint'] = '["http://example.com/api_endpoint"]'
 
         # Mock out the imgur API
         patcher = patch('imgur_populator.ImgurAPI.fetch_viral_images')
@@ -24,6 +25,7 @@ class TestImgurPopulator(TestCase):
         patcher = patch('mysql.connector.connect')
         self.MockDatabase = patcher.start()
         self.MockCursor = Mock()
+        self.MockCursor.rowcount = 1
         self.MockConnection = Mock()
         self.MockConnection.cursor.return_value = self.MockCursor
         self.MockDatabase.return_value = self.MockConnection
@@ -459,7 +461,6 @@ class TestImgurPopulator(TestCase):
         # Post-conditions
         self.assertEqual(self.MockFetchViralImages.call_count, 1)
         self.assertEqual(self.MockCursor.execute.call_count, 106)
-        self.assertEqual(self.MockConnection.commit.call_count, 1)
 
     # Cleanup
 
@@ -894,7 +895,6 @@ class TestImgurPopulator(TestCase):
         # Post-conditions
         self.assertEqual(self.MockFetchViralImages.call_count, 1)
         self.assertEqual(self.MockCursor.execute.call_count, 106)
-        self.assertEqual(self.MockConnection.commit.call_count, 1)
 
     # Cleanup
 
@@ -911,7 +911,6 @@ class TestImgurPopulator(TestCase):
         # Post-conditions
         self.assertEqual(self.MockFetchViralImages.call_count, 1)
         self.assertEqual(self.MockCursor.execute.call_count, 0)
-        self.assertEqual(self.MockConnection.commit.call_count, 1)
 
     # Cleanup
 
@@ -923,9 +922,10 @@ class TestImgurPopulator(TestCase):
         # Pre-conditions
 
         # Execute code
-        with self.assertRaises(mysql.connector.errors.InterfaceError):
-            populator.populate()
+        populator.populate()
 
         # Post-conditions
+        self.assertEqual(self.MockFetchViralImages.call_count, 1)
+        self.assertEqual(self.MockCursor.execute.call_count, 0)
 
         # Cleanup
