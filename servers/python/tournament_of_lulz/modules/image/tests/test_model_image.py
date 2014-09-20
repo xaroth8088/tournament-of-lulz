@@ -7,6 +7,7 @@ class ModelImageTest(unittest.TestCase):
         self.image = model_image.ModelImage()
 
     def test_init_with_db_row(self):
+        # Setup
         data = [
             '320',
             '39570dd668d2896673d87df59b7def40',
@@ -18,8 +19,15 @@ class ModelImageTest(unittest.TestCase):
             '216.0448091137806',
             '0.059999385235406474'
         ]
-        self.assertTrue(self.image.image_id is None)
 
+        # Preconditions
+        self.assertIsNone(self.image.image_id)
+
+        # Run the test
         self.image.init_with_db_row(data)
 
-        self.assertTrue(self.image.image_id is not None)
+        # Postconditions
+        self.assertIsNotNone(self.image.image_id)
+        self.assertEqual(self.image.image_id, '320')
+
+        # Cleanup
