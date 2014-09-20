@@ -1,17 +1,18 @@
-from tournament_of_lulz.database.database import get_connection
+from tournament_of_lulz.database.database import get_connection, fetchall, update
 from tournament_of_lulz.modules.image.model_image import ModelImage
 from glicko2.glicko2 import Player
+from tournament_of_lulz.exceptions.service_exception import ServiceException
 
 
 class ModelResults():
-    def __init__(self):
-        pass
+    def __init__(self, tournament_id):
+        self.tournament_id = tournament_id
 
-    def register_win(self, winner_id, loser_id):
+    @staticmethod
+    def register_win(winner_id, loser_id):
         images = []
 
         connection = get_connection()
-        cursor = connection.cursor()
 
         # Load the two images
         sql = (
@@ -24,9 +25,13 @@ class ModelResults():
             'winner_id': winner_id,
             'loser_id': loser_id
         }
-        cursor.execute(sql, params)
+        data = fetchall(connection, sql, params)
 
-        for row in cursor:
+        if len(data) != 2:
+            connection.close()
+            raise ServiceException(400, "Invalid image ids: %s or %s" % (winner_id, loser_id))
+
+        for row in data:
             image = ModelImage()
             image.init_with_db_row(row)
             images.append(image)
@@ -67,7 +72,7 @@ class ModelResults():
             'rd': winner_image.rd,
             'volatility': winner_image.volatility
         }
-        cursor.execute(sql, params)
+        update(connection, sql, params)
 
         sql = (
             "UPDATE images "
@@ -83,9 +88,8 @@ class ModelResults():
             'rd': loser_image.rd,
             'volatility': loser_image.volatility
         }
-        cursor.execute(sql, params)
+        update(connection, sql, params)
 
         # TODO: Ensure this match-up hasn't occurred before for this tournament_id
 
-        cursor.close()
         connection.close()

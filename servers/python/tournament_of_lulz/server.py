@@ -4,6 +4,7 @@ import json
 from importlib import import_module
 from os.path import splitext
 from bottle import route, abort, request
+from tournament_of_lulz.exceptions.service_exception import ServiceException
 
 
 CONFIG = configparser.ConfigParser()
@@ -59,7 +60,11 @@ def route_request(path):
     if method is None:
         abort(503, "Server misconfiguration in routing - method does not exist")
 
-    raw_response = method(data)
+    try:
+        raw_response = method(data)
+    except ServiceException as exception:
+        abort(code=exception.http_status_code, text=str(exception))
+        return
 
     # In the future, format the response based on different response_format's before outputting
 

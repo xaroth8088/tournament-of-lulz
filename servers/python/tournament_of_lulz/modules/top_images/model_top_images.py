@@ -1,4 +1,4 @@
-from tournament_of_lulz.database.database import get_connection
+from tournament_of_lulz.database.database import get_connection, fetchall
 from tournament_of_lulz.modules.image.model_image import ModelImage
 
 
@@ -10,7 +10,6 @@ class ModelTopImages():
         self.top_images = []
 
         connection = get_connection()
-        cursor = connection.cursor()
 
         sql = (
             "SELECT image_id, image_url_hash, image_url, page_url, thumbnail_url, title, rating, rd, volatility "
@@ -22,12 +21,11 @@ class ModelTopImages():
             'start': start,
             'limit': limit
         }
-        cursor.execute(sql, params)
+        data = fetchall(connection, sql, params)
 
-        for row in cursor:
+        for row in data:
             image = ModelImage()
             image.init_with_db_row(row)
             self.top_images.append(image)
 
-        cursor.close()
         connection.close()
