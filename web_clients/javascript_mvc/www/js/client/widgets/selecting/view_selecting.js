@@ -13,12 +13,62 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
 		},
 
 		'_initTemplate': function() {
+            var image_1, image_2;
 			this.callSuper();
 
 			this.container.addClass( 'widget_selecting' );
-			this.container.html("<img class='image_1' /><div class='versus'>VS</div><img class='image_2' />");
-			this.container.find('.image_1').click($.proxy(this._onImage1Clicked, this));
-			this.container.find('.image_2').click($.proxy(this._onImage2Clicked, this));
+			this.container.html("<div class='img_holder'><img class='image_1' /></div><div class='versus'></div><div class='img_holder'><img class='image_2' /></div>");
+
+            image_1 = this.container.find('.image_1');
+			image_1.click($.proxy(this._onImage1Clicked, this));
+
+			image_2 = this.container.find('.image_2');
+            image_2.click($.proxy(this._onImage2Clicked, this));
+
+            // Animations
+            image_1.transition({
+                opacity: 0
+            }).transition({
+                opacity: 1
+            }, 100);
+
+            image_2.transition({
+                opacity: 0
+            }).transition({
+                opacity: 1
+            }, 100);
+
+            this.container.find('.versus').transition({
+                scale: 9
+            }).transition({
+                scale: 1
+            }, 250, 'easeInCubic', function() {
+                image_1.transition({
+                    rotate: '1deg',
+                    delay: 5
+                }, 5).transition({
+                    rotate: '-1deg'
+                }, 5).transition({
+                    rotate: '1deg'
+                }, 5).transition({
+                    rotate: '-1deg'
+                }, 5).transition({
+                    rotate: '0deg'
+                }, 5);
+
+                image_2.transition({
+                    rotate: '-1deg',
+                    delay: 4
+                }, 5).transition({
+                    rotate: '1deg'
+                }, 5).transition({
+                    rotate: '-1deg'
+                }, 5).transition({
+                    rotate: '1deg'
+                }, 5).transition({
+                    rotate: '0deg'
+                }, 5);
+            });
 		},
 
 		'_draw': function() {

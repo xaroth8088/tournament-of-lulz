@@ -1,17 +1,26 @@
 .widget_selecting {
-	display: flex;
-	justify-content: center;
-	align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.widget_selecting > .image_1, .widget_selecting > .image_2 {
-	margin: 5%;
-	flex-grow: 2;
-	width: 100%;
+.widget_selecting > .img_holder {
+    flex: 3 3;
+    text-align: center;
+}
+
+.widget_selecting > .img_holder > img {
+    display: inline-block;
+    max-width: 96%;
+    max-height: 96%;
 }
 
 .widget_selecting > .versus {
-	flex-grow: 1;
-	width: 5em;
-	text-align: center;
+    flex: 1 1;
+    width: 25%;
+    height: 100%;
+    background-image: url(images/versus.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
 }

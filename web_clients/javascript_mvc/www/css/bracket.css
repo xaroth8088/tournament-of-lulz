@@ -13,7 +13,8 @@
 	height: 3em;
 }
 
-/* Bracket styling */
+
+/* Simple Bracket styling */
 .sb-match_label {
     text-align: center;
 }
@@ -27,3 +28,4 @@
 .sb-match_lost {
     -webkit-filter: sepia() contrast(0.5) blur(2px);
 }
+/* END SIMPLE BRACKET STYLING */
