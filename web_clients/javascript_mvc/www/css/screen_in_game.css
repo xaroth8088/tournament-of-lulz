@@ -1,4 +1,17 @@
-.widget_screen_in_game > div, .widget_screen_in_game > div > div {
+.widget_screen_in_game {
+    display: flex;
+    align-content: stretch;
+    height: 100%;
+}
+
+.widget_screen_in_game > div {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-content: stretch;
+}
+
+.widget_screen_in_game > div > div {
 	width: 100%;
-	height: 100%;
+    height: 100%;
 }
