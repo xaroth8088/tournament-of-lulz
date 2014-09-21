@@ -13,7 +13,7 @@ class ModelTopImages():
         sql = (
             "SELECT image_id, image_url_hash, image_url, page_url, thumbnail_url, title, rating, rd, volatility "
             "FROM images "
-            "ORDER BY rating, image_id DESC "
+            "ORDER BY rating DESC "
             "LIMIT %(start)s, %(limit)s"
         )
         params = {
