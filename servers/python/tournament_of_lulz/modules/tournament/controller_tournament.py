@@ -4,7 +4,7 @@ from tournament_of_lulz.modules.tournament.view_tournament import ViewTournament
 MAX_IMAGES = 32  # a reasonable maximum
 
 
-def post(data):
+def post(db_connection, data):
     num_images = 8
     if 'num_images' in data:
         num_images = int(data['num_images'])
@@ -19,12 +19,12 @@ def post(data):
     if 'starting_image_id' in data:
         starting_image_id = data['starting_image_id']
 
-    tournament = ModelTournament()
+    tournament = ModelTournament(db_connection)
     tournament.create_new_tournament(num_images, starting_image_id)
     view = ViewTournament(tournament)
 
     return view.render()
 
 
-def delete(data):
+def delete(db_connection, data):
     return ""

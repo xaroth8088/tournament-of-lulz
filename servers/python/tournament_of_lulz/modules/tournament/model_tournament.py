@@ -1,9 +1,10 @@
-from tournament_of_lulz.database.database import get_connection, insert, fetchall
+from tournament_of_lulz.database.database import insert, fetchall
 from tournament_of_lulz.modules.image.model_image import ModelImage
 
 
 class ModelTournament():
-    def __init__(self):
+    def __init__(self, db_connection):
+        self.db_connection = db_connection
         self.tournament_id = None
         self.images = None
         self.start_time = None
@@ -11,15 +12,13 @@ class ModelTournament():
     def create_new_tournament(self, num_images, starting_image_id):
         self.images = []
 
-        connection = get_connection()
-
         sql = (
             "INSERT INTO tournaments "
             "(tournament_id, start_time)"
             "VALUES "
             "(NULL, NOW())"
         )
-        self.tournament_id = insert(connection, sql)
+        self.tournament_id = insert(self.db_connection, sql)
 
         # TODO: Handle case where a starting image_id is included
 
@@ -33,7 +32,7 @@ class ModelTournament():
         params = {
             'limit': num_images
         }
-        data = fetchall(connection, sql, params)
+        data = fetchall(self.db_connection, sql, params)
 
         for row in data:
             image = ModelImage()
@@ -41,5 +40,3 @@ class ModelTournament():
             self.images.append(image)
 
         # TODO: Populate results table
-
-        connection.close()

@@ -2,7 +2,7 @@ from tournament_of_lulz.modules.results.model_results import ModelResults
 from tournament_of_lulz.exceptions.service_exception import ServiceException
 
 
-def post(data):
+def post(db_connection, data):
     if 'tournament' not in data:
         raise ServiceException(400, "No tournament_id present")
     if 'winner_id' not in data:
@@ -14,7 +14,7 @@ def post(data):
     winner_id = int(data['winner_id'])
     loser_id = int(data['loser_id'])
 
-    results = ModelResults(tournament_id)
+    results = ModelResults(db_connection, tournament_id)
     results.register_win(winner_id, loser_id)
 
     return ""

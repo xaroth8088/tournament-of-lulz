@@ -21,7 +21,7 @@ class ModelResultsTest(unittest.TestCase):
         # Preconditions
 
         # Run the test
-        post(data)
+        post(None, data)
 
         # Postconditions
         mock_model.register_win.assert_called_with(data['winner_id'], data['loser_id'])
@@ -40,7 +40,7 @@ class ModelResultsTest(unittest.TestCase):
 
         # Run the test
         with self.assertRaises(ServiceException) as cm:
-            post(data)
+            post(None, data)
 
         # Postconditions
         self.assertEqual(model_results.call_count, 0)
@@ -60,7 +60,7 @@ class ModelResultsTest(unittest.TestCase):
 
         # Run the test
         with self.assertRaises(ServiceException) as cm:
-            post(data)
+            post(None, data)
 
         # Postconditions
         self.assertEqual(model_results.call_count, 0)
@@ -80,7 +80,7 @@ class ModelResultsTest(unittest.TestCase):
 
         # Run the test
         with self.assertRaises(ServiceException) as cm:
-            post(data)
+            post(None, data)
 
         # Postconditions
         self.assertEqual(model_results.call_count, 0)

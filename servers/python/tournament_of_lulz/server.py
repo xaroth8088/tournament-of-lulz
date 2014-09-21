@@ -5,7 +5,8 @@ from importlib import import_module
 from os.path import splitext
 from bottle import route, abort, request
 from tournament_of_lulz.exceptions.service_exception import ServiceException
-
+from tournament_of_lulz.database.database import get_connection
+import mysql.connector
 
 CONFIG = configparser.ConfigParser()
 CONFIG.read('./tournament_of_lulz/configuration/server.conf')
@@ -52,6 +53,7 @@ def route_request(path):
         abort(405)
         return
 
+    # Now that we know the call is well-formed and that we're permitted to call it, load up the method to call
     imported_module = import_module("tournament_of_lulz.modules." + module + ".controller_" + module)
     if imported_module is None:
         abort(503, "Server misconfiguration in routing - module does not exist")
@@ -60,13 +62,25 @@ def route_request(path):
     if method is None:
         abort(503, "Server misconfiguration in routing - method does not exist")
 
+    # Grab a DB connection to use for this web transaction
     try:
-        raw_response = method(data)
+        db_connection = get_connection()
+    except mysql.connector.Error:
+        abort(503, "Unable to connect to database")
+        return
+
+    # Actually call it, capturing any ServiceExceptions raised
+    try:
+        raw_response = method(db_connection, data)
     except ServiceException as exception:
+        db_connection.close()
         abort(code=exception.http_status_code, text=str(exception))
         return
 
-    # In the future, format the response based on different response_format's before outputting
+    # Close up the DB connection
+    db_connection.close()
+
+    # TODO: In the future, format the response based on different response_format's before outputting
 
     return raw_response
 
