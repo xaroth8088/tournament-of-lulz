@@ -57,14 +57,16 @@ def route_request(path):
     imported_module = import_module("tournament_of_lulz.modules." + module + ".controller_" + module)
     if imported_module is None:
         abort(503, "Server misconfiguration in routing - module does not exist")
+        return
 
     method = getattr(imported_module, request.method.lower())
     if method is None:
         abort(503, "Server misconfiguration in routing - method does not exist")
+        return
 
     # Grab a DB connection to use for this web transaction
     try:
-        db_connection = get_connection(CONFIG)
+        db_connection = get_connection()
     except mysql.connector.Error:
         abort(503, "Unable to connect to database")
         return
@@ -74,7 +76,7 @@ def route_request(path):
         raw_response = method(db_connection, data)
     except ServiceException as exception:
         db_connection.close()
-        abort(code=exception.http_status_code, text=str(exception))
+        abort(code=exception.http_status_code, text=exception.message)
         return
 
     # Close up the DB connection
@@ -88,6 +90,10 @@ def route_request(path):
 def _parse_request(path):
     data = request.params.decode()
     tokens = path.split('/')
+
+    # Get rid of the elements caused by "/api"
+    tokens.pop(0)
+    tokens.pop(0)
 
     if len(tokens) == 0:
         return None, data, None

@@ -91,8 +91,8 @@ class ModelResultsTest(unittest.TestCase):
         # Postconditions
         mock_update_calls = mock_update.call_args_list
 
-        self.assertEqual(len(set(params_winner.items()) ^ set(mock_update_calls[0][0][2].items())), 0)
-        self.assertEqual(len(set(params_loser.items()) ^ set(mock_update_calls[1][0][2].items())), 0)
+        self.assertDictEqual(params_winner, mock_update_calls[0][0][2])
+        self.assertDictEqual(params_loser, mock_update_calls[1][0][2])
 
         # Cleanup
 
