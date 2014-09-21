@@ -4,27 +4,22 @@
             minification, logging, etc.
         2) It simplifies unit testingby removing the need to mock everything about the MySQL connector library.
 """
-import configparser
 
 import mysql.connector
 
 
-CONFIG = configparser.ConfigParser()
-CONFIG.read('./tournament_of_lulz/configuration/server.conf')
-
-
-def get_connection():
-    if CONFIG['database'].get('unix_socket', None):
-        connection = mysql.connector.connect(user=CONFIG['database']['user'],
-                                             database=CONFIG['database']['schema'],
-                                             password=CONFIG['database']['password'],
-                                             unix_socket=CONFIG['database']['unix_socket'],
+def get_connection(config):
+    if config['database'].get('unix_socket', None):
+        connection = mysql.connector.connect(user=config['database']['user'],
+                                             database=config['database']['schema'],
+                                             password=config['database']['password'],
+                                             unix_socket=config['database']['unix_socket'],
                                              autocommit=True)
     else:
-        connection = mysql.connector.connect(user=CONFIG['database']['user'],
-                                             database=CONFIG['database']['schema'],
-                                             password=CONFIG['database']['password'],
-                                             host=CONFIG['database']['host'], port=CONFIG['database']['port'],
+        connection = mysql.connector.connect(user=config['database']['user'],
+                                             database=config['database']['schema'],
+                                             password=config['database']['password'],
+                                             host=config['database']['host'], port=config['database']['port'],
                                              autocommit=True)
 
     return connection
@@ -41,8 +36,6 @@ def fetchone(connection, sql, params=None):
     cursor = connection.cursor()
     cursor.execute(sql, params)
     row = cursor.fetchone()
-    if row is None:
-        return None
     return row
 
 

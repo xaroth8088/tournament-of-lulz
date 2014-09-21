@@ -64,7 +64,7 @@ def route_request(path):
 
     # Grab a DB connection to use for this web transaction
     try:
-        db_connection = get_connection()
+        db_connection = get_connection(CONFIG)
     except mysql.connector.Error:
         abort(503, "Unable to connect to database")
         return
