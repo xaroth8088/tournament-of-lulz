@@ -66,7 +66,7 @@ def route_request(path):
 
     # Grab a DB connection to use for this web transaction
     try:
-        db_connection = get_connection()
+        db_connection = get_connection(CONFIG)
     except mysql.connector.Error:
         abort(503, "Unable to connect to database")
         return
@@ -91,11 +91,7 @@ def _parse_request(path):
     data = request.params.decode()
     tokens = path.split('/')
 
-    # Get rid of the elements caused by "/api"
-    tokens.pop(0)
-    tokens.pop(0)
-
-    if len(tokens) == 0:
+    if len(tokens) == 1 and tokens[0] == '':
         return None, data, None
 
     if len(tokens) % 2 == 0:

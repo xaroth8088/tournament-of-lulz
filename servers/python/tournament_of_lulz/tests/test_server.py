@@ -37,7 +37,7 @@ class ServerTest(unittest.TestCase):
         # Preconditions
 
         # Run the test
-        response = server.route_request("/api/test_api.json")
+        response = server.route_request("test_api.json")
 
         # Postconditions
         self.assertEqual(self.mock_abort.call_count, 0)
@@ -62,7 +62,7 @@ class ServerTest(unittest.TestCase):
         # Preconditions
 
         # Run the test
-        response = server.route_request("/api/some_id/123/test_api.json")
+        response = server.route_request("some_id/123/test_api.json")
 
         # Postconditions
         self.assertEqual(self.mock_abort.call_count, 0)
@@ -92,7 +92,7 @@ class ServerTest(unittest.TestCase):
         # Preconditions
 
         # Run the test
-        response = server.route_request("/api/test_api/123.json")
+        response = server.route_request("test_api/123.json")
 
         # Postconditions
         self.assertEqual(self.mock_abort.call_count, 0)
@@ -125,7 +125,7 @@ class ServerTest(unittest.TestCase):
         # Preconditions
 
         # Run the test
-        response = server.route_request("/api/test_api.json")
+        response = server.route_request("test_api.json")
 
         # Postconditions
         self.assertEqual(self.mock_abort.call_count, 0)
@@ -158,7 +158,7 @@ class ServerTest(unittest.TestCase):
         # Preconditions
 
         # Run the test
-        response = server.route_request("/api/some_id/123/test_api/999.json")
+        response = server.route_request("some_id/123/test_api/999.json")
 
         # Postconditions
         self.assertEqual(self.mock_abort.call_count, 0)
@@ -193,7 +193,7 @@ class ServerTest(unittest.TestCase):
         # Preconditions
 
         # Run the test
-        response = server.route_request("/api/bad.json")
+        response = server.route_request("bad.json")
 
         # Postconditions
         self.assertEqual(self.mock_abort.call_count, 1)
@@ -223,7 +223,7 @@ class ServerTest(unittest.TestCase):
         # Preconditions
 
         # Run the test
-        response = server.route_request("/api/test_api.json")
+        response = server.route_request("test_api.json")
 
         # Postconditions
         self.assertEqual(self.mock_abort.call_count, 1)
@@ -253,7 +253,7 @@ class ServerTest(unittest.TestCase):
         # Preconditions
 
         # Run the test
-        response = server.route_request("/api")
+        response = server.route_request("")
 
         # Postconditions
         self.assertEqual(self.mock_abort.call_count, 1)
@@ -283,7 +283,7 @@ class ServerTest(unittest.TestCase):
         # Preconditions
 
         # Run the test
-        response = server.route_request("/api/test_api.xml")
+        response = server.route_request("test_api.xml")
 
         # Postconditions
         self.assertEqual(self.mock_abort.call_count, 1)
@@ -309,7 +309,7 @@ class ServerTest(unittest.TestCase):
         # Preconditions
 
         # Run the test
-        response = server.route_request("/api/test_api_that_definitely_does_not_exist.json")
+        response = server.route_request("test_api_that_definitely_does_not_exist.json")
 
         # Postconditions
         self.assertEqual(self.mock_abort.call_count, 1)
@@ -340,7 +340,7 @@ class ServerTest(unittest.TestCase):
         # Preconditions
 
         # Run the test
-        response = server.route_request("/api/test_api.json")
+        response = server.route_request("test_api.json")
 
         # Postconditions
         self.assertEqual(self.mock_abort.call_count, 1)
@@ -365,7 +365,7 @@ class ServerTest(unittest.TestCase):
         # Preconditions
 
         # Run the test
-        response = server.route_request("/api/test_api.json")
+        response = server.route_request("test_api.json")
 
         # Postconditions
         self.assertEqual(self.mock_abort.call_count, 1)
@@ -390,7 +390,7 @@ class ServerTest(unittest.TestCase):
         # Preconditions
 
         # Run the test
-        response = server.route_request("/api/test_api.json")
+        response = server.route_request("test_api.json")
 
         # Postconditions
         self.assertEqual(self.mock_abort.call_count, 1)
