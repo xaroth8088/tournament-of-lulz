@@ -1,17 +1,29 @@
 .widget_victory {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .widget_victory > .winner {
-	width: 50%;
-	margin: 1em;
+    width: 50%;
+    margin: 1em;
 }
 
-.widget_victory > .victory_text {
-	width: 50%;
-	text-align: center;
+.widget_victory > .victory_image {
+    background-image: url(images/victory.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
 }
 
+.widget_victory > .goback {
+    /* Put the button above the confetti */
+    position: relative;
+    z-index: 999;
+}
