@@ -1,18 +1,42 @@
 .widget_screen_intro {
-	display: flex;
+    display: flex;
+    background-size: cover;
+    background-repeat: no-repeat;
+    flex-direction: column;
 }
 
-.widget_screen_intro > .widget_image {
-	width: 3em;
-	height: 3em;
-	min-width: 3em;
-	min-height: 3em;
-	border: 1px solid green;
-	position: absolute;
-	top: 0;
-	left: 0;
+.widget_screen_intro > .background {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    -webkit-filter: blur(12px) contrast(0.66);
+    z-index: -1;
 }
 
-.widget_screen_intro > button {
-	margin: auto;
+.widget_screen_intro > .start_tournament {
+    margin: 0 auto;
+    background-color: #38a6f0;
+    color: white;
+    padding: 1em 1em;
+    font-weight: 700;
+    font-size: 1.1em;
+    border-radius: 3em;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+    font-family: 'Gloria Hallelujah', cursive;
+    outline: none;
+    text-shadow: 1px 1px black;
+}
+
+.widget_screen_intro > .title_text {
+    font-family: 'Gloria Hallelujah', cursive;
+    text-align: center;
+    font-size: 5em;
+    height: 5em;
+    line-height: 5em;
+    text-shadow: 2px 2px white;
 }
