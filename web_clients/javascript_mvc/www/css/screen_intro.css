@@ -3,6 +3,7 @@
     background-size: cover;
     background-repeat: no-repeat;
     flex-direction: column;
+    height: 100%;
 }
 
 .widget_screen_intro > .background {
@@ -18,7 +19,27 @@
     z-index: -1;
 }
 
-.widget_screen_intro > .start_tournament {
+.widget_screen_intro > .title_container {
+    flex: 2 2;
+    display: flex;
+    align-items: center;
+}
+
+.widget_screen_intro > .title_container > .title_text {
+    font-family: 'Gloria Hallelujah', cursive;
+    text-align: center;
+    font-size: 8vh;
+    width: 100%;
+    text-shadow: 2px 2px white;
+}
+
+.widget_screen_intro > .button_container {
+    flex: 2 2;
+    display: flex;
+    align-items: center;
+}
+
+.widget_screen_intro > .button_container > .start_tournament {
     margin: 0 auto;
     background-color: #38a6f0;
     color: white;
@@ -32,11 +53,13 @@
     text-shadow: 1px 1px black;
 }
 
-.widget_screen_intro > .title_text {
-    font-family: 'Gloria Hallelujah', cursive;
-    text-align: center;
-    font-size: 5em;
-    height: 5em;
-    line-height: 5em;
-    text-shadow: 2px 2px white;
+.widget_screen_intro > .announcer_container {
+    flex: 1 1;
+    height: 100%;
+    display: flex;
+}
+
+.widget_screen_intro > .announcer_container > .announcer {
+    flex: 1 1;
+    display: flex;
 }

@@ -1,0 +1,119 @@
+/***
+	RPGSay Model
+	A fun way to show text
+
+    Script format:
+        * text (string) - The text to say.
+        * events (object) - An object describing configuration at various times during the text.
+                            The key is the character at which the configuration takes effect.  Note that
+                                the configuration takes effect *before* the character is displayed.
+                            The value is an event object (see below).
+
+                            Most likely, you'll want to set an event for character 0 with your starting state.
+        * open_speed (int) [200] - The time, in ms, taken to open the box initially.
+        * face_appear_speed (int) [400] - The time, in ms, taken to show the character portrait initially.
+        * autoclose_delay (int) [1000] - The delay, in ms, before the dialog box automatically dismisses itself.
+        * autoclose_speed (int) [200] - The time, in ms, taken to close the box when done.
+
+
+    Event object options:
+        * speaker_image (url) [blank] - The character portrait to display.
+        * text_speed (int) [50] - The delay, in ms, between each character.  Can be used to effect a pause in the speech
+                                  if given as a large number, followed by a normal value on the next character.
+        * speaker_on_left (boolean) [true] - Whether the speaker image appears on the left or the right of the dialog.
+                                             When this value switches, the text box will clear, permitting a
+                                             conversation to happen between two parties.
+        * pre_speech_delay (int) [250] - The delay, in ms, between when the face appears and when text begins to display.
+
+***/
+define(['require', 'jsclass/min/core', 'client/base/model'], function (require) {
+	'use strict';
+	var Model = require('client/base/model');
+
+	return new JS.Class(Model,{
+		'initialize': function( script ) {
+			this.callSuper();
+
+			this.script = script;
+            this.speaker_image = null;
+            this.text_speed = 50;
+            this.autoclose_delay = 1000;
+            if( script.autoclose_delay !== undefined ) {
+                this.autoclose_delay = script.autoclose_delay;
+            }
+
+            this.open_speed = 200;
+            if( script.open_speed !== undefined ) {
+                this.open_speed = script.open_speed;
+            }
+
+            this.face_appear_speed = 400;
+            if( script.face_appear_speed !== undefined ) {
+                this.face_appear_speed = script.face_appear_speed;
+            }
+
+            this.autoclose_speed = 200;
+            if( script.autoclose_speed !== undefined ) {
+                this.autoclose_speed = script.autoclose_speed;
+            }
+
+            this.pre_speech_delay = 250;
+
+            this.text_position = 0;
+            this._text_start = 0;
+
+            this.speaker_on_left = true;
+
+            // Apply any event at position 0, so that initial state can be properly drawn
+            this._applyEvents();
+		},
+
+        /* Advances the state machine one character.
+            Returns true if there's more text to display.
+            Returns false if we're at the end and the auto-close timer should be triggered.
+         */
+        'advanceText': function() {
+            this._applyEvents();
+
+            this.text_position++;
+            if( this.text_position > this.script.text.length ) {
+                return false;
+            }
+
+            return true;
+        },
+
+        'getDisplayText': function() {
+            return this.script.text.substr(this._text_start, this.text_position - this._text_start);
+        },
+
+        '_applyEvents': function() {
+            var event;
+
+            if( this.script.events === undefined || this.script.events[this.text_position] === undefined ) {
+                return;
+            }
+
+            event = this.script.events[this.text_position];
+
+            if( event.speaker_image !== undefined ) {
+                this.speaker_image = event.speaker_image;
+            }
+
+            if( event.text_speed !== undefined ) {
+                this.text_speed = event.text_speed;
+            }
+
+            if( event.pre_speech_delay !== undefined ) {
+                this.pre_speech_delay = event.pre_speech_delay;
+            }
+
+            if( event.speaker_on_left !== undefined ) {
+                if( this.speaker_on_left !== event.speaker_on_left ) {
+                    this._text_start = this.text_position;
+                }
+                this.speaker_on_left = event.speaker_on_left;
+            }
+        }
+	});
+});
