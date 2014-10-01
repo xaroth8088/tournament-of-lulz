@@ -1,6 +1,6 @@
 /***
 	Image Controller
-	Responsible for handling the intro screen controls
+	Show one of the game's "image" objects.
 ***/
 define(['require', 'jsclass/min/core', 'client/base/controller'], function (require) {
 	'use strict';
