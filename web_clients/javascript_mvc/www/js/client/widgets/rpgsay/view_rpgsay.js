@@ -37,14 +37,25 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
         },
 
         '_setSpeakerImage': function() {
-            if (this.models.rpgsay_model.speaker_image !== null) {
+            this.container.removeClass();
+            this.container.addClass("widget_rpgsay");
+            this.face.removeClass();
+            this.face.addClass("face");
+
+            if( this.models.rpgsay_model.speaker_on_left === false ) {
+                this.face.addClass("right");
                 this.face.css({
-                    'background-image': "url('" + this.models.rpgsay_model.speaker_image + "')"
+                    "transform": "scaleX(-1)"
                 });
             } else {
                 this.face.css({
-                    'background-image': "none"
+                    "transform": "scaleX(1)"
                 });
+            }
+
+            if (this.models.rpgsay_model.speaker !== null && this.models.rpgsay_model.mood) {
+                this.container.addClass(this.models.rpgsay_model.speaker);
+                this.face.addClass(this.models.rpgsay_model.mood);
             }
         },
 
@@ -80,11 +91,7 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
         '_animateFaceOut': function() {
             var x_offset;
 
-            if( this.last_speaker_side === false ) {
-                x_offset = this.face.outerWidth();
-            } else {
-                x_offset = -this.face.outerWidth();
-            }
+            x_offset = -this.face.outerWidth();
 
             this.last_speaker_side = this.models.rpgsay_model.speaker_on_left;
 
@@ -123,11 +130,7 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
             this.face.outerHeight(this.face.parent().height());
             this.face.width(this.face.height());
 
-            if( this.models.rpgsay_model.speaker_on_left ) {
-                x_offset = -this.face.outerWidth();
-            } else {
-                x_offset = this.face.outerWidth();
-            }
+            x_offset = -this.face.outerWidth();
 
             this.face.css({
                 x: x_offset + 'px'
@@ -157,15 +160,6 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
         },
 
         '_setSpeakerImageSide': function() {
-            if( this.models.rpgsay_model.speaker_on_left === true ) {
-                this.face.css({
-                    "order": 1
-                });
-            } else {
-                this.face.css({
-                    "order": 3
-                });
-            }
         },
 
         'destroy': function () {

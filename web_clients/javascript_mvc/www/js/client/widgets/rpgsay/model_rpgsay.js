@@ -17,7 +17,8 @@
 
 
     Event object options:
-        * speaker_image (url) [blank] - The character portrait to display.
+        * speaker (string) [blank] - The character class to add.
+        * mood (string) ["neutral"] - The character's mood.  Used as a CSS class to decide which image to show.
         * text_speed (int) [50] - The delay, in ms, between each character.  Can be used to effect a pause in the speech
                                   if given as a large number, followed by a normal value on the next character.
         * speaker_on_left (boolean) [true] - Whether the speaker image appears on the left or the right of the dialog.
@@ -35,7 +36,8 @@ define(['require', 'jsclass/min/core', 'client/base/model'], function (require) 
 			this.callSuper();
 
 			this.script = script;
-            this.speaker_image = null;
+            this.speaker = null;
+            this.mood = "neutral";
             this.text_speed = 50;
             this.autoclose_delay = 1000;
             if( script.autoclose_delay !== undefined ) {
@@ -96,8 +98,12 @@ define(['require', 'jsclass/min/core', 'client/base/model'], function (require) 
 
             event = this.script.events[this.text_position];
 
-            if( event.speaker_image !== undefined ) {
-                this.speaker_image = event.speaker_image;
+            if( event.speaker !== undefined ) {
+                this.speaker = event.speaker;
+            }
+
+            if( event.mood !== undefined ) {
+                this.mood = event.mood;
             }
 
             if( event.text_speed !== undefined ) {

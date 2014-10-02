@@ -42,30 +42,31 @@ define(['require',
                 "events": {
                     '0': {
                         'text_speed': 100,
-                        'speaker_image': 'css/images/announcers/green_hair/green_hair-0-0.png',
+                        'speaker': 'announcer_green_hair',
+                        'mood': 'neutral',
                         'speaker_on_left': false
                     },
                     '10': {
                         'speaker_on_left': true,
-                        'speaker_image': 'css/images/announcers/green_hair/green_hair-1-0.png'
+                        'mood': 'surprised'
                     },
                     '20': {
                         'speaker_on_left': false,
-                        'speaker_image': 'css/images/announcers/green_hair/green_hair-0-1.png'
+                        'mood': 'sad'
                     },
                     '23': {
-                        'speaker_image': 'css/images/announcers/green_hair/green_hair-0-2.png'
+                        'mood': 'angry'
                     },
                     '26': {
-                        'speaker_image': 'css/images/announcers/green_hair/green_hair-0-3.png'
+                        'mood': 'happy'
                     },
                     '30': {
                         'speaker_on_left': true,
-                        'speaker_image': 'css/images/announcers/green_hair/green_hair-1-1.png'
+                        'mood': 'concerned'
                     },
                     '40': {
                         'speaker_on_left': false,
-                        'speaker_image': 'css/images/announcers/green_hair/green_hair-0-2.png'
+                        'mood': 'embarrassed'
                     }
                 }
             };
