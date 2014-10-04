@@ -2,10 +2,14 @@
 	Selecting View
 	Displays the choices for a given match-up, permitting the user to pick a winner
 ***/
-define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
+define([
+    'require',
+    'jsclass/min/core',
+    'client/base/view'
+], function (require) {
 	'use strict';
 	var View = require('client/base/view');
-	
+
 	return new JS.Class(View, {
 		'initialize': function(callback) {
 			this.callSuper(['tournament_model']);
@@ -17,7 +21,15 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
 			this.callSuper();
 
 			this.container.addClass( 'widget_selecting' );
-			this.container.html("<div class='img_holder'><img class='image_1' /></div><div class='versus'></div><div class='img_holder'><img class='image_2' /></div>");
+			this.container.html("\
+    			<div class='img_holder'>\
+	    		    <img class='image_1' />\
+			    </div>\
+			    <div class='versus'></div>\
+			    <div class='img_holder'>\
+		    	    <img class='image_2' />\
+			    </div>\
+            ");
 
             image_1 = this.container.find('.image_1');
 			image_1.click($.proxy(this._onImage1Clicked, this));

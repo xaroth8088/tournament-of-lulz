@@ -58,8 +58,3 @@
     height: 100%;
     display: flex;
 }
-
-.widget_screen_intro > .announcer_container > .announcer {
-    flex: 1 1;
-    display: flex;
-}

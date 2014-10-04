@@ -38,18 +38,14 @@ define(['require', 'jsclass/min/core', 'client/lib/simplebracket/simplebracket',
             y = height * bracket_pos.match + height / 2;
             y = 50 - y;
 
-            console.log( 'round:' + this.models.tournament_model.round );
-            console.log( 'x:' + x );
-            console.log( 'y:' + y );
-
             bracket_container.transition({
                 scale: 3,
                 x: x + '%',
                 y: y + '%',
-                delay: 1250
-            }, 2500, 'in-out').transition({
+                delay: 250
+            }, 1750, 'in-out').transition({
                 opacity: 0
-            }, 1000, 'easeInOutSine', $.proxy(this.animation_complete_callback, this) );
+            }, 750, 'easeInOutSine', $.proxy(this.animation_complete_callback, this) );
         },
 
         '_getBracketData': function () {

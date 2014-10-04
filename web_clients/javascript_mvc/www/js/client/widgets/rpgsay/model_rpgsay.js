@@ -32,33 +32,20 @@ define(['require', 'jsclass/min/core', 'client/base/model'], function (require) 
 	var Model = require('client/base/model');
 
 	return new JS.Class(Model,{
-		'initialize': function( script ) {
-			this.callSuper();
+		'initialize': function() {
+            this.callSuper();
+            this._resetToDefaults();
+        },
 
-			this.script = script;
+        '_resetToDefaults': function() {
+            this.script = null;
             this.speaker = null;
             this.mood = "neutral";
             this.text_speed = 50;
             this.autoclose_delay = 1000;
-            if( script.autoclose_delay !== undefined ) {
-                this.autoclose_delay = script.autoclose_delay;
-            }
-
             this.open_speed = 200;
-            if( script.open_speed !== undefined ) {
-                this.open_speed = script.open_speed;
-            }
-
             this.face_appear_speed = 400;
-            if( script.face_appear_speed !== undefined ) {
-                this.face_appear_speed = script.face_appear_speed;
-            }
-
             this.autoclose_speed = 200;
-            if( script.autoclose_speed !== undefined ) {
-                this.autoclose_speed = script.autoclose_speed;
-            }
-
             this.pre_speech_delay = 250;
 
             this.text_position = 0;
@@ -66,8 +53,43 @@ define(['require', 'jsclass/min/core', 'client/base/model'], function (require) 
 
             this.speaker_on_left = true;
 
+            this._running_script = false;
+        },
+
+        'runScript': function(script) {
+            if( this._running_script !== false ) {
+                return; // Don't permit switching the script while a previous one is running.
+            }
+
+            if( script === false || script === null ) {
+                return; // Don't do anything if given an empty script
+            }
+
+            this._resetToDefaults();
+            this.script = script;
+
+            if (script.autoclose_delay !== undefined) {
+                this.autoclose_delay = script.autoclose_delay;
+            }
+
+            if (script.open_speed !== undefined) {
+                this.open_speed = script.open_speed;
+            }
+
+            if (script.face_appear_speed !== undefined) {
+                this.face_appear_speed = script.face_appear_speed;
+            }
+
+            if (script.autoclose_speed !== undefined) {
+                this.autoclose_speed = script.autoclose_speed;
+            }
+
             // Apply any event at position 0, so that initial state can be properly drawn
             this._applyEvents();
+
+            this._running_script = true;
+
+            this.modelWasUpdated();
 		},
 
         /* Advances the state machine one character.
@@ -79,6 +101,7 @@ define(['require', 'jsclass/min/core', 'client/base/model'], function (require) 
 
             this.text_position++;
             if( this.text_position > this.script.text.length ) {
+                this._running_script = false;
                 return false;
             }
 

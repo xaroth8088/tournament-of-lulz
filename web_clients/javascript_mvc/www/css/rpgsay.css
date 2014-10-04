@@ -1,3 +1,4 @@
+/* Some CSS for message boxes adapted from styles found at http://codepen.io/terrancerobb/pen/bnuqe */
 .widget_rpgsay {
     border: solid 0.3vh #424542;
     box-shadow: 0.3vh 0.3vh #e7dfe7,
@@ -37,7 +38,7 @@
     flex: 1 1;
     padding: 3vh;
     font-size: 3vh;
-    font-family: 'Press Start 2P', cursive;
+    font-family: 'Press Start 2P', 'Courier New', cursive;
     overflow-y: auto;
     order: 2;
     color: #eff1ff;

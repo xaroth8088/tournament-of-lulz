@@ -12,6 +12,7 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
             this.timer = null;
             this.container.addClass('widget_rpgsay');
             this.last_speaker_side = true;
+            this._running_script = false;
         },
 
         '_initTemplate': function () {
@@ -23,20 +24,31 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
             this.text_box = $('<div/>').addClass('text_box');
             this.container.append(this.text_box);
 
+            // Hide it by default, so that appearing is always smooth
+            this.container.hide();
+        },
+
+        '_draw': function () {
+            if( this.models.rpgsay_model.script === null ) {
+                return;
+            }
+
+            this.container.show();
+
+            // In theory, we're only redrawing when the model gets a new script, so kick things off
             this._setSpeakerImage();    // Set the initial speaker image, to reduce pop-in effect.
 
             // Set the initial side for the speaker
             this.last_speaker_side = this.models.rpgsay_model.speaker_on_left;
-            this._setSpeakerImageSide();
 
-            setTimeout($.proxy(this._animateContainer, this), 0);   // Give the doc a chance to reflow before starting
-        },
-
-        '_draw': function () {
-            return; // We don't permit the script to change after we're started
+            this._animateContainer();
         },
 
         '_setSpeakerImage': function() {
+            if( this._destroyed === true ) {
+                return;
+            }
+
             this.container.removeClass();
             this.container.addClass("widget_rpgsay");
             this.face.removeClass();
@@ -61,6 +73,11 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
 
         '_drawTextFrame': function () {
             var text_incomplete;
+
+            if( this._destroyed === true ) {
+                return;
+            }
+
             clearTimeout(this.timer);
 
             this._setSpeakerImage();
@@ -84,12 +101,20 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
         },
 
         '_animateFaceSideChange': function() {
+            if( this._destroyed === true ) {
+                return;
+            }
+
             this.text_box.text("");
             this._animateFaceOut();
         },
 
         '_animateFaceOut': function() {
             var x_offset;
+
+            if( this._destroyed === true ) {
+                return;
+            }
 
             x_offset = -this.face.outerWidth();
 
@@ -124,7 +149,6 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
             }
 
             this._setSpeakerImage();
-            this._setSpeakerImageSide();
 
             this.face.show();
             this.face.outerHeight(this.face.parent().height());
@@ -146,7 +170,7 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
                 return;
             }
 
-            // Clear out the text box?
+            // Clear out the text box
             this.text_box.text("");
 
             this.face.hide();
@@ -157,9 +181,6 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
                 scale: [1, 0],
                 transformOrigin: '0px 100%'
             }, this.models.rpgsay_model.autoclose_speed);
-        },
-
-        '_setSpeakerImageSide': function() {
         },
 
         'destroy': function () {

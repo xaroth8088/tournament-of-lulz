@@ -14,14 +14,12 @@ define(['require',
 
     return new JS.Class(View, {
         'initialize': function () {
-            this.callSuper(['top_images_model']);
+            this.callSuper(['top_images_model', 'page_model', 'rpgsay_model']);
             this.timer = null;
             this.image_shown = 0;
         },
 
         '_initTemplate': function () {
-            var script, rpgsay_model;
-
             this.callSuper();
             this.container.addClass('widget_screen_intro');
 
@@ -32,53 +30,16 @@ define(['require',
             <div class="button_container">\
                 <button class="start_tournament">Start Tournament</button>\
             </div>\
-            <div class="announcer_container">\
-                <div class="announcer"></div>\
-            </div>\
+            <div class="announcer_container"></div>\
             ');
 
-            script = {
-                "text": "01234567890123456789012345678901234567890123456789",
-                "events": {
-                    '0': {
-                        'text_speed': 100,
-                        'speaker': 'announcer_green_hair',
-                        'mood': 'neutral',
-                        'speaker_on_left': false
-                    },
-                    '10': {
-                        'speaker_on_left': true,
-                        'mood': 'surprised'
-                    },
-                    '20': {
-                        'speaker_on_left': false,
-                        'mood': 'sad'
-                    },
-                    '23': {
-                        'mood': 'angry'
-                    },
-                    '26': {
-                        'mood': 'happy'
-                    },
-                    '30': {
-                        'speaker_on_left': true,
-                        'mood': 'concerned'
-                    },
-                    '40': {
-                        'speaker_on_left': false,
-                        'mood': 'embarrassed'
-                    }
-                }
-            };
-
-            rpgsay_model = new WidgetRPGSay.model(script);
             this.addSubwidget(new WidgetRPGSay.controller(
                 this._controller,
                 new WidgetRPGSay.view(),
                 {
-                    'rpgsay_model': rpgsay_model
+                    'rpgsay_model': this.models.rpgsay_model
                 }
-            ), this.container.find('.announcer'));
+            ), this.container.find('.announcer_container'));
 
             this.container.find('button').click($.proxy(this._controller.onStartPressed, this._controller));
         },

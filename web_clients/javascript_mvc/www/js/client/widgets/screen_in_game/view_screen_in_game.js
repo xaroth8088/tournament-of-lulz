@@ -7,7 +7,8 @@ define(['require', 'jsclass/min/core', 'client/base/view',
 	'client/widgets/bracket/widget_bracket',
 	'client/widgets/selecting/widget_selecting',
 	'client/widgets/victory/widget_victory',
-	'client/widgets/error/widget_error'
+	'client/widgets/error/widget_error',
+    'client/widgets/rpgsay/widget_rpgsay'
 	], function (require) {
 	'use strict';
 	var View = require('client/base/view'),
@@ -15,7 +16,8 @@ define(['require', 'jsclass/min/core', 'client/base/view',
 		WidgetBracket = require('client/widgets/bracket/widget_bracket'),
 		WidgetSelecting = require('client/widgets/selecting/widget_selecting'),
 		WidgetVictory = require('client/widgets/victory/widget_victory'),
-		WidgetError = require('client/widgets/error/widget_error');
+		WidgetError = require('client/widgets/error/widget_error'),
+        WidgetRPGSay = require('client/widgets/rpgsay/widget_rpgsay');
 	
 	return new JS.Class(View, {
 		'initialize': function() {
@@ -24,6 +26,7 @@ define(['require', 'jsclass/min/core', 'client/base/view',
 			this.mode = null;
 			this.active_widget = null;
 			this._has_preloaded = false;
+            this.rpgsay_model = new WidgetRPGSay.model();
 		},
 
 		'_initTemplate': function() {
@@ -36,7 +39,16 @@ define(['require', 'jsclass/min/core', 'client/base/view',
 				<div class="bracket"></div>\
 				<div class="victory"></div>\
 				<div class="error"></div>\
+			    <div class="announcer_container"></div>\
 			');
+
+            this.addSubwidget(new WidgetRPGSay.controller(
+                this._controller,
+                new WidgetRPGSay.view(),
+                {
+                    'rpgsay_model': this.rpgsay_model
+                }
+            ), this.container.find('.announcer_container'));
 		},
 
 		'_draw': function() {
@@ -133,7 +145,7 @@ define(['require', 'jsclass/min/core', 'client/base/view',
 		},
 
 		'_drawSelecting': function() {
-			var selecting_container, selected_callback;
+			var selecting_container, selected_callback, match;
 
 			selecting_container = this.container.find('.selecting');
 
@@ -143,6 +155,12 @@ define(['require', 'jsclass/min/core', 'client/base/view',
 				'tournament_model': this.models.tournament_model
 			} );
 			this.addSubwidget( this.active_widget, selecting_container );
+
+            // Set up the announcer
+			match = this.models.tournament_model.getCurrentRoundData();
+
+            this.container.find('.announcer_container').show();
+            this.rpgsay_model.runScript(this.models.page_model.announcer.getVersusScript(match));
 
 			selecting_container.show();
 		},
@@ -163,7 +181,7 @@ define(['require', 'jsclass/min/core', 'client/base/view',
 		},
 		
 		'_drawVictory': function() {
-			var victory_container;
+			var victory_container, winner;
 
 			victory_container = this.container.find('.victory');
 
@@ -174,6 +192,10 @@ define(['require', 'jsclass/min/core', 'client/base/view',
 			this.addSubwidget( this.active_widget, victory_container );
 
 			victory_container.show();
+
+			winner = this.models.tournament_model.getWinnerData();
+            this.container.find('.announcer_container').show();
+            this.rpgsay_model.runScript(this.models.page_model.announcer.getGameOverScript(winner));
 		},
 		
 		'_drawError': function() {
