@@ -219,7 +219,7 @@ define(['require', 'jsclass/min/core', 'client/models/model_announcer'], functio
                             }
                         }
                     }
-                },
+                }
             ];
 
             selected_script = this._selectRandomScript(avail_scripts);
@@ -238,7 +238,8 @@ define(['require', 'jsclass/min/core', 'client/models/model_announcer'], functio
                 {
                     'weight': 100,
                     'script': {
-                        'text': "Player " + player_number + " clocks in at " + Math.floor(image.rating) + " points.  Let's see if that's enough to win!",
+                        'text': "Player " + player_number + " clocks in at " + Math.floor(image.rating) +
+                            " points.  Let's see if that's enough to win!",
                         'events': {
                             0: {
                                 'mood': 'neutral'
@@ -249,7 +250,8 @@ define(['require', 'jsclass/min/core', 'client/models/model_announcer'], functio
                 {
                     'weight': 100,
                     'script': {
-                        'text': "Can player " + player_number + " really win with " + Math.floor(image.rating) + " points?",
+                        'text': "Can player " + player_number + " really win with " + Math.floor(image.rating) +
+                            " points?",
                         'events': {
                             0: {
                                 'mood': 'concerned'
@@ -260,7 +262,8 @@ define(['require', 'jsclass/min/core', 'client/models/model_announcer'], functio
                 {
                     'weight': 100,
                     'script': {
-                        'text': "Player " + player_number + ", is \"" + this._shortenTitle(image.title) + "\" really the best name you could come up with?",
+                        'text': "Player " + player_number + ", is \"" + this._shortenTitle(image.title) +
+                            "\" really the best name you could come up with?",
                         'events': {
                             0: {
                                 'mood': 'neutral'
@@ -377,7 +380,8 @@ define(['require', 'jsclass/min/core', 'client/models/model_announcer'], functio
                 {
                     'weight': 100,
                     'script': {
-                        'text': "Player " + player_number + " dominates with " + Math.floor(image.rating) + " points, and is a shoe-in to win it this time.",
+                        'text': "Player " + player_number + " dominates with " + Math.floor(image.rating) +
+                            " points, and is a shoe-in to win it this time.",
                         'events': {
                             0: {
                                 'mood': 'happy'
@@ -504,7 +508,9 @@ define(['require', 'jsclass/min/core', 'client/models/model_announcer'], functio
                 {
                     'weight': 100,
                     'script': {
-                        'text': "Even though they differ by " + Math.abs(Math.floor(match.player_1.rating - match.player_2.rating)) + " points, both players are strong contenders.",
+                        'text': "Even though they differ by " +
+                            Math.abs(Math.floor(match.player_1.rating - match.player_2.rating)) +
+                            " points, both players are strong contenders.",
                         'events': {
                             0: {
                                 'mood': 'neutral'
@@ -669,14 +675,71 @@ define(['require', 'jsclass/min/core', 'client/models/model_announcer'], functio
         },
 
         'getGameOverScript': function (winner) {
-            var script;
+            var avail_scripts, script, selected_script, len;
 
-            // TODO: randomize the script
+            avail_scripts = [
+                {
+                    'weight': 100,
+                    'script': {
+                        'text': "Congratulations to \"" + this._shortenTitle(winner.title) + "\"!",
+                        'events': {
+                            0: {
+                                'mood': 'happy'
+                            }
+                        }
+                    }
+                },
+                {
+                    'weight': 100,
+                    'script': {
+                        'text': "I knew all along that \"" + this._shortenTitle(winner.title) + "\" would win.",
+                        'events': {
+                            0: {
+                                'mood': 'happy'
+                            }
+                        }
+                    }
+                },
+                {
+                    'weight': 100,
+                    'script': {
+                        'text': "With a rating of " + Math.floor(winner.rating) + " points, was there ever any doubt?",
+                        'events': {
+                            0: {
+                                'mood': 'happy'
+                            }
+                        }
+                    }
+                },
+                {
+                    'weight': 50,
+                    'script': {
+                        'text': "I can't believe \"" + this._shortenTitle(winner.title) + "\" won! I shouldn't have made that bet!",
+                        'events': {
+                            0: {
+                                'mood': 'surprised'
+                            }
+                        }
+                    }
+                }
+            ];
 
-            script = this._getBaseScript();
-            script.text = "Winner:" + winner.title;
-            script.events[0].mood = 'surprised';
+            // Special for the one with the title in it
+            len = this._shortenTitle(winner.title).length + 24;
+            avail_scripts[3].script.events[len] = {
+                'text_speed': 1000
+            };
+            avail_scripts[3].script.events[len + 1] = {
+                'text_speed': 50,
+                'mood': 'hurt'
+            };
 
+            selected_script = this._selectRandomScript(avail_scripts);
+            if (selected_script === null) {
+                return null;
+            }
+
+            script = $.extend(true, {}, this._getBaseScript(), selected_script);
             return script;
         }
     });
