@@ -44,7 +44,7 @@ define(['require', 'jsclass/min/core', 'client/base/view', 'confetti/confetti', 
             clearInterval(this.timer);
 
             this.timer = setInterval(function() {
-                CONFETTIS_PER_SHAKE = 50;
+                CONFETTIS_PER_SHAKE = 40;
 
                 startConfetti();
             }, 1000);
