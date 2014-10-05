@@ -83,6 +83,7 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
             this._setSpeakerImage();
 
             this.text_box.text(this.models.rpgsay_model.getDisplayText());
+            this.text_box.scrollTop(this.text_box.outerHeight());
 
             text_incomplete = this.models.rpgsay_model.advanceText();
 
