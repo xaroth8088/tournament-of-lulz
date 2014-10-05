@@ -145,7 +145,7 @@ define(['require', 'jsclass/min/core', 'client/base/view',
 		},
 
 		'_drawSelecting': function() {
-			var selecting_container, selected_callback, match;
+			var selecting_container, selected_callback, match, script;
 
 			selecting_container = this.container.find('.selecting');
 
@@ -160,7 +160,14 @@ define(['require', 'jsclass/min/core', 'client/base/view',
 			match = this.models.tournament_model.getCurrentRoundData();
 
             this.container.find('.announcer_container').show();
-            this.rpgsay_model.runScript(this.models.page_model.announcer.getVersusScript(match));
+            script = this.models.page_model.announcer.getVersusScript(match);
+
+            // Always say something for the final round
+            while( script === false && this.models.tournament_model.round === this.models.tournament_model.total_rounds - 1 ) {
+                script = this.models.page_model.announcer.getVersusScript(match);
+            }
+
+            this.rpgsay_model.runScript(script);
 
 			selecting_container.show();
 		},

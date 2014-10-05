@@ -67,6 +67,17 @@ define(['require', 'jsclass/min/core', 'client/base/model'], function (require) 
             }
 
             return null;
+        },
+
+        '_shortenTitle': function( title ) {
+            var len = 40;
+
+            // Sometimes, an image's title is too long for a good display experience, so shorten it up a bit here
+            if( title.length <= len ) {
+                return title;
+            }
+
+            return title.substr(0,len - 3) + '...';
         }
     });
 });
