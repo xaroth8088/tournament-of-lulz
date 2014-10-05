@@ -47,6 +47,26 @@ define(['require', 'jsclass/min/core', 'client/base/model'], function (require) 
 
         'getGameOverScript': function () {
             return false;
+        },
+
+        '_selectRandomScript': function( scripts ) {
+            var total, i, len, roll;
+
+            total = 0;
+            for( i = 0, len = scripts.length; i < len; i++ ) {
+                total += scripts[i].weight;
+            }
+
+            roll = Math.random() * total;
+            total = 0;
+            for( i = 0, len = scripts.length; i < len; i++ ) {
+                total += scripts[i].weight;
+                if( total > roll ) {
+                    return scripts[i].script;
+                }
+            }
+
+            return null;
         }
     });
 });

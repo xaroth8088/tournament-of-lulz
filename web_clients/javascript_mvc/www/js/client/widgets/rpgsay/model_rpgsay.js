@@ -12,7 +12,7 @@
                             Most likely, you'll want to set an event for character 0 with your starting state.
         * open_speed (int) [200] - The time, in ms, taken to open the box initially.
         * face_appear_speed (int) [400] - The time, in ms, taken to show the character portrait initially.
-        * autoclose_delay (int) [1000] - The delay, in ms, before the dialog box automatically dismisses itself.
+        * autoclose_delay (int) [1250] - The delay, in ms, before the dialog box automatically dismisses itself.
         * autoclose_speed (int) [200] - The time, in ms, taken to close the box when done.
 
 
@@ -42,7 +42,7 @@ define(['require', 'jsclass/min/core', 'client/base/model'], function (require) 
             this.speaker = null;
             this.mood = "neutral";
             this.text_speed = 50;
-            this.autoclose_delay = 1000;
+            this.autoclose_delay = 1250;
             this.open_speed = 200;
             this.face_appear_speed = 400;
             this.autoclose_speed = 200;

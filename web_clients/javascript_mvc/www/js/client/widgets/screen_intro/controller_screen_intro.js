@@ -33,11 +33,16 @@ define([
 		},
 
         'onTalkTimerFired': function() {
-            this.models.rpgsay_model.runScript(this.models.page_model.announcer.getTitleScript());
+            this.models.rpgsay_model.runScript(this.models.page_model.announcer.getTitleScript(this.models.top_images_model));
         },
 
 		'onStartPressed': function() {
 			this.models.page_model.changeScreen( "IN_GAME" );
-		}
+		},
+
+        'destroy': function() {
+            clearInterval(this.talk_timer);
+            this.callSuper();
+        }
 	});
 });
