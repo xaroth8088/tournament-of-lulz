@@ -52,16 +52,11 @@ define(['require', 'jsclass/min/core', 'client/base/model'], function (require) 
             this._text_start = 0;
 
             this.speaker_on_left = true;
-
-            this._running_script = false;
         },
 
         'runScript': function(script) {
-            if( this._running_script !== false ) {
-                return; // Don't permit switching the script while a previous one is running.
-            }
-
             if( script === false || script === null ) {
+                this._resetToDefaults();
                 return; // Don't do anything if given an empty script
             }
 
@@ -87,8 +82,6 @@ define(['require', 'jsclass/min/core', 'client/base/model'], function (require) 
             // Apply any event at position 0, so that initial state can be properly drawn
             this._applyEvents();
 
-            this._running_script = true;
-
             this.modelWasUpdated();
 		},
 
@@ -101,7 +94,6 @@ define(['require', 'jsclass/min/core', 'client/base/model'], function (require) 
 
             this.text_position++;
             if( this.text_position > this.script.text.length ) {
-                this._running_script = false;
                 return false;
             }
 

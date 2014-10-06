@@ -33,6 +33,9 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
                 return;
             }
 
+            clearTimeout(this.timer);
+            this._initTemplate();
+
             this.container.show();
 
             // In theory, we're only redrawing when the model gets a new script, so kick things off
@@ -97,7 +100,7 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
             } else {
                 // Speaker has changed sides
                 // ( This will chain back into _drawTextFrame again )
-                setTimeout($.proxy( this._animateFaceSideChange, this), this.models.rpgsay_model.text_speed );
+                this.timer = setTimeout($.proxy( this._animateFaceSideChange, this), this.models.rpgsay_model.text_speed );
             }
         },
 
