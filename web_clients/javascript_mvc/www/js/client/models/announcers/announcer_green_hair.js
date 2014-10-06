@@ -721,6 +721,32 @@ define(['require', 'jsclass/min/core', 'client/models/model_announcer'], functio
                             }
                         }
                     }
+                },
+                {
+                    'weight': 100,
+                    'script': {
+                        'text': "To the victor go the spoils! Wait, \"Victor\"? I thought the winner's name was \"" +
+                            winner.title + "\"!",
+                        'events': {
+                            0: {
+                                'mood': 'happy'
+                            },
+                            29: {
+                                'text_speed': 1000
+                            },
+                            30: {
+                                'text_speed': 50,
+                                'mood': 'concerned'
+                            },
+                            45: {
+                                'text_speed': 1000
+                            },
+                            46: {
+                                'text_speed': 50,
+                                'mood': 'surprised'
+                            }
+                        }
+                    }
                 }
             ];
 
