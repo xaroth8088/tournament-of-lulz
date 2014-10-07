@@ -101,6 +101,9 @@ define(['require', 'jsclass/min/core', 'client/base/model'], function (require) 
         },
 
         'getDisplayText': function() {
+            if( this.script === null || this.script === undefined || this.script === false ) {
+                return "";
+            }
             return this.script.text.substr(this._text_start, this.text_position - this._text_start);
         },
 

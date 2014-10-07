@@ -29,7 +29,7 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
         },
 
         '_draw': function () {
-            if( this.models.rpgsay_model.script === null ) {
+            if (this.models.rpgsay_model.script === null) {
                 return;
             }
 
@@ -47,8 +47,8 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
             this._animateContainer();
         },
 
-        '_setSpeakerImage': function() {
-            if( this._destroyed === true ) {
+        '_setSpeakerImage': function () {
+            if (this._destroyed === true) {
                 return;
             }
 
@@ -57,7 +57,7 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
             this.face.removeClass();
             this.face.addClass("face");
 
-            if( this.models.rpgsay_model.speaker_on_left === false ) {
+            if (this.models.rpgsay_model.speaker_on_left === false) {
                 this.face.addClass("right");
                 this.face.css({
                     "transform": "scaleX(-1)"
@@ -77,11 +77,17 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
         '_drawTextFrame': function () {
             var text_incomplete;
 
-            if( this._destroyed === true ) {
+            if (this._destroyed === true) {
                 return;
             }
 
             clearTimeout(this.timer);
+
+            if (this.models.rpgsay_model.script === false ||
+                this.models.rpgsay_model.script === null ||
+                this.models.rpgsay_model.script === undefined) {
+                return;
+            }
 
             this._setSpeakerImage();
 
@@ -90,7 +96,7 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
 
             text_incomplete = this.models.rpgsay_model.advanceText();
 
-            if( this.last_speaker_side === this.models.rpgsay_model.speaker_on_left ) {
+            if (this.last_speaker_side === this.models.rpgsay_model.speaker_on_left) {
                 // Normal text continues until end
                 if (text_incomplete === true) {
                     this.timer = setTimeout($.proxy(this._drawTextFrame, this), this.models.rpgsay_model.text_speed);
@@ -100,12 +106,12 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
             } else {
                 // Speaker has changed sides
                 // ( This will chain back into _drawTextFrame again )
-                this.timer = setTimeout($.proxy( this._animateFaceSideChange, this), this.models.rpgsay_model.text_speed );
+                this.timer = setTimeout($.proxy(this._animateFaceSideChange, this), this.models.rpgsay_model.text_speed);
             }
         },
 
-        '_animateFaceSideChange': function() {
-            if( this._destroyed === true ) {
+        '_animateFaceSideChange': function () {
+            if (this._destroyed === true) {
                 return;
             }
 
@@ -113,10 +119,10 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
             this._animateFaceOut();
         },
 
-        '_animateFaceOut': function() {
+        '_animateFaceOut': function () {
             var x_offset;
 
-            if( this._destroyed === true ) {
+            if (this._destroyed === true) {
                 return;
             }
 
@@ -131,8 +137,8 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
             }, this.models.rpgsay_model.face_appear_speed, $.proxy(this._animateFace, this));
         },
 
-        '_animateContainer': function() {
-            if( this._destroyed === true ) {
+        '_animateContainer': function () {
+            if (this._destroyed === true) {
                 return;
             }
 
@@ -145,10 +151,10 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
             }, this.models.rpgsay_model.open_speed, $.proxy(this._animateFace, this));
         },
 
-        '_animateFace': function() {
+        '_animateFace': function () {
             var x_offset;
 
-            if( this._destroyed === true ) {
+            if (this._destroyed === true) {
                 return;
             }
 
@@ -169,8 +175,8 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
             }, this.models.rpgsay_model.pre_speech_delay, $.proxy(this._drawTextFrame, this));
         },
 
-        '_animateClose': function() {
-            if( this._destroyed === true ) {
+        '_animateClose': function () {
+            if (this._destroyed === true) {
                 return;
             }
 
