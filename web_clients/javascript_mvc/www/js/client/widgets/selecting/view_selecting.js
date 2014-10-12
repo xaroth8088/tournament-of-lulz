@@ -38,19 +38,19 @@ define([
             image_2.click($.proxy(this._onImage2Clicked, this));
 
             // Animations
-            image_1.transition({
+            image_1.css({
                 opacity: 0
             }).transition({
                 opacity: 1
             }, 100);
 
-            image_2.transition({
+            image_2.css({
                 opacity: 0
             }).transition({
                 opacity: 1
             }, 100);
 
-            this.container.find('.versus').transition({
+            this.container.find('.versus').css({
                 scale: 9
             }).transition({
                 scale: 1

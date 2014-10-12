@@ -28,8 +28,8 @@ define(['require', 'jsclass/min/core', 'client/base/controller', 'client/models/
 		},
 
 		'onSelectionMade': function( image_id ) {
-			this.models.screen_in_game_model.setState( this.models.screen_in_game_model.CONSTANTS.STATES.BRACKET);
 			this.models.tournament_model.registerWinner(image_id);
+			this.models.screen_in_game_model.setState( this.models.screen_in_game_model.CONSTANTS.STATES.BRACKET);
 		}
 	});
 });

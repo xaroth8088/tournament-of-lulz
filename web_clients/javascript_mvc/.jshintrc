@@ -1,5 +1,5 @@
 {
-    "predef": ["define", "JS", "$"],
+    "predef": ["define", "JS", "$", "describe", "it", "beforeEach", "spyOn", "afterEach", "expect"],
     "maxlen": 150,
     "curly": true,
     "eqeqeq": true,

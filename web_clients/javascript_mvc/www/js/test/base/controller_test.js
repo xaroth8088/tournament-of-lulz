@@ -39,6 +39,27 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
 
                 // Cleanup
             });
+
+            it('should throw an exception if started more than once', function() {
+                var self;
+
+                // Setup
+                spyOn(this.mock_view, 'start');
+                this.controller.start();
+
+                // Preconditions
+                expect(this.mock_view.start).toHaveBeenCalled();
+
+                // Run Test
+                self = this;
+                expect(function () {
+                    self.controller.start();
+                }).toThrow();
+
+                // Postconditions
+
+                // Cleanup
+            });
         });
 
         describe('#destroy', function() {

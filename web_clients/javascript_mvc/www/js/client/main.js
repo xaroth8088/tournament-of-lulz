@@ -18,13 +18,20 @@ define(['require', 'jquery', './widgets/page/widget_page'], function (require) {
         loading_text.animate({
             opacity: 0
         }, 500, function(){
+            var page_view;
+
             loading_spinner.remove();
             loading_text.remove();
-            page_widget = new WidgetPage.controller( null, new WidgetPage.view(), {
+
+            // Even though it's out of the normal flow, ensure the page view is attached to the DOM before starting
+            // to help reduce problems with layout later.
+            page_view = new WidgetPage.view();
+            $(document.body).append(page_view.container);
+
+            page_widget = new WidgetPage.controller( null, page_view, {
                 'page_model': new WidgetPage.model()
             });
             page_widget.start();
-            $(document.body).append(page_widget.view.container);
         });
 	}
 

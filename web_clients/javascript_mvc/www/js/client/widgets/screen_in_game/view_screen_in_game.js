@@ -137,17 +137,17 @@ define(['require', 'jsclass/min/core', 'client/base/view',
 			var loading_container;
 
 			loading_container = this.container.find('.loading');
+			loading_container.show();
 
 			this.active_widget = new WidgetLoading.controller( this._controller, new WidgetLoading.view() );
 			this.addSubwidget( this.active_widget, loading_container );
-
-			loading_container.show();
 		},
 
 		'_drawSelecting': function() {
 			var selecting_container, selected_callback, match, script;
 
 			selecting_container = this.container.find('.selecting');
+			selecting_container.show();
 
 			selected_callback = $.proxy(this._controller.onSelectionMade, this._controller);
 
@@ -168,8 +168,6 @@ define(['require', 'jsclass/min/core', 'client/base/view',
             }
 
             this.rpgsay_model.runScript(script);
-
-			selecting_container.show();
 		},
 		
 		'_drawBracket': function() {
@@ -178,27 +176,25 @@ define(['require', 'jsclass/min/core', 'client/base/view',
 			callback = $.proxy(this._controller.advanceStateToSelection, this._controller);
 
 			bracket_container = this.container.find('.bracket');
+			bracket_container.show();
 
 			this.active_widget = new WidgetBracket.controller( this._controller, new WidgetBracket.view( callback ), {
 				'tournament_model': this.models.tournament_model
 			} );
 			this.addSubwidget( this.active_widget, bracket_container );
-
-			bracket_container.show();
 		},
 		
 		'_drawVictory': function() {
 			var victory_container, winner;
 
 			victory_container = this.container.find('.victory');
+			victory_container.show();
 
 			this.active_widget = new WidgetVictory.controller( this._controller, new WidgetVictory.view(), {
 				'tournament_model': this.models.tournament_model,
 				'page_model': this.models.page_model
 			} );
 			this.addSubwidget( this.active_widget, victory_container );
-
-			victory_container.show();
 
 			winner = this.models.tournament_model.getWinnerData();
             this.container.find('.announcer_container').show();
@@ -209,11 +205,10 @@ define(['require', 'jsclass/min/core', 'client/base/view',
 			var error_container;
 
 			error_container = this.container.find('.error');
+			error_container.show();
 
 			this.active_widget = new WidgetError.controller( this._controller, new WidgetError.view() );
 			this.addSubwidget( this.active_widget, error_container );
-
-			error_container.show();
 		},
 
 		'CONSTANTS': {

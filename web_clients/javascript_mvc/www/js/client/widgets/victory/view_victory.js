@@ -23,7 +23,7 @@ define(['require', 'jsclass/min/core', 'client/base/view', 'confetti/confetti', 
             // Victory!
             victory = $("<div/>").addClass('victory_image');
             this.container.append(victory);
-            victory.transition({
+            victory.css({
                 scale: 30,
                 opacity: 0
             }).transition({

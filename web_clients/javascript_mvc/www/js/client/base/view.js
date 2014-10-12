@@ -37,10 +37,7 @@ define(['require', 'jsclass/min/core'], function (require) {
 			this._watchModels(models);
 			this._initTemplate();
 
-			// To avoid scenarios where draw is called before the rendering engine has had time to reflow
-			// (especially important for widgets who care about their available width), defer the initial
-			// _draw() call to after the next reflow.
-			setTimeout($.proxy(this._startupDraw, this),0);
+            this._draw();
 		},
 
 		'_initTemplate': function() {

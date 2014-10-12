@@ -1,45 +1,45 @@
-define(['require', 'squire', 'jquery'], function(require, Squire) {
+define(['require', 'squire', 'jquery'], function (require, Squire) {
     'use strict';
-    describe('View', function() {
+    ddescribe('View', function () {
         var View, MockWidget;
 
         // Mock dependencies and module loading
-        beforeEach(function(done) {
+        beforeEach(function (done) {
             var injector;
 
             injector = new Squire();
 
-            injector.require(['test/mocks/widget/mock_widget'], function(mock_widget) {
+            injector.require(['test/mocks/widget/mock_widget'], function (mock_widget) {
                 MockWidget = mock_widget;
                 done();
             });
         });
 
-        beforeEach(function(done) {
-            var injector, builder;
+        beforeEach(function (done) {
+            var injector;
 
             injector = new Squire();
 
-            injector.require(['client/base/view'], function(view_with_mocks) {
+            injector.require(['client/base/view'], function (view_with_mocks) {
                 View = view_with_mocks;
                 done();
             });
         });
 
-        beforeEach(function() {
+        beforeEach(function () {
             this.view = new View();
-            this.mock_widget = new MockWidget.controller( this.view._controller, new View() );
+            this.mock_widget = new MockWidget.controller(this.view._controller, new View());
             spyOn(this.mock_widget, 'destroy').and.callThrough();
         });
 
-        afterEach(function() {
+        afterEach(function () {
             this.view.destroy();
         });
 
         // Tests
-        describe('#startup', function() {
+        describe('#startup', function () {
             // Despite the _ in the name, _initTemplate() is part of the interface contract with its subclasses
-            it('should create a blank container div and set up its template', function() {
+            it('should create a blank container div and set up its template', function () {
                 // Setup
 
                 // Preconditions
@@ -56,7 +56,7 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
                 // Cleanup
             });
 
-            it('should watch its models', function() {
+            it('should watch its models', function () {
                 var mock_model;
 
                 // Setup
@@ -65,7 +65,7 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
                 spyOn(mock_model, 'watch').and.callThrough();
 
                 // Preconditions
-                expect(this.view.models['mock_model']).toBeNull();
+                expect(this.view.models.mock_model).toBeNull();
                 expect(mock_model.watch).not.toHaveBeenCalled();
 
                 // Run Test
@@ -74,24 +74,53 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
                 });
 
                 // Postconditions
-                expect(this.view.models['mock_model']).not.toBeNull();
+                expect(this.view.models.mock_model).not.toBeNull();
                 expect(mock_model.watch).toHaveBeenCalled();
 
                 // Cleanup
             });
 
-            it('should behave correctly even when Object has been extended', function() {
+            it("should not watch models that haven't been named it its constructor", function() {
+                var mock_model, mock_not_present;
+
+                // Setup
+                this.view = new View(['mock_model']);
+                mock_model = new MockWidget.model();
+                spyOn(mock_model, 'watch').and.callThrough();
+
+                mock_not_present = jasmine.createSpyObj('mock_not_present', ['watch']);
+
+                // Preconditions
+                expect(this.view.models.mock_model).toBeNull();
+                expect(mock_model.watch).not.toHaveBeenCalled();
+
+                // Run Test
+                this.view.start(null, {
+                    'mock_model': mock_model,
+                    'mock_not_present': {}
+                });
+
+                // Postconditions
+                expect(this.view.models.mock_model).not.toBeNull();
+                expect(mock_model.watch).toHaveBeenCalled();
+                expect(mock_not_present.watch).not.toHaveBeenCalled();
+
+                // Cleanup
+            });
+
+            it('should behave correctly even when Object has been extended', function () {
                 var mock_model;
 
                 // Setup
-                Object.prototype.mock_example = function() {};
+                Object.prototype.mock_example = function () {
+                };
 
                 this.view = new View(['mock_model']);
                 mock_model = new MockWidget.model();
                 spyOn(mock_model, 'watch').and.callThrough();
 
                 // Preconditions
-                expect(this.view.models['mock_model']).toBeNull();
+                expect(this.view.models.mock_model).toBeNull();
                 expect(mock_model.watch).not.toHaveBeenCalled();
 
                 // Run Test
@@ -100,16 +129,37 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
                 });
 
                 // Postconditions
-                expect(this.view.models['mock_model']).not.toBeNull();
+                expect(this.view.models.mock_model).not.toBeNull();
                 expect(mock_model.watch).toHaveBeenCalled();
 
                 // Cleanup
                 delete Object.prototype.mock_example;
             });
+
+            it('should throw an exception if started more than once', function () {
+                var self;
+
+                // Setup
+                spyOn(this.view, '_initTemplate');
+                this.view.start();
+
+                // Preconditions
+                expect(this.view._initTemplate).toHaveBeenCalled();
+
+                // Run Test
+                self = this;
+                expect(function () {
+                    self.view.start();
+                }).toThrow();
+
+                // Postconditions
+
+                // Cleanup
+            });
         });
 
-        describe('#destroy', function() {
-            it('should destroy its subwidgets, unwatch its models, and remove itself from the DOM', function() {
+        describe('#destroy', function () {
+            it('should destroy its subwidgets, unwatch its models, and remove itself from the DOM', function () {
                 var temp_parent, mock_widget2, mock_model;
 
                 // Setup
@@ -125,7 +175,7 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
                     'mock_model': mock_model
                 });
 
-                mock_widget2 = new MockWidget.controller( this.view._controller, new View() );
+                mock_widget2 = new MockWidget.controller(this.view._controller, new View());
                 spyOn(mock_widget2, 'destroy').and.callThrough();
 
                 this.view.addSubwidget(this.mock_widget, this.view.container);
@@ -134,7 +184,7 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
                 // Preconditions
                 expect(this.view.container.children()[0]).toBe(this.mock_widget.view.container[0]);
                 expect(this.view.container.children()[1]).toBe(mock_widget2.view.container[0]);
-                expect(this.view.models['mock_model']).not.toBeNull();
+                expect(this.view.models.mock_model).not.toBeNull();
                 expect(mock_model.watch).toHaveBeenCalled();
                 expect(mock_model.unwatch).not.toHaveBeenCalled();
 
@@ -151,11 +201,12 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
                 temp_parent.remove();
             });
 
-            it('should behave correctly even when Object has been extended', function() {
+            it('should behave correctly even when Object has been extended', function () {
                 var mock_model;
 
                 // Setup
-                Object.prototype.mock_example = function() {};
+                Object.prototype.mock_example = function () {
+                };
 
                 this.view = new View(['mock_model']);
                 mock_model = new MockWidget.model();
@@ -167,7 +218,7 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
                 });
 
                 // Preconditions
-                expect(this.view.models['mock_model']).not.toBeNull();
+                expect(this.view.models.mock_model).not.toBeNull();
                 expect(mock_model.watch).toHaveBeenCalled();
                 expect(mock_model.unwatch).not.toHaveBeenCalled();
 
@@ -182,8 +233,8 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
             });
         });
 
-        describe('#subwidgets', function() {
-            it('should append the child controller to DOM', function() {
+        describe('#subwidgets', function () {
+            it('should append the child controller to DOM', function () {
                 // Setup
 
                 // Preconditions
@@ -197,7 +248,7 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
                 // Cleanup
             });
 
-            it('should not re-append the child controller to DOM', function() {
+            it('should not re-append the child controller to DOM', function () {
                 var test_view, test_widget;
 
                 // Setup
@@ -209,7 +260,7 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
                 // Preconditions
 
                 // Run Test
-                expect(function() {
+                expect(function () {
                     test_view.addSubwidget(test_widget, test_view.container);
                 }).toThrow("Attempted to re-add a subwidget.");
 
@@ -219,11 +270,11 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
                 // Cleanup
             });
 
-            it('should remove a specified subwidget, without touching others', function() {
+            it('should remove a specified subwidget, without touching others', function () {
                 // Setup
                 var mock_widget2;
 
-                mock_widget2 = new MockWidget.controller( this.view._controller, new View() );
+                mock_widget2 = new MockWidget.controller(this.view._controller, new View());
                 spyOn(mock_widget2, 'destroy').and.callThrough();
 
                 this.view.addSubwidget(this.mock_widget, this.view.container);
@@ -246,7 +297,7 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
                 // Cleanup
             });
 
-            it('should throw an exception if a non-added subwidget is removed', function() {
+            it('should throw an exception if a non-added subwidget is removed', function () {
                 var test_widget, test_view;
 
                 // Setup
@@ -258,18 +309,18 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
                 // Run Test
 
                 // Postconditions
-                expect(function() {
+                expect(function () {
                     test_view.removeSubwidget(test_widget);
                 }).toThrow();
 
                 // Cleanup
             });
 
-            it('should remove all subwidgets', function() {
+            it('should remove all subwidgets', function () {
                 // Setup
                 var mock_widget2;
 
-                mock_widget2 = new MockWidget.controller( this.view._controller, new View() );
+                mock_widget2 = new MockWidget.controller(this.view._controller, new View());
                 spyOn(mock_widget2, 'destroy').and.callThrough();
 
                 this.view.addSubwidget(this.mock_widget, this.view.container);
@@ -291,7 +342,7 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
                 // Cleanup
             });
 
-            it('should do nothing if asked to remove a null subwidget' , function() {
+            it('should do nothing if asked to remove a null subwidget', function () {
                 // Setup
                 this.view.addSubwidget(this.mock_widget, this.view.container);
 
@@ -308,9 +359,9 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
             });
         });
 
-        describe('#model updates', function() {
+        describe('#model updates', function () {
             // Despite the _ in the name, _draw() is part of the interface contract with its subclasses
-            it('should call _draw() when its model is updated', function() {
+            it('should call _draw() when its model is updated', function () {
                 // Setup
                 spyOn(this.view, '_draw').and.callThrough();
 
@@ -324,6 +375,24 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
 
                 // Cleanup
             });
+
+            it('should not call _draw() when the view was destroyed and its model is updated', function () {
+                // Normally, this happens when a view is destroyed part-way through a model update, due to an action by its parent
+                // Setup
+                spyOn(this.view, '_draw').and.callThrough();
+                this.view.destroy();
+
+                // Preconditions
+
+                // Run Test
+                this.view.onModelUpdated();
+
+                // Postconditions
+                expect(this.view._draw).not.toHaveBeenCalled();
+
+                // Cleanup
+            });
+
         });
     });
 });
