@@ -11,7 +11,7 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
             this.callSuper(['rpgsay_model']);
             this.timer = null;
             this.container.addClass('widget_rpgsay');
-            this.last_speaker_side = true;
+            this._last_speaker_on_left = true;
             this._running_script = false;
         },
 
@@ -23,6 +23,10 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
 
             this.text_box = $('<div/>').addClass('text_box');
             this.container.append(this.text_box);
+
+            this._last_speaker = null;
+            this._last_speaker_mood = null;
+            this._last_speaker_on_left = true;
 
             // Hide it by default, so that appearing is always smooth
             this.container.hide();
@@ -42,7 +46,7 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
             this._setSpeakerImage();    // Set the initial speaker image, to reduce pop-in effect.
 
             // Set the initial side for the speaker
-            this.last_speaker_side = this.models.rpgsay_model.speaker_on_left;
+            this._last_speaker_on_left = this.models.rpgsay_model.speaker_on_left;
 
             this._animateContainer();
         },
@@ -52,21 +56,16 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
                 return;
             }
 
+            if (this._last_speaker === this.models.rpgsay_model.speaker &&
+                this._last_speaker_mood === this.models.rpgsay_model.mood &&
+                this._last_speaker_on_left === this.models.rpgsay_model.speaker_on_left) {
+                return;
+            }
+
             this.container.removeClass();
             this.container.addClass("widget_rpgsay");
             this.face.removeClass();
             this.face.addClass("face");
-
-            if (this.models.rpgsay_model.speaker_on_left === false) {
-                this.face.addClass("right");
-                this.face.css({
-                    "transform": "scaleX(-1)"
-                });
-            } else {
-                this.face.css({
-                    "transform": "scaleX(1)"
-                });
-            }
 
             if (this.models.rpgsay_model.speaker !== null && this.models.rpgsay_model.mood) {
                 this.container.addClass(this.models.rpgsay_model.speaker);
@@ -94,9 +93,12 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
             this.text_box.text(this.models.rpgsay_model.getDisplayText());
             this.text_box.scrollTop(this.text_box.outerHeight());
 
+            this._last_speaker = this.models.rpgsay_model.speaker;
+            this._last_speaker_mood = this.models.rpgsay_model.mood;
+
             text_incomplete = this.models.rpgsay_model.advanceText();
 
-            if (this.last_speaker_side === this.models.rpgsay_model.speaker_on_left) {
+            if (this._last_speaker_on_left === this.models.rpgsay_model.speaker_on_left) {
                 // Normal text continues until end
                 if (text_incomplete === true) {
                     this.timer = setTimeout($.proxy(this._drawTextFrame, this), this.models.rpgsay_model.text_speed);
@@ -128,7 +130,7 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
 
             x_offset = -this.face.outerWidth();
 
-            this.last_speaker_side = this.models.rpgsay_model.speaker_on_left;
+            this._last_speaker_on_left = this.models.rpgsay_model.speaker_on_left;
 
             this.face.css({
                 x: 0
@@ -159,6 +161,21 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
             }
 
             this._setSpeakerImage();
+
+            // Set the face direction and order
+            // NOTE: The .css() transforms has to happen here, because otherwise jquery.transit
+            // will override the 'transform' property when running the animations.
+            if (this.models.rpgsay_model.speaker_on_left === false) {
+                this.face.addClass("right");
+                this.face.css({
+                    "transform": "scaleX(-1)"
+                });
+            } else {
+                this.face.removeClass("right");
+                this.face.css({
+                    "transform": "scaleX(1)"
+                });
+            }
 
             this.face.show();
             this.face.outerHeight(this.face.parent().height());
