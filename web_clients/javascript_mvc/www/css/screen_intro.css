@@ -1,8 +1,15 @@
 .widget_screen_intro {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
     background-size: cover;
     background-repeat: no-repeat;
-    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+            flex-direction: column;
     height: 100%;
 }
 
@@ -16,13 +23,23 @@
     background-size: cover;
     background-position: center;
     -webkit-filter: blur(12px) contrast(0.66);
+            filter: blur(12px) contrast(0.66);
     z-index: -1;
 }
 
 .widget_screen_intro > .title_container {
-    flex: 2 2;
+    -webkit-box-flex: 2;
+    -webkit-flex: 2 2;
+        -ms-flex: 2 2;
+            flex: 2 2;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
 }
 
 .widget_screen_intro > .title_container > .title_text {
@@ -34,9 +51,18 @@
 }
 
 .widget_screen_intro > .button_container {
-    flex: 2 2;
+    -webkit-box-flex: 2;
+    -webkit-flex: 2 2;
+        -ms-flex: 2 2;
+            flex: 2 2;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
 }
 
 .widget_screen_intro > .button_container > .start_tournament {
@@ -54,7 +80,13 @@
 }
 
 .widget_screen_intro > .announcer_container {
-    flex: 1 1;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 1;
+        -ms-flex: 1 1;
+            flex: 1 1;
     height: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
 }

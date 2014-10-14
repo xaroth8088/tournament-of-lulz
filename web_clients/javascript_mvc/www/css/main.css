@@ -1,8 +1,17 @@
 body {
     background-color: #ccc;
 
+    display: -webkit-box;
+
+    display: -webkit-flex;
+
+    display: -ms-flexbox;
+
     display: flex;
-    align-items: stretch;
+    -webkit-box-align: stretch;
+    -webkit-align-items: stretch;
+        -ms-flex-align: stretch;
+            align-items: stretch;
 
     position: fixed;
     top: 0;
@@ -13,7 +22,9 @@ body {
     margin: 0px;
     padding: 0px;
 
-    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+
+         box-sizing: border-box;
 }
 
 .initial_loading_text {

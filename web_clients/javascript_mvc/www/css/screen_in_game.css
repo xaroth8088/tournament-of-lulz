@@ -1,17 +1,28 @@
 .widget_screen_in_game {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
-    align-content: stretch;
+    -webkit-align-content: stretch;
+        -ms-flex-line-pack: stretch;
+            align-content: stretch;
     height: 100%;
 }
 
 .widget_screen_in_game > div {
     width: 100%;
     height: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
-    align-content: stretch;
+    -webkit-align-content: stretch;
+        -ms-flex-line-pack: stretch;
+            align-content: stretch;
 
     background-color: #fff;
-    background-image: linear-gradient(#eee 0px, transparent 0px), linear-gradient(88deg, #eee 0px, transparent 0px), linear-gradient(rgba(175, 175, 175, .3) 1px, transparent 1px), linear-gradient(90deg, rgba(175, 175, 175, .3) 1px, transparent 1px);
+    background-image: -webkit-linear-gradient(#eee 1px, transparent 0px), -webkit-linear-gradient(2deg, #eee 0px, transparent 0px), -webkit-linear-gradient(rgba(175, 175, 175, .3) 1px, transparent 1px), -webkit-linear-gradient(0deg, rgba(175, 175, 175, .3) 1px, transparent 1px);
+    background-image: linear-gradient(#eee 1px, transparent 0px), linear-gradient(88deg, #eee 0px, transparent 0px), linear-gradient(rgba(175, 175, 175, .3) 1px, transparent 1px), linear-gradient(90deg, rgba(175, 175, 175, .3) 1px, transparent 1px);
     background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
     background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
 }

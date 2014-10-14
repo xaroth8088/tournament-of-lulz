@@ -1,6 +1,11 @@
 .widget_bracket {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
-    align-content: stretch;
+    -webkit-align-content: stretch;
+        -ms-flex-line-pack: stretch;
+            align-content: stretch;
 }
 
 .widget_bracket > .bracket {
@@ -27,5 +32,6 @@
 
 .sb-match_lost {
     -webkit-filter: sepia() contrast(0.5) blur(2px);
+            filter: sepia() contrast(0.5) blur(2px);
 }
 /* END SIMPLE BRACKET STYLING */
