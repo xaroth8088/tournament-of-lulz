@@ -1,3 +1,5 @@
 #!/bin/bash
-autoprefixer `find . -name '*.css'` -b none --safe
-autoprefixer `find . -name '*.css'` --safe
+autoprefixer `find css/ -name '*.css'` -b none --safe
+autoprefixer `find css/ -name '*.css'` --safe
+autoprefixer `find js/client/lib/ -name '*.css'` -b none --safe
+autoprefixer `find js/client/lib/ -name '*.css'` --safe
