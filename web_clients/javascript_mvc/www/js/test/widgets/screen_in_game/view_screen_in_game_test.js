@@ -57,7 +57,7 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
                 });
 
                 // Postconditions
-                expect(this.view.container.children().length).toBe(5);
+                expect(this.view.container.children().length).toBe(6);
                 expect(this.view.container.find('.loading').length).toBe(1);
                 expect(this.view.container.find('.bracket').length).toBe(1);
                 expect(this.view.container.find('.selecting').length).toBe(1);

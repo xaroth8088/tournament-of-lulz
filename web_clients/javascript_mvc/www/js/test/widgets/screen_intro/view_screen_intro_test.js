@@ -20,9 +20,6 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
 
             injector = new Squire();
 
-            injector.mock('client/widgets/image/controller_image', MockWidget.controller);
-            injector.mock('client/widgets/image/view_image', MockWidget.view);
-
             injector.require(['client/widgets/screen_intro/widget_screen_intro'], function(widget_with_mocks) {
                 WidgetScreenIntro = widget_with_mocks;
                 done();
@@ -37,97 +34,143 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
         // Tests
         describe('#start', function() {
             it("should create a basic layout", function() {
-                var mock_top_images;
+                var mock_top_images, mock_rpgsay, mock_page;
 
                 // Setup
                 mock_top_images = new MockWidget.model();
                 mock_top_images.images = [];
+
+                mock_rpgsay = new MockWidget.model();
+                mock_page = new MockWidget.model();
 
                 // Preconditions
                 expect(this.view.models.top_images_model).toBeNull();
 
                 // Run Test
                 this.view.start(this.mock_controller, {
-                    'top_images_model': mock_top_images
+                    'top_images_model': mock_top_images,
+                    'rpgsay_model': mock_rpgsay,
+                    'page_model': mock_page
                 });
 
                 // Postconditions
-                expect(this.view.container.children('').length).toBe(1);
-                expect(this.view.container.children('button').length).toBe(1);
+                expect(this.view.container.children('').length).toBe(4);
+                expect(this.view.container.find('button').length).toBe(1);
 
                 // Cleanup
             });
         });
 
         describe('#onModelUpdated', function() {
-            var mock_top_images;
+            var mock_top_images, mock_rpgsay, mock_page;
 
             beforeEach( function() {
                 mock_top_images = new MockWidget.model();
                 mock_top_images.images = [];
 
+                mock_rpgsay = new MockWidget.model();
+                mock_page = new MockWidget.model();
+
                 this.view.start(this.mock_controller, {
-                    'top_images_model': mock_top_images
+                    'top_images_model': mock_top_images,
+                    'rpgsay_model': mock_rpgsay,
+                    'page_model': mock_page
                 });
             });
 
-            it("should create and add some image sub-widgets", function() {
-                var i;
+            afterEach( function() {
+                this.view.destroy();
+            });
+
+            it("should set the background image and create an interval to switch the background image periodically", function() {
+                var old_timer;
 
                 // Setup
-
-                // Because we're mocking the Image widget, the actual contents of the images is moot, but the quantity is important.
-                for( i = 0; i < 4; i++ ) {
-                    mock_top_images.images.push({});
-                }
+                this.view.models.top_images_model.images = [];
+                this.view.models.top_images_model.images.push(new MockWidget.model());
+                old_timer = this.view.timer;
 
                 // Preconditions
+                expect(this.view.container.find('.background').css('background-image')).toBe('');
+                expect(old_timer).not.toBeNull();
 
                 // Run Test
                 this.view.onModelUpdated();
 
                 // Postconditions
-                expect(this.view.container.children().length).toBe(5);
-                expect(this.view.container.children('button').length).toBe(1);
+                expect(this.view.container.find('.background').css('background-image')).not.toBe('');
+                expect(this.view.timer).not.toBe(old_timer);
 
                 // Cleanup
             });
 
-            it("should not have any image sub-widgets if model_top_images lacks them", function() {
+            it("should set/replace its interval to update the background image", function() {
+                var old_timer;
+
                 // Setup
+                old_timer = this.view.timer;
 
                 // Preconditions
+                expect(old_timer).not.toBeNull();
 
                 // Run Test
                 this.view.onModelUpdated();
 
                 // Postconditions
-                expect(this.view.container.children('').length).toBe(1);
-                expect(this.view.container.children('button').length).toBe(1);
+                expect(this.view.timer).not.toBe(old_timer);
 
                 // Cleanup
             });
 
-            it("should properly replace the existing sub-widgets and watchers", function() {
-                var i;
+            it("should not update the background image if there are none to show (timer should still update, though)", function() {
+                var old_timer;
 
                 // Setup
+                old_timer = this.view.timer;
+
+                // Preconditions
+                expect(old_timer).not.toBeNull();
+                expect(this.view.container.find('.background').css('background-image')).toBe('');
+
+                // Run Test
                 this.view.onModelUpdated();
 
+                // Postconditions
+                expect(this.view.container.find('.background').css('background-image')).toBe('');
+                expect(this.view.timer).not.toBe(old_timer);
+
+                // Cleanup
+            });
+        });
+
+        describe('#destroy', function() {
+            var mock_top_images, mock_rpgsay, mock_page;
+
+            beforeEach( function() {
+                mock_top_images = new MockWidget.model();
                 mock_top_images.images = [];
-                // Because we're mocking the Image widget, the actual contents of the images is moot, but the quantity is important.
-                for( i = 0; i < 10; i++ ) {
-                    mock_top_images.images.push({});
-                }
+
+                mock_rpgsay = new MockWidget.model();
+                mock_page = new MockWidget.model();
+
+                this.view.start(this.mock_controller, {
+                    'top_images_model': mock_top_images,
+                    'rpgsay_model': mock_rpgsay,
+                    'page_model': mock_page
+                });
+            });
+
+            it('should stop its timer', function() {
+                // Setup
+                spyOn(window, "clearInterval").and.callThrough();
 
                 // Preconditions
 
                 // Run Test
-                this.view.onModelUpdated();
+                this.view.destroy();
 
                 // Postconditions
-                expect(this.view.container.children().length).toBe(11);
-                expect(this.view.container.children('button').length).toBe(1);
+                expect(clearInterval).toHaveBeenCalled();
 
                 // Cleanup
             });

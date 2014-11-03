@@ -52,7 +52,7 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
                 setTimeout(function() {
                     // Postconditions
                     expect(self.view.container.children().length).toBe(0);
-                    expect(self.view.container.css('background-image')).toBe('url(http://localhost:9876/mock_url)');
+                    expect(self.view.container.css('background-image')).not.toBe('');
                     expect(self.view.container.css('display')).not.toBe('none');
 
                     // Cleanup

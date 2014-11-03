@@ -38,10 +38,16 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
             this.mock_model_page = new MockWidget.model();
             this.mock_model_page.changeScreen = jasmine.createSpy('changeScreen');
 
+            this.mock_model_page.announcer = jasmine.createSpy('announcer');
+            this.mock_model_page.announcer.getWelcomeScript = jasmine.createSpy('getWelcomeScript').and.returnValue({});
+
+            this.mock_model_rpgsay = new MockWidget.model();
+
             this.mock_view = new MockWidget.view();
             this.controller = new WidgetScreenIntro.controller(null, this.mock_view, {
                 'page_model': this.mock_model_page,
-                'top_images_model': this.mock_top_images
+                'top_images_model': this.mock_top_images,
+                'rpgsay_model': this.mock_model_rpgsay
             });
         });
 

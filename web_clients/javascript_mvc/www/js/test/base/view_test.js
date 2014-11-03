@@ -1,6 +1,6 @@
 define(['require', 'squire', 'jquery'], function (require, Squire) {
     'use strict';
-    ddescribe('View', function () {
+    describe('View', function () {
         var View, MockWidget;
 
         // Mock dependencies and module loading
