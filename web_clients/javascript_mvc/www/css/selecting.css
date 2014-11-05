@@ -19,6 +19,10 @@
         -ms-flex: 3 3;
             flex: 3 3;
     text-align: center;
+    height: 100%;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
 }
 
 .widget_selecting > .img_holder > img {

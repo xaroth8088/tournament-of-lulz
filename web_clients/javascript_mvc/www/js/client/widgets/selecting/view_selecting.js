@@ -22,12 +22,10 @@ define([
 
 			this.container.addClass( 'widget_selecting' );
 			this.container.html("\
-    			<div class='img_holder'>\
-	    		    <img class='image_1' />\
+    			<div class='img_holder image_1'>\
 			    </div>\
 			    <div class='versus'></div>\
-			    <div class='img_holder'>\
-		    	    <img class='image_2' />\
+			    <div class='img_holder image_2'>\
 			    </div>\
             ");
 
@@ -91,8 +89,12 @@ define([
 
 			this.match = this.models.tournament_model.getCurrentRoundData();
 
-			image_1.attr('src', this.match.player_1.image_url );
-			image_2.attr('src', this.match.player_2.image_url );
+            image_1.css({
+                'background-image': 'url(' + this.match.player_1.image_url + ')'
+            });
+            image_2.css({
+                'background-image': 'url(' + this.match.player_2.image_url + ')'
+            });
 		},
 
 		'_onImage1Clicked': function() {

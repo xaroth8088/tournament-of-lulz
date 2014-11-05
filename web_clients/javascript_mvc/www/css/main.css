@@ -38,3 +38,8 @@ body {
     font-family: 'Gloria Hallelujah', cursive;
     font-size: 2em;
 }
+
+body * {
+    -moz-box-sizing: border-box;
+         box-sizing: border-box;
+}

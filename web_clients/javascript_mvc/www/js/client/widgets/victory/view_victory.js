@@ -17,7 +17,7 @@ define(['require', 'jsclass/min/core', 'client/base/view', 'confetti/confetti', 
 			this.callSuper();
 
 			this.container.addClass( 'widget_victory' );
-			this.container.append("<img class='winner' /><button class='goback'>Play Again!</button>");
+			this.container.append("<div class='winner'></div><button class='goback'>Play Again!</button>");
 			this.container.find('.goback').click($.proxy(this._controller.onPlayAgainPressed, this._controller));
 
             // Victory!
@@ -38,7 +38,9 @@ define(['require', 'jsclass/min/core', 'client/base/view', 'confetti/confetti', 
 			var winner;
 
 			winner = this.models.tournament_model.getWinnerData();
-			this.container.find('.winner').attr('src', winner.image_url);
+			this.container.find('.winner').css({
+                'background-image': 'url(' + winner.image_url + ')'
+            });
 
             // Confetti!
             clearInterval(this.timer);

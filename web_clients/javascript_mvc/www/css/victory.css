@@ -19,7 +19,12 @@
 }
 
 .widget_victory > .winner {
+    margin: 1em;
     width: 50%;
+    height: 85%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
     margin: 1em;
 }
 
