@@ -11,27 +11,90 @@
     -webkit-align-items: center;
         -ms-flex-align: center;
             align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-justify-content: space-around;
+        -ms-flex-pack: distribute;
+            justify-content: space-around;
 }
 
-.widget_selecting > .img_holder {
+.widget_selecting > .images {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
+    height: 95%;
+    width: 100%;
+}
+
+.widget_selecting > .images > .img_holder {
     -webkit-box-flex: 3;
     -webkit-flex: 3 3;
         -ms-flex: 3 3;
             flex: 3 3;
     text-align: center;
     height: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+}
+
+.widget_selecting > .images > .img_holder > .image {
+    width: 100%;
+    height: 90%;
     background-size: contain;
     background-position: center center;
     background-repeat: no-repeat;
+    background-color: rgba(0,0,0,0.1);
+    box-shadow: rgba(0,0,0,0.25) 3px 3px 10px;
 }
 
-.widget_selecting > .img_holder > img {
-    display: inline-block;
-    max-width: 96%;
-    max-height: 96%;
+.widget_selecting > .images > .img_holder > .image_1 {
+    border-radius: 1em 0 1em 1em;
 }
 
-.widget_selecting > .versus {
+.widget_selecting > .images > .img_holder > .image_2 {
+    border-radius: 0 1em 1em 1em;
+}
+
+.widget_selecting > .images > .img_holder > .title {
+    margin: 0 auto;
+    font-family: "Arial";
+    font-size: 4vh;
+    color: white;
+    background-color: rgba(0,0,0,0.5);
+    border-radius: 0 0 1em 1em;
+    padding: 0.5em;
+    text-shadow: rgba(0,0,0,0.35) 2px 2px;
+    box-shadow: rgba(0,0,0,0.35) 5px 5px 7px;
+    width: 90%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.widget_selecting > .images > .versus {
     -webkit-box-flex: 1;
     -webkit-flex: 1 1;
         -ms-flex: 1 1;
@@ -42,4 +105,23 @@
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
+}
+
+.widget_selecting > .images > .score_tag {
+    background-color: rgba(187, 0, 0, 0.68);
+    padding: 0.4em;
+    -webkit-align-self: baseline;
+        -ms-flex-item-align: baseline;
+            align-self: baseline;
+    color: white;
+    text-shadow: rgba(0,0,0,0.25) 2px 2px;
+    font-size: 4vh;
+}
+
+.widget_selecting > .images > .player_1 {
+    border-radius: 0 1em 1em 0;
+}
+
+.widget_selecting > .images > .player_2 {
+    border-radius: 1em 0 0 1em;
 }
