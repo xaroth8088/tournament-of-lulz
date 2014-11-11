@@ -8,7 +8,7 @@ define([
     'client/base/controller',
     'client/configuration',
     'client/widgets/rpgsay/widget_rpgsay',
-    'jquery.fullscreen/jquery.fullscreen-0.4.1.min'
+    'screenfull/screenfull.min'
 ], function (require) {
 	'use strict';
 	var Controller = require('client/base/controller'),
@@ -38,8 +38,10 @@ define([
         },
 
 		'onStartPressed': function() {
-            $('body').fullscreen();
-			this.models.page_model.changeScreen( "IN_GAME" );
+            if (screenfull.enabled) {
+                screenfull.request();
+            }
+            this.models.page_model.changeScreen( "IN_GAME" );
 		},
 
         'destroy': function() {
