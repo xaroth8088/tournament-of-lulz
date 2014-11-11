@@ -17,7 +17,7 @@ define(['require', 'jsclass/min/core', 'client/base/view', 'confetti/confetti', 
 			this.callSuper();
 
 			this.container.addClass( 'widget_victory' );
-			this.container.append("<div class='winner'></div><button class='goback'>Play Again!</button>");
+			this.container.append("<button class='goback'>Play Again!</button><div class='winner'></div>");
 			this.container.find('.goback').click($.proxy(this._controller.onPlayAgainPressed, this._controller));
 
             // Victory!
@@ -31,8 +31,12 @@ define(['require', 'jsclass/min/core', 'client/base/view', 'confetti/confetti', 
                 opacity: 1
             }, 1000, 'easeInQuad').transition({
                 opacity: 0
-            }, 3000, 'easeInQuad');
+            }, 3000, 'easeInQuad', $.proxy(this._onVictoryAnimationComplete, this));
 		},
+
+        '_onVictoryAnimationComplete': function() {
+            this.container.find('.victory_image').remove();
+        },
 
 		'_draw': function() {
 			var winner;

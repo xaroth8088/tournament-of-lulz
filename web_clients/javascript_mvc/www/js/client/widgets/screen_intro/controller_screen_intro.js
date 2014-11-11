@@ -7,7 +7,8 @@ define([
     'jsclass/min/core',
     'client/base/controller',
     'client/configuration',
-    'client/widgets/rpgsay/widget_rpgsay'
+    'client/widgets/rpgsay/widget_rpgsay',
+    'jquery.fullscreen/jquery.fullscreen-0.4.1.min'
 ], function (require) {
 	'use strict';
 	var Controller = require('client/base/controller'),
@@ -37,6 +38,7 @@ define([
         },
 
 		'onStartPressed': function() {
+            $('body').fullscreen();
 			this.models.page_model.changeScreen( "IN_GAME" );
 		},
 

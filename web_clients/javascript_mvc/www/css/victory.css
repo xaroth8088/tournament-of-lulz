@@ -41,7 +41,17 @@
 }
 
 .widget_victory > .goback {
-    /* Put the button above the confetti */
-    position: relative;
-    z-index: 999;
+    margin: 0 auto;
+    background-color: #38a6f0;
+    color: white;
+    padding: 1em 1em;
+    font-weight: 700;
+    font-size: 1.1em;
+    border-radius: 3em;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+    font-family: 'Gloria Hallelujah', cursive;
+    outline: none;
+    text-shadow: 1px 1px black;
+    margin: 1em;
+    z-index: 1;
 }
