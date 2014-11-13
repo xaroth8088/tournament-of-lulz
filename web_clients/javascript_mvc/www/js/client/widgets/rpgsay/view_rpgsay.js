@@ -91,7 +91,7 @@ define(['require', 'jsclass/min/core', 'client/base/view', 'velocity'], function
             this._setSpeakerImage();
 
             this.text_box.text(this.models.rpgsay_model.getDisplayText());
-            this.text_box.scrollTop(this.text_box.outerHeight());
+            this.text_box.scrollTop(this.text_box[0].scrollHeight);
 
             this._last_speaker = this.models.rpgsay_model.speaker;
             this._last_speaker_mood = this.models.rpgsay_model.mood;
