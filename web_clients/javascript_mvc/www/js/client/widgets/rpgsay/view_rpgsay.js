@@ -2,7 +2,7 @@
  RPGSay View
  A fun way to show text
  ***/
-define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
+define(['require', 'jsclass/min/core', 'client/base/view', 'velocity'], function (require) {
     'use strict';
     var View = require('client/base/view');
 
@@ -132,11 +132,13 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
 
             this._last_speaker_on_left = this.models.rpgsay_model.speaker_on_left;
 
-            this.face.css({
-                x: 0
-            }).transition({
-                x: x_offset + 'px'
-            }, this.models.rpgsay_model.face_appear_speed, $.proxy(this._animateFace, this));
+            $.Velocity.hook(this.face, "translateX", "0px");
+            this.face.velocity({
+                "translateX": x_offset + 'px'
+            }, {
+                "duration": this.models.rpgsay_model.face_appear_speed,
+                "complete": $.proxy(this._animateFace, this)
+            });
         },
 
         '_animateContainer': function () {
@@ -145,12 +147,19 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
             }
 
             this.face.hide();
-            this.container.css({
-                scale: [1, 0],
-                transformOrigin: '0px 100%'
-            }).transition({
-                scale: [1, 1]
-            }, this.models.rpgsay_model.open_speed, $.proxy(this._animateFace, this));
+
+            $.Velocity.hook(this.container, "scaleX", 1);
+            $.Velocity.hook(this.container, "scaleY", 0);
+            $.Velocity.hook(this.container, "transformOriginX", "0px");
+            $.Velocity.hook(this.container, "transformOriginY", "100%");
+
+            this.container.velocity({
+                "scaleX": 1,
+                "scaleY": 1
+            },{
+                "duration": this.models.rpgsay_model.open_speed,
+                "complete": $.proxy(this._animateFace, this)
+            });
         },
 
         '_animateFace': function () {
@@ -163,18 +172,14 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
             this._setSpeakerImage();
 
             // Set the face direction and order
-            // NOTE: The .css() transforms has to happen here, because otherwise jquery.transit
+            // NOTE: The .hook() transforms has to happen here, because otherwise velocity
             // will override the 'transform' property when running the animations.
             if (this.models.rpgsay_model.speaker_on_left === false) {
                 this.face.addClass("right");
-                this.face.css({
-                    "transform": "scaleX(-1)"
-                });
+                $.Velocity.hook(this.face, "scaleX", -1);
             } else {
                 this.face.removeClass("right");
-                this.face.css({
-                    "transform": "scaleX(1)"
-                });
+                $.Velocity.hook(this.face, "scaleX", 1);
             }
 
             this.face.show();
@@ -182,14 +187,17 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
             this.face.width(this.face.height());
 
             x_offset = -this.face.outerWidth();
-
-            this.face.css({
-                x: x_offset + 'px'
-            }).transition({
-                x: 0
-            }, this.models.rpgsay_model.face_appear_speed).transition({
-                x: 0
-            }, this.models.rpgsay_model.pre_speech_delay, $.proxy(this._drawTextFrame, this));
+            $.Velocity.hook(this.face, "translateX", x_offset + 'px' );
+            this.face.velocity({
+                "translateX": 0
+            },{
+                "duration": this.models.rpgsay_model.face_appear_speed
+            }).velocity({
+                "translateX": 0
+            }, {
+                "duration": this.models.rpgsay_model.pre_speech_delay,
+                "complete": $.proxy(this._drawTextFrame, this)
+            });
         },
 
         '_animateClose': function () {
@@ -202,12 +210,18 @@ define(['require', 'jsclass/min/core', 'client/base/view'], function (require) {
 
             this.face.hide();
             this.text_box.empty();
-            this.container.css({
-                scale: [1, 1]
-            }).transition({
-                scale: [1, 0],
-                transformOrigin: '0px 100%'
-            }, this.models.rpgsay_model.autoclose_speed);
+
+            $.Velocity.hook(this.container, "scaleX", 1);
+            $.Velocity.hook(this.container, "scaleY", 1);
+            $.Velocity.hook(this.container, "transformOriginX", "0px");
+            $.Velocity.hook(this.container, "transformOriginY", "100%");
+
+            this.container.velocity({
+                "scaleX": 1,
+                "scaleY": 0
+            }, {
+                "duration": this.models.rpgsay_model.autoclose_speed
+            });
         },
 
         'destroy': function () {

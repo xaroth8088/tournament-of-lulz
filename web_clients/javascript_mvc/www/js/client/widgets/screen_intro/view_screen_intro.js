@@ -5,7 +5,6 @@
 define(['require',
     'jsclass/min/core',
     'client/base/view',
-    'jquery.transit/jquery.transit',
     'client/widgets/rpgsay/widget_rpgsay'
 ], function (require) {
     'use strict';

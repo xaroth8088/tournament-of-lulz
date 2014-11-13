@@ -2,7 +2,7 @@
  Bracket View
  Shows off the current position in the bracket
  ***/
-define(['require', 'jsclass/min/core', 'client/lib/simplebracket/simplebracket', 'client/base/view', 'jquery.transit/jquery.transit'], function (require) {
+define(['require', 'jsclass/min/core', 'client/lib/simplebracket/simplebracket', 'client/base/view', 'velocity'], function (require) {
     'use strict';
     var View = require('client/base/view');
 
@@ -38,14 +38,21 @@ define(['require', 'jsclass/min/core', 'client/lib/simplebracket/simplebracket',
             y = height * bracket_pos.match + height / 2;
             y = 50 - y;
 
-            bracket_container.transition({
-                scale: 3,
-                x: x + '%',
-                y: y + '%',
-                delay: 250
-            }, 1750, 'in-out').transition({
+            bracket_container.velocity({
+                "scale": 3,
+                "translateX": x + "%",
+                "translateY": y + "%"
+            }, {
+                "delay": 250,
+                "duration": 1750,
+                "easing": "easeInOutSine"
+            }).velocity({
                 opacity: 0
-            }, 750, 'easeInOutSine', $.proxy(this.animation_complete_callback, this) );
+            }, {
+                "duration": 750,
+                "easing": "easeInOutSine",
+                "complete": $.proxy(this.animation_complete_callback, this)
+            });
         },
 
         '_getBracketData': function () {

@@ -5,7 +5,13 @@ requirejs.config({
     baseUrl: 'js/vendor',
     paths: {
 		jquery: 'jquery/jquery-2.1.1.min',
-        client: '../client'
+        client: '../client',
+        "velocity": "velocity-1.1.0/velocity.min"
+    },
+    shim: {
+        "velocity": {
+            deps: [ "jquery" ]
+        }
     }
 });
 
