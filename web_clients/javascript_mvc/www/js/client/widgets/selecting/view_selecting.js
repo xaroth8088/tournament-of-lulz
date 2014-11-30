@@ -5,8 +5,7 @@
 define([
     'require',
     'jsclass/min/core',
-    'client/base/view',
-    'velocity'
+    'client/base/view'
 ], function (require) {
 	'use strict';
 	var View = require('client/base/view');
@@ -45,73 +44,48 @@ define([
             image_2.click($.proxy(this._onImage2Clicked, this));
 
             // Animations
-            $.Velocity.hook(image_1, "opacity", 0);
-            image_1.velocity({
-                "opacity": 1
-            }, {
-                "duration": 100
-            });
+            image_1.css({
+                opacity: 0
+            }).transition({
+                opacity: 1
+            }, 100);
 
-            $.Velocity.hook(image_2, "opacity", 0);
-            image_2.velocity({
-                "opacity": 1
-            }, {
-                "duration": 100
-            });
+            image_2.css({
+                opacity: 0
+            }).transition({
+                opacity: 1
+            }, 100);
 
-            $.Velocity.hook(this.container.find('.versus'), "scale", 9);
-            this.container.find('.versus').velocity({
-                "scale": 1
-            }, {
-                "duration": 250,
-                "easing": "easeInCubic",
-                "complete": function() {
-                    image_1.velocity({
-                        "rotateZ": "1deg"
-                    }, {
-                        "duration": 5,
-                        "delay": 5
-                    }).velocity({
-                        "rotateZ": "-1deg"
-                    }, {
-                        "duration": 5
-                    }).velocity({
-                        "rotateZ": "1deg"
-                    }, {
-                        "duration": 5
-                    }).velocity({
-                        "rotateZ": "-1deg"
-                    }, {
-                        "duration": 5
-                    }).velocity({
-                        "rotateZ": "0deg"
-                    }, {
-                        "duration": 5
-                    });
+            this.container.find('.versus').css({
+                scale: 9
+            }).transition({
+                scale: 1
+            }, 250, 'easeInCubic', function() {
+                image_1.transition({
+                    rotate: '1deg',
+                    delay: 5
+                }, 5).transition({
+                    rotate: '-1deg'
+                }, 5).transition({
+                    rotate: '1deg'
+                }, 5).transition({
+                    rotate: '-1deg'
+                }, 5).transition({
+                    rotate: '0deg'
+                }, 5);
 
-                    image_2.velocity({
-                        "rotateZ": "1deg"
-                    }, {
-                        "duration": 5,
-                        "delay": 5
-                    }).velocity({
-                        "rotateZ": "-1deg"
-                    }, {
-                        "duration": 5
-                    }).velocity({
-                        "rotateZ": "1deg"
-                    }, {
-                        "duration": 5
-                    }).velocity({
-                        "rotateZ": "-1deg"
-                    }, {
-                        "duration": 5
-                    }).velocity({
-                        "rotateZ": "0deg"
-                    }, {
-                        "duration": 5
-                    });
-                }
+                image_2.transition({
+                    rotate: '-1deg',
+                    delay: 4
+                }, 5).transition({
+                    rotate: '1deg'
+                }, 5).transition({
+                    rotate: '-1deg'
+                }, 5).transition({
+                    rotate: '1deg'
+                }, 5).transition({
+                    rotate: '0deg'
+                }, 5);
             });
 		},
 

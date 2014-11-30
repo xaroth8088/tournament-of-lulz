@@ -119,12 +119,6 @@ define(['require', 'jsclass/min/core'], function (require) {
 			this.removeAllSubwidgets();
 			this._unwatchModels();
 			this.models = {};
-
-            // Explicit cleanup for jQuery
-            this.container.children().removeData();
-            this.container.removeData();
-
-            // Kill the container
 			this.container.remove();
 		},
 

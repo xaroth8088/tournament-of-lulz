@@ -2,7 +2,7 @@
 	Victory View
 	A brief celebration of the ultimate tournament winner
 ***/
-define(['require', 'jsclass/min/core', 'client/base/view', 'confetti/confetti', 'velocity'], function (require) {
+define(['require', 'jsclass/min/core', 'client/base/view', 'confetti/confetti', 'jquery.transit/jquery.transit'], function (require) {
 	'use strict';
 	var View = require('client/base/view');
 	
@@ -23,22 +23,15 @@ define(['require', 'jsclass/min/core', 'client/base/view', 'confetti/confetti', 
             // Victory!
             victory = $("<div/>").addClass('victory_image');
             this.container.append(victory);
-            $.Velocity.hook(victory, "scale", 30);
-            $.Velocity.hook(victory, "opacity", 0);
-
-            victory.velocity({
-                "scale": 1,
-                "opacity": 1
-            }, {
-                "duration": 1000,
-                "easing": "easeInQuad"
-            }).velocity({
-                "opacity": 0
-            }, {
-                "duration": 3000,
-                "easing": "easeInQuad",
-                "complete": $.proxy(this._onVictoryAnimationComplete, this)
-            });
+            victory.css({
+                scale: 30,
+                opacity: 0
+            }).transition({
+                scale: 1,
+                opacity: 1
+            }, 1000, 'easeInQuad').transition({
+                opacity: 0
+            }, 3000, 'easeInQuad', $.proxy(this._onVictoryAnimationComplete, this));
 		},
 
         '_onVictoryAnimationComplete': function() {
