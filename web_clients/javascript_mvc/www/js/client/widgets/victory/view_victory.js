@@ -24,10 +24,7 @@ define(['require', 'jsclass/min/core', 'client/base/view', 'confetti/confetti', 
             victory = $("<div/>").addClass('victory_image');
             this.container.append(victory);
             $.Velocity.hook(victory, "scale", 30);
-
-            victory.css({
-                "opacity": 0
-            });
+            $.Velocity.hook(victory, "opacity", 0);
 
             victory.velocity({
                 "scale": 1,

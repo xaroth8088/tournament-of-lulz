@@ -18,7 +18,7 @@ define([
 		},
 
 		'_initTemplate': function() {
-            var image_1, image_2, versus;
+            var image_1, image_2;
 			this.callSuper();
 
 			this.container.addClass( 'widget_selecting' );
@@ -45,27 +45,22 @@ define([
             image_2.click($.proxy(this._onImage2Clicked, this));
 
             // Animations
-            image_1.css({
-                "opacity": 0
-            });
+            $.Velocity.hook(image_1, "opacity", 0);
             image_1.velocity({
                 "opacity": 1
             }, {
-                "duration": 300
+                "duration": 100
             });
 
-            image_2.css({
-                "opacity": 0
-            });
+            $.Velocity.hook(image_2, "opacity", 0);
             image_2.velocity({
                 "opacity": 1
             }, {
-                "duration": 300
+                "duration": 100
             });
 
-            versus = this.container.find('.versus');
-            $.Velocity.hook(versus, "scale", 9);
-            versus.velocity({
+            $.Velocity.hook(this.container.find('.versus'), "scale", 9);
+            this.container.find('.versus').velocity({
                 "scale": 1
             }, {
                 "duration": 250,
