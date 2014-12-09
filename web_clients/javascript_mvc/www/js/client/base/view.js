@@ -139,15 +139,6 @@ define(['require', 'jsclass/min/core'], function (require) {
 			}
 
 			this._draw();
-		},
-
-		'_startupDraw': function() {
-			// We may have been destroyed before getting here
-			if( this._destroyed === true ) {
-				return;
-			}
-
-			this._draw();
 		}
 	});
 });
