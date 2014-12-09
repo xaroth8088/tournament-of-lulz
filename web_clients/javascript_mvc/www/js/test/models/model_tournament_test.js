@@ -3,7 +3,8 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
     describe('ModelTournament', function() {
         var ModelTournament,
             mock_data,
-            mock_unbalanced_data;
+            mock_unbalanced_data,
+            mock_round_with_two_byes_data;
 
         // Mock dependencies and module loading
         beforeEach(function(done) {
@@ -105,6 +106,60 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
                         "thumbnail_url": "http://i.imgur.com/mLcWci0s.png",
                         "title": "Mock Top Image 5",
                         "rating": 7890.12
+                    }
+                ]
+            };
+
+            mock_round_with_two_byes_data = {
+                'tournament_id': 'mock_tournament_id',
+                'images': [
+                    {
+                        "image_id": "123",
+                        "page_url": "http://imgur.com/gallery/w2RByDr",
+                        "image_url": "http://i.imgur.com/w2RByDr.png",
+                        "thumbnail_url": "http://i.imgur.com/w2RByDrs.png",
+                        "title": "Mock Top Image 1",
+                        "rating": 1234.56
+                    },
+                    {
+                        "image_id": "456",
+                        "page_url": "http://imgur.com/gallery/ex9i5Mv",
+                        "image_url": "http://i.imgur.com/ex9i5Mv.png",
+                        "thumbnail_url": "http://i.imgur.com/ex9i5Mvs.png",
+                        "title": "Mock Top Image 2",
+                        "rating": 6543.21
+                    },
+                    {
+                        "image_id": "321",
+                        "page_url": "http://imgur.com/gallery/Sba6Px8",
+                        "image_url": "http://i.imgur.com/Sba6Px8.png",
+                        "thumbnail_url": "http://i.imgur.com/Sba6Px8s.png",
+                        "title": "Mock Top Image 3",
+                        "rating": 1111.11
+                    },
+                    {
+                        "image_id": "654",
+                        "page_url": "http://imgur.com/gallery/mLcWci0",
+                        "image_url": "http://i.imgur.com/mLcWci0.png",
+                        "thumbnail_url": "http://i.imgur.com/mLcWci0s.png",
+                        "title": "Mock Top Image 4",
+                        "rating": 4321.98
+                    },
+                    {
+                        "image_id": "789",
+                        "page_url": "http://imgur.com/gallery/mLcWci0",
+                        "image_url": "http://i.imgur.com/mLcWci0.png",
+                        "thumbnail_url": "http://i.imgur.com/mLcWci0s.png",
+                        "title": "Mock Top Image 5",
+                        "rating": 7890.12
+                    },
+                    {
+                        "image_id": "987",
+                        "page_url": "http://imgur.com/gallery/mLcWci0",
+                        "image_url": "http://i.imgur.com/mLcWci0.png",
+                        "thumbnail_url": "http://i.imgur.com/mLcWci0s.png",
+                        "title": "Mock Top Image 6",
+                        "rating": 9999.99
                     }
                 ]
             };
@@ -547,6 +602,34 @@ define(['require', 'squire', 'jquery'], function(require, Squire) {
                 this.model_tournament.registerWinner("123");
 
                 expect(this.model_tournament.round).toBe(6);
+                this.model_tournament.registerWinner("789");
+
+                // Postconditions
+                expect(this.model_tournament.round).toBe(7);
+                expect(this.model_tournament.state).toBe(this.model_tournament.CONSTANTS.COMPLETE);
+
+                // Cleanup
+            });
+
+            it('should automatically progress past rounds with both players as byes', function() {
+                // Setup
+                this.model_tournament.startNewTournament();
+                this.model_tournament.onLoadComplete( mock_round_with_two_byes_data );
+                this.model_tournament.registerWinner("123");
+                this.model_tournament.registerWinner("321");
+                this.model_tournament.registerWinner("789");
+
+                // Preconditions
+                expect(this.model_tournament.state).toBe(this.model_tournament.CONSTANTS.LOADED);
+                expect(this.model_tournament.images.length).toBe(6);
+                expect(this.model_tournament.tournament_id).toBe('mock_tournament_id');
+                expect(this.model_tournament.modelWasUpdated).toHaveBeenCalled();
+                expect(this.model_tournament.round).toBe(4);
+                expect(this.model_tournament.total_rounds).toBe(7);
+                expect(this.model_tournament.bracket).not.toBeNull();
+
+                // Run Test
+                this.model_tournament.registerWinner("123");
                 this.model_tournament.registerWinner("789");
 
                 // Postconditions
