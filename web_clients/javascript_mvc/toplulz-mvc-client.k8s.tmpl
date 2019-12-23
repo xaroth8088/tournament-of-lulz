@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: toplulz-mvc-client-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: toplulz-mvc-client
+  template:
+    metadata:
+      labels:
+        app: toplulz-mvc-client
+    spec:
+      containers:
+        - name: toplulz-mvc-client-container
+          image: ${DOCKER_REGISTRY_URL}/toplulz-mvc-client:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+      imagePullSecrets:
+        - name: registry-credentials
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: toplulz-mvc-client-service
+spec:
+  ports:
+    - name: tcp
+      targetPort: 80
+      port: 80
+      protocol: TCP
+  selector:
+    app: toplulz-mvc-client
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: toplulz-mvc-client-ingress
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+    - host: ${TRAEFIK_INGRESS_URL}
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: toplulz-mvc-client-service
+              servicePort: 80

@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: toplulz-credentials
+type: Opaque
+stringData:
+  imgur-client-id: ${IMGUR_CLIENT_ID}
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: toplulz-imgur-populator-cronjob
+spec:
+  schedule: "@daily"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: toplulz-imgur-populator-container
+            image: ${DOCKER_REGISTRY_URL}/toplulz-imgur-populator:latest
+            imagePullPolicy: Always
+            env:
+              - name: IMGUR_CLIENT_ID
+                valueFrom:
+                  secretKeyRef:
+                    name: toplulz-credentials
+                    key: imgur-client-id
+          imagePullSecrets:
+            - name: registry-credentials
+          restartPolicy: OnFailure

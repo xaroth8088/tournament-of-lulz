@@ -19,9 +19,9 @@ class ImgurAPI:
         image = {}
 
         try:
-            image['page_url'] = "http://imgur.com/gallery/%s" % raw_image['id']
+            image['page_url'] = "https://imgur.com/gallery/%s" % raw_image['id']
             image['image_url'] = raw_image['link']
-            image['thumbnail_url'] = "http://i.imgur.com/%sm.%s" % (
+            image['thumbnail_url'] = "https://i.imgur.com/%sm.%s" % (
                 raw_image['id'], self.file_extensions[raw_image['type']])
             image['title'] = raw_image['title']
         except KeyError:

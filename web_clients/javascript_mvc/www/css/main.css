@@ -1,4 +1,6 @@
 body {
+    user-select: none;
+
     background-color: #ccc;
 
     display: -webkit-box;
