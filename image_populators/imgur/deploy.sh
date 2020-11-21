@@ -11,9 +11,8 @@ then
   exit 1
 fi
 
-docker build -t "${DOCKER_REGISTRY_URL}/toplulz-mvc-client:latest" .
-docker push "${DOCKER_REGISTRY_URL}/toplulz-mvc-client:latest"
-kubectl delete deployment toplulz-mvc-client-deployment
+docker build -t "${DOCKER_REGISTRY_URL}/toplulz-imgur-populator:latest" .
+docker push "${DOCKER_REGISTRY_URL}/toplulz-imgur-populator:latest"
 envsubst < toplulz-imgur-populator.k8s.tmpl > toplulz-imgur-populator.k8s.yaml
 kubectl apply -f toplulz-imgur-populator.k8s.yaml
 rm toplulz-imgur-populator.k8s.yaml
