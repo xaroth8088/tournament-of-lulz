@@ -1,4 +1,4 @@
-bottle==0.12.7
+bottle==0.12.20
 coverage==3.7.1
 glicko2==1.2
 mysql-connector-python==8.0.18
