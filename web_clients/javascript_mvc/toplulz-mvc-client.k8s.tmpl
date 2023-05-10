@@ -34,18 +34,17 @@ spec:
   selector:
     app: toplulz-mvc-client
 ---
-apiVersion: extensions/v1beta1
-kind: Ingress
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
 metadata:
   name: toplulz-mvc-client-ingress
-  annotations:
-    kubernetes.io/ingress.class: traefik
 spec:
-  rules:
-    - host: ${TRAEFIK_INGRESS_URL}
-      http:
-        paths:
-          - path: /
-            backend:
-              serviceName: toplulz-mvc-client-service
-              servicePort: 80
+  routes:
+    - kind: Rule
+      match: Host(`${TRAEFIK_INGRESS_URL}`)
+      services:
+        - kind: Service
+          name: toplulz-mvc-client-service
+          port: 80
+  tls:
+    certResolver: letsencrypt

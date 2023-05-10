@@ -34,18 +34,17 @@ spec:
   selector:
     app: toplulz-python-server
 ---
-apiVersion: extensions/v1beta1
-kind: Ingress
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
 metadata:
   name: toplulz-python-server-ingress
-  annotations:
-    kubernetes.io/ingress.class: traefik
 spec:
-  rules:
-    - host: ${TRAEFIK_INGRESS_URL}
-      http:
-        paths:
-          - path: /api/
-            backend:
-              serviceName: toplulz-python-server-service
-              servicePort: 80
+  routes:
+    - kind: Rule
+      match: Host(`${TRAEFIK_INGRESS_URL}`) && PathPrefix(`/api/`)
+      services:
+        - kind: Service
+          name: toplulz-python-server-service
+          port: 80
+  tls:
+    certResolver: letsencrypt
